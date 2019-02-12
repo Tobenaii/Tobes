@@ -1,4 +1,5 @@
 #include "p2Body.h"
+#include "p2World.h"
 
 p2Body::p2Body(const p2BodyDef* bodyDef, p2World* world)
 {
@@ -23,7 +24,16 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 
 void p2Body::ApplyForce(p2Vec2 force)
 {
+	if (m_type == p2_kinematicBody)
+		return;
 	m_linearVelocity += force / m_mass;
+}
+
+void p2Body::CreateFixture(const p2FixtureDef* shape)
+{
+	p2Fixture* fixture = new p2Fixture(this, shape);
+	m_fixtures.push_back(fixture);
+	m_world->m_fixtures.push_back(fixture);
 }
 
 

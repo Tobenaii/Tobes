@@ -1,5 +1,6 @@
 #include "p2World.h"
 #include "p2Body.h"
+#include "p2Collision.h"
 #include <iostream>
 
 p2World::p2World(const p2Vec2 & gravity, const float fixedTimeStep)
@@ -31,6 +32,7 @@ void p2World::Update(const float dt)
 	{
 		for (p2Body* body : m_bodies)
 			body->Update(m_fixedTimeStep, m_gravity);
+		CheckCollisions(m_fixtures);
 		accumulator -= m_fixedTimeStep;
 	}
 	//TODO: Handle extra time in accumulator

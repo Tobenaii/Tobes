@@ -6,6 +6,8 @@
 #include <Gizmos.h>
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
+#include <p2CircleShape.h>
+#include <p2EdgeShape.h>
 
 PhysicsTestApp::PhysicsTestApp() {
 
@@ -22,13 +24,29 @@ bool PhysicsTestApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, -1), 0.01f);
+	m_p2World = new p2World(p2Vec2(0, -10), 0.01f);
 	p2BodyDef def;
-	def.position = p2Vec2(400, 800);
+	def.position = p2Vec2(200, 800);
 
 	body = m_p2World->CreateBody(&def);
 
+	p2CircleShape circleShape;
+	circleShape.m_radius = 10;
 
+	p2FixtureDef fDef;
+	fDef.shape = &circleShape;
+	body->CreateFixture(&fDef);
+	
+	p2EdgeShape edgeShape;
+	edgeShape.Setp1(p2Vec2(0, 700));
+	edgeShape.Setp2(p2Vec2(800, 200));
+
+	fDef.shape = &edgeShape;
+
+	def.position = p2Vec2(0, 0);
+	def.type = p2_kinematicBody;
+	body2 = m_p2World->CreateBody(&def);
+	body2->CreateFixture(&fDef);
 	return true;
 }
 
@@ -61,6 +79,7 @@ void PhysicsTestApp::draw() {
 	// draw your stuff here!
 	// output some text, uses the last used colour
 	m_2dRenderer->drawCircle(pos.x, pos.y, 10, 0);
+	m_2dRenderer->drawLine(0, 700, 800, 200, 1);
 	// done drawing sprites
 	m_2dRenderer->end();
 }

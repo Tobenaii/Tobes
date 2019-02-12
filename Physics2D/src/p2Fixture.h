@@ -1,7 +1,6 @@
 #pragma once
 #include "p2Shape.h"
-
-class p2Body;
+#include "p2Math.h"
 
 struct p2FixtureDef
 {
@@ -15,15 +14,21 @@ struct p2FixtureDef
 	float restitution;
 };
 
+class p2Body;
+
 class p2Fixture
 {
 private:
 	friend class p2Body;
 	friend class p2World;
 
-	p2Fixture(p2Body* body, const p2FixtureDef* def) { m_body = body; m_shape = new p2Shape(*def->shape); m_restitution = def->restitution; }
+	p2Fixture(p2Body* body, const p2FixtureDef* def) { m_body = body; m_shape = def->shape->Clone(); m_restitution = def->restitution; }
 	p2Body* m_body;
 	p2Shape* m_shape;
 	float m_restitution;
 	//TODO: Friction
+
+public:
+	p2Shape* GetShape() const;
+	p2Vec2 GetBodyPos() const;
 };

@@ -33,12 +33,33 @@
     <ClInclude Include="src\p2Fixture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\p2Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\p2PolygonShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\p2EdgeShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\p2Body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\p2World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p2Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p2CircleShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p2Fixture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\p2PolygonShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,5 +23,7 @@ protected:
 	aie::Font*			m_font;
 	p2World* m_p2World;
 	p2Body* body;
+	p2Body* body2;
 	p2Vec2 pos;
+	p2Vec2 pos2;
 };

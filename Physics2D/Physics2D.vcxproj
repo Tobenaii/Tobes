@@ -123,14 +123,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\p2CircleShape.h" />
+    <ClInclude Include="src\p2Collision.h" />
+    <ClInclude Include="src\p2EdgeShape.h" />
     <ClInclude Include="src\p2Fixture.h" />
     <ClInclude Include="src\p2Math.h" />
     <ClInclude Include="src\p2Body.h" />
+    <ClInclude Include="src\p2PolygonShape.h" />
     <ClInclude Include="src\p2Shape.h" />
     <ClInclude Include="src\p2World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\p2Body.cpp" />
+    <ClCompile Include="src\p2CircleShape.cpp" />
+    <ClCompile Include="src\p2Collision.cpp" />
+    <ClCompile Include="src\p2Fixture.cpp" />
+    <ClCompile Include="src\p2PolygonShape.cpp" />
     <ClCompile Include="src\p2World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,7 @@
 #pragma once
 #include "p2Math.h"
+#include "p2Fixture.h"
+#include <vector>
 
 class p2World;
 
@@ -52,9 +54,11 @@ private:
 	p2Vec2 m_linearVelocity;
 	float m_gravityScale;
 	float m_mass;
+	std::vector<p2Fixture*> m_fixtures;
 
 public:
 	inline p2Vec2 GetPosition() { return m_position; }
+	void CreateFixture(const p2FixtureDef* shape);
 };
 
 
