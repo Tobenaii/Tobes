@@ -1,8 +1,7 @@
 #include "p2Collision.h"
-#include "p2Fixture.h"
 #include <vector>
 #include <iostream>
-
+#include "p2Body.h"
 fn collisionsFunctionArray[] = 
 {
 p2CollideCircles, //0 + 0 =  0
@@ -12,6 +11,13 @@ p2CollideEdgeAndCircle, //3 + 0 = 3
 p2CollideEdgeAndPolygon, //3 + 1 = 4
 };
 
+void ResolveCollision(const CollisionData& data)
+{
+	float j = (p2Dot(data.relativeVelocity * -(0.5f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
+	data.bodyA->SetVelocity(data.bodyA->GetVelocity() + data.normal * (j / data.bodyA->GetMass()));
+	data.bodyB->SetVelocity(data.bodyB->GetVelocity() - data.normal * (j / data.bodyB->GetMass()));
+}
+
 void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
 {
 	int fixtureCount = fixtures.size();
@@ -19,47 +25,75 @@ void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
 	{
 		for (int f2 = f1 + 1; f2 < fixtureCount; f2++)
 		{
+			CollisionData data;
 			int collisionId = fixtures[f1]->GetShape()->GetShapeID() + fixtures[f2]->GetShape()->GetShapeID();
-			collisionsFunctionArray[collisionId](fixtures[f1]->GetShape(), fixtures[f1]->GetBodyPos(), fixtures[f2]->GetShape(), fixtures[f2]->GetBodyPos());
+			collisionsFunctionArray[collisionId](&data, fixtures[f1]->GetShape(), fixtures[f1]->GetBodyPos(), fixtures[f2]->GetShape(), fixtures[f2]->GetBodyPos());
+			//TODO: Check data for collision
+			if (data.collision)
+			{
+				data.normal = data.normal / p2Length(data.normal);
+				
+				data.relativeVelocity = fixtures[f1]->GetBodyVelocity() - fixtures[f2]->GetBodyVelocity();
+				data.bodyA = fixtures[f1]->GetBody();
+				data.bodyB = fixtures[f2]->GetBody();
+				ResolveCollision(data);
+			}
 		}
 	}
 }
 
-bool p2CollideCircles(const p2Shape* circleA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
+void p2CollideCircles(CollisionData* data, const p2Shape* circleA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
 {
 	const p2CircleShape* cA = dynamic_cast<const p2CircleShape*>(circleA);
 	const p2CircleShape* cB = dynamic_cast<const p2CircleShape*>(circleB);
 
-	p2Vec2 diff = (bodyPosA + cB->m_pos) - (bodyPosB + cA->m_pos);
+	p2Vec2 diff = (bodyPosB + cB->m_pos) - (bodyPosA + cA->m_pos);
 	float length = p2Length(diff);
 	float intersect = cA->m_radius + cB->m_radius - length;
 
 	if (intersect > 0)
 	{
-		//TODO: Resolve collision
-		std::cout << "COLLISION!" << std::endl;
-		return true;
+		data->collision = true;
+		data->normal = diff;
 	}
 }
 
-bool p2CollidePolygonAndCircle(const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
+void p2CollidePolygonAndCircle(CollisionData* data, const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
 {
-	return false;
+	const p2PolygonShape* pA = dynamic_cast<const p2PolygonShape*>(polygonA);
+	if (!pA)
+	{
+		p2CollidePolygonAndCircle(data, circleB, bodyPosB, polygonA, bodyPosA);
+		return;
+	}
+
+	const p2CircleShape* cB = dynamic_cast<const p2CircleShape*>(circleB);
+
+	for (int i = 0; i < pA->GetVertexCount() - 1; i++)
+	{
+		p2EdgeShape edge;
+		edge.Setp1(bodyPosA + pA->GetVertex(i));
+		edge.Setp2(bodyPosA + pA->GetVertex(i + 1));
+		p2CollideEdgeAndCircle(data, &edge, bodyPosA, circleB, bodyPosB);
+		if (data->collision)
+			return;
+	}
+
 }
 
-bool p2CollidePolygons(const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
+void p2CollidePolygons(CollisionData* data, const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
 {
-	return false;
 }
 
-bool p2CollideEdgeAndCircle(const p2Shape * edgeA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
+void p2CollideEdgeAndCircle(CollisionData* data, const p2Shape * edgeA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
 {
 	const p2EdgeShape* eA = dynamic_cast<const p2EdgeShape*>(edgeA);
 	if (!eA)
 	{
-		p2CollideEdgeAndCircle(circleB, bodyPosB, edgeA, bodyPosA);
-		return false;
+		p2CollideEdgeAndCircle(data, circleB, bodyPosB, edgeA, bodyPosA);
+		return;
 	}
+
 	const p2CircleShape* cB = dynamic_cast<const p2CircleShape*>(circleB);
 
 	p2Vec2 bPos = bodyPosB + cB->m_pos;
@@ -78,13 +112,44 @@ bool p2CollideEdgeAndCircle(const p2Shape * edgeA, const p2Vec2& bodyPosA, const
 
 	if (p2Length(closestPoint - bPos) < cB->m_radius)
 	{
-		std::cout << "CIRCLE COLLIDING WITH AN EDGE AWOOOOO!!!!!!" << std::endl;
-		return true;
+		data->collision = true;
+		data->normal = bodyPosB - closestPoint;
 	}
-	return false;
 }
 
-bool p2CollideEdgeAndPolygon(const p2Shape * edgeA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
+void p2CollideEdgeAndPolygon(CollisionData* data, const p2Shape * edgeA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
 {
-	return false;
+	const p2EdgeShape* eA = dynamic_cast<const p2EdgeShape*>(edgeA);
+	if (!eA)
+	{
+		p2CollideEdgeAndPolygon(data, polygonB, bodyPosB, edgeA, bodyPosA);
+		return;
+	}
+	const p2PolygonShape* pB = dynamic_cast<const p2PolygonShape*>(polygonB);
+
+	for (int i = 0; i < pB->GetVertexCount(); i++)
+	{
+		p2EdgeShape e1;
+		e1.Setp1(p2Vec2(pB->GetVertex(i)));
+		e1.Setp2(p2Vec2(pB->GetVertex((i == pB->GetVertexCount() - 1)?(0):(i + 1))));
+
+		float x1 = eA->Getp1().x;
+		float x2 = eA->Getp2().x;
+		float x3 = e1.Getp1().x + bodyPosB.x;
+		float x4 = e1.Getp2().x + bodyPosB.x;
+		float y1 = eA->Getp1().y;
+		float y2 = eA->Getp2().y;
+		float y3 = e1.Getp1().y + bodyPosB.y;
+		float y4 = e1.Getp2().y + bodyPosB.y;
+
+		float l1 = ((x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
+		float l2 = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
+		if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1)
+		{
+			data->collision = true;
+			p2Vec2 intersection(x1 + (l1 * (x2 - x1)), y1 + (l1 * (y2 - y1)));
+			data->normal = bodyPosB - intersection;
+			return;
+		}
+	}
 }

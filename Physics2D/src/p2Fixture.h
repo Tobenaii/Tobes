@@ -26,9 +26,12 @@ private:
 	p2Body* m_body;
 	p2Shape* m_shape;
 	float m_restitution;
+
 	//TODO: Friction
 
 public:
 	p2Shape* GetShape() const;
+	p2Body* GetBody() const;
 	p2Vec2 GetBodyPos() const;
+	p2Vec2 GetBodyVelocity() const;
 };

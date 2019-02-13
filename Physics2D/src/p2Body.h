@@ -39,12 +39,12 @@ class p2Body
 {
 private:
 	friend class p2World;
+	friend class p2Fixture;
 
 	p2Body(const p2BodyDef* bodyDef, p2World* world);
 	~p2Body();
 
 	void Update(float dt, p2Vec2 gravity);
-	void ApplyForce(p2Vec2 force);
 
 private:
 	p2World* m_world;
@@ -58,7 +58,9 @@ private:
 
 public:
 	inline p2Vec2 GetPosition() { return m_position; }
+	inline p2Vec2 GetVelocity() { return m_linearVelocity; }
+	inline float GetMass() { return m_mass; }
+	inline void SetVelocity(p2Vec2 vel) { if (m_type == p2_kinematicBody)return; m_linearVelocity = vel; }
 	void CreateFixture(const p2FixtureDef* shape);
+	void ApplyForce(p2Vec2 force);
 };
-
-
