@@ -13,6 +13,7 @@ public:
 	p2Vec2 GetVertex(int index) const;
 	int GetVertexCount() const;
 	virtual p2Shape* Clone() const;
+	void ComputeMass(p2MassData* massData, float density);
 
 private:
 	std::vector<p2Vec2> m_vertices;

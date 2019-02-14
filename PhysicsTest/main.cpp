@@ -7,6 +7,7 @@ int main() {
 
 	// initialise and loop
 	app->run("AIE", 800, 800, false);
+	app->setVSync(false);
 
 	// deallocation
 	delete app;

@@ -19,17 +19,16 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+	void CreateCircle(p2Vec2 pos);
+
 protected:
 
 	aie::Renderer2D*	m_2dRenderer;
 	aie::Font*			m_font;
 	p2World* m_p2World;
-	p2Body* body;
-	p2Body* body2;
-	p2Body* body3;
-	p2Vec2 pos;
-	p2Vec2 pos2;
-	p2PolygonShape polyShape;
-	p2Vec2 merp1;
-	p2Vec2 merp2;
+
+	std::vector<p2Body*> m_bodies;
+	p2Body* polyBody;
+
+	p2PolygonShape poly;
 };

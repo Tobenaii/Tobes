@@ -21,3 +21,8 @@ p2Vec2 p2Fixture::GetBodyVelocity() const
 	return m_body->GetVelocity();
 }
 
+void p2Fixture::GetMassData(p2MassData* massData) const
+{
+	m_shape->ComputeMass(massData, m_density);
+}
+

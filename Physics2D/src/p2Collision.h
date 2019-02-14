@@ -16,6 +16,8 @@ struct CollisionData
 	CollisionData()
 	{
 		collision = false;
+		point = p2Vec2(0, 0);
+		overlap = 0;
 	}
 
 	bool collision;
@@ -23,7 +25,8 @@ struct CollisionData
 	p2Body* bodyA;
 	p2Body* bodyB;
 	p2Vec2 normal;
-	float intersect;
+	p2Vec2 point;
+	float overlap;
 };
 
 typedef void(*fn)(CollisionData*, const p2Shape*, const p2Vec2&, const p2Shape*, const p2Vec2&);

@@ -15,6 +15,7 @@ struct p2Vec2
 	p2Vec2 operator*(const float& rhs) const { return p2Vec2(x * rhs, y * rhs); }
 	p2Vec2 operator/(const float& rhs) const { return p2Vec2(x / rhs, y / rhs); }
 	p2Vec2 operator/=(const float& rhs) { x /= rhs; y /= rhs; return *this; }
+	bool operator==(const p2Vec2& rhs) const { return (x == rhs.x && y == rhs.y); }
 
 	float x, y;
 };
@@ -27,6 +28,11 @@ inline float p2Length(const p2Vec2& vec2)
 inline float p2Dot(const p2Vec2& p1, const p2Vec2& p2)
 {
 	return ((p1.x * p2.x) + (p1.y * p2.y));
+}
+
+inline float p2Cross(const p2Vec2& p1, const p2Vec2& p2)
+{
+	return (p1.x * p2.y - p1.y * p2.x);
 }
 
 struct p2Rot

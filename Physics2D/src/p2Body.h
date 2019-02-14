@@ -24,7 +24,6 @@ struct p2BodyDef
 		angle = 0;
 		linearVelocity.Set(0, 0);
 		gravityScale = 1.0f;
-		mass = 1.0f;
 	}
 
 	p2BodyType type;
@@ -32,7 +31,6 @@ struct p2BodyDef
 	float angle;
 	p2Vec2 linearVelocity;
 	float gravityScale;
-	float mass;
 };
 
 class p2Body
@@ -45,22 +43,35 @@ private:
 	~p2Body();
 
 	void Update(float dt, p2Vec2 gravity);
+	void CalculateMassData();
 
 private:
 	p2World* m_world;
+
 	p2BodyType m_type;
 	p2Vec2 m_position;
-	float m_angle;
+	float m_rotation;
+
 	p2Vec2 m_linearVelocity;
+	float m_angularVelocity;
+
 	float m_gravityScale;
 	float m_mass;
+
+	float m_I;
+
+	p2Vec2 m_centre;
+
 	std::vector<p2Fixture*> m_fixtures;
 
 public:
-	inline p2Vec2 GetPosition() { return m_position; }
-	inline p2Vec2 GetVelocity() { return m_linearVelocity; }
-	inline float GetMass() { return m_mass; }
+	inline p2Vec2 GetPosition() const { return m_position; }
+	inline p2Vec2 GetVelocity() const { return m_linearVelocity; }
+	inline float GetRotation() const { return m_rotation; }
+	inline float GetMass() const { return m_mass; }
+	inline p2BodyType GetType() const { return m_type; }
 	inline void SetVelocity(p2Vec2 vel) { if (m_type == p2_kinematicBody)return; m_linearVelocity = vel; }
+	inline void SetPosition(p2Vec2 newPos) { m_position = newPos; }
 	void CreateFixture(const p2FixtureDef* shape);
-	void ApplyForce(p2Vec2 force);
+	void ApplyForce(const p2Vec2& force, const p2Vec2& point);
 };

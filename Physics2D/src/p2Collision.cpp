@@ -14,8 +14,18 @@ p2CollideEdgeAndPolygon, //3 + 1 = 4
 void ResolveCollision(const CollisionData& data)
 {
 	float j = (p2Dot(data.relativeVelocity * -(0.5f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
-	data.bodyA->SetVelocity(data.bodyA->GetVelocity() + data.normal * (j / data.bodyA->GetMass()));
-	data.bodyB->SetVelocity(data.bodyB->GetVelocity() - data.normal * (j / data.bodyB->GetMass()));
+	if (data.bodyA->GetType() != p2_kinematicBody)
+		data.bodyA->SetPosition(data.bodyA->GetPosition() - (data.normal * (data.overlap / 2)));
+	if (data.bodyB->GetType() != p2_kinematicBody)
+		data.bodyB->SetPosition(data.bodyB->GetPosition() + (data.normal * (data.overlap / 2)));
+
+	if (data.bodyA->GetType() == p2_kinematicBody)
+		data.bodyB->SetPosition(data.bodyB->GetPosition() + (data.normal * (data.overlap / 2)));
+	else if (data.bodyB->GetType() == p2_kinematicBody)
+		data.bodyA->SetPosition(data.bodyA->GetPosition() - (data.normal * (data.overlap / 2)));
+
+	data.bodyA->ApplyForce(data.normal * (j), data.point);
+	data.bodyB->ApplyForce(data.normal * (j) * -1, data.point);
 }
 
 void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
@@ -27,6 +37,8 @@ void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
 		{
 			CollisionData data;
 			int collisionId = fixtures[f1]->GetShape()->GetShapeID() + fixtures[f2]->GetShape()->GetShapeID();
+			if (collisionId > 4)
+				continue;
 			collisionsFunctionArray[collisionId](&data, fixtures[f1]->GetShape(), fixtures[f1]->GetBodyPos(), fixtures[f2]->GetShape(), fixtures[f2]->GetBodyPos());
 			//TODO: Check data for collision
 			if (data.collision)
@@ -55,6 +67,9 @@ void p2CollideCircles(CollisionData* data, const p2Shape* circleA, const p2Vec2&
 	{
 		data->collision = true;
 		data->normal = diff;
+		p2Vec2 norm = diff / length;
+		data->point = norm * cA->m_radius;
+		data->overlap = intersect;
 	}
 }
 
@@ -110,10 +125,13 @@ void p2CollideEdgeAndCircle(CollisionData* data, const p2Shape * edgeA, const p2
 	else
 		closestPoint = (eA->Getp1() + (lineDirNorm * proj));
 
-	if (p2Length(closestPoint - bPos) < cB->m_radius)
+	float overLap = p2Length(closestPoint - bPos);
+	if (overLap < cB->m_radius)
 	{
 		data->collision = true;
 		data->normal = bodyPosB - closestPoint;
+		data->point = closestPoint;
+		data->overlap = cB->m_radius - overLap;
 	}
 }
 

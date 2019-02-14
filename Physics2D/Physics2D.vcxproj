@@ -136,6 +136,7 @@
     <ClCompile Include="src\p2Body.cpp" />
     <ClCompile Include="src\p2CircleShape.cpp" />
     <ClCompile Include="src\p2Collision.cpp" />
+    <ClCompile Include="src\p2EdgeShape.cpp" />
     <ClCompile Include="src\p2Fixture.cpp" />
     <ClCompile Include="src\p2PolygonShape.cpp" />
     <ClCompile Include="src\p2World.cpp" />

@@ -31,3 +31,8 @@ p2Shape * p2PolygonShape::Clone() const
 {
 	return new p2PolygonShape(*this);
 }
+
+void p2PolygonShape::ComputeMass(p2MassData * massData, float density)
+{
+	massData->mass = 100;
+}
