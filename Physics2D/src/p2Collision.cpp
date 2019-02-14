@@ -33,8 +33,12 @@ void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
 	int fixtureCount = fixtures.size();
 	for (int f1 = 0; f1 < fixtureCount - 1; f1++)
 	{
+		if (fixtures[f1] == nullptr)
+			continue;
 		for (int f2 = f1 + 1; f2 < fixtureCount; f2++)
 		{
+			if (fixtures[f2] == nullptr)
+				continue;
 			CollisionData data;
 			int collisionId = fixtures[f1]->GetShape()->GetShapeID() + fixtures[f2]->GetShape()->GetShapeID();
 			if (collisionId > 4)

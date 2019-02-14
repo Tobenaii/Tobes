@@ -10,6 +10,7 @@
 #include <p2EdgeShape.h>
 #include <p2PolygonShape.h>
 #include <math.h>
+#include <algorithm>
 #define _USE_MATH_DEFINES
 
 PhysicsTestApp::PhysicsTestApp() {
@@ -33,14 +34,14 @@ bool PhysicsTestApp::startup() {
 	p2EdgeShape edge;
 	def.type = p2_kinematicBody;
 	edge.Setp1(p2Vec2(0, 800));
-	edge.Setp2(p2Vec2(400, 0));
+	edge.Setp2(p2Vec2(380, 0));
 	p2FixtureDef fDef;
 	fDef.shape = &edge;
 
 	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
 
 	edge.Setp1(p2Vec2(800, 800));
-	edge.Setp2(p2Vec2(400, 0));
+	edge.Setp2(p2Vec2(420, 0));
 	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
 
 
@@ -68,7 +69,7 @@ void PhysicsTestApp::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
-	if (input->wasMouseButtonPressed(0))
+	if (input->isMouseButtonDown(0))
 	{
 		CreateCircle(p2Vec2(input->getMouseX(), input->getMouseY()));
 	}
@@ -93,16 +94,26 @@ void PhysicsTestApp::draw() {
 	// output some text, uses the last used colour
 	m_2dRenderer->setRenderColour(1, 1, 1, 1);
 
-	m_2dRenderer->drawLine(0, 800, 400, 0);
-	m_2dRenderer->drawLine(800, 800, 400, 0);
+	m_2dRenderer->drawLine(0, 800, 380, 0);
+	m_2dRenderer->drawLine(800, 800, 420, 0);
 
-	for (const p2Body* body : m_bodies)
+	for (p2Body* body : m_bodies)
 	{
-		p2Vec2 p2 = p2Vec2(cos(body->GetRotation()), sin(body->GetRotation())) * 10;
-		m_2dRenderer->setRenderColour(1, 1, 1, 1);
-		m_2dRenderer->drawCircle(body->GetPosition().x, body->GetPosition().y, 10);
-		m_2dRenderer->setRenderColour(1, 0, 0, 1);
-		m_2dRenderer->drawLine(body->GetPosition().x, body->GetPosition().y, body->GetPosition().x + p2.x, body->GetPosition().y + p2.y);
+		if (body)
+		{
+			p2Vec2 p2 = p2Vec2(cos(body->GetRotation()), sin(body->GetRotation())) * RADIUS;
+			m_2dRenderer->setRenderColour(1, 1, 1, 1);
+			m_2dRenderer->drawCircle(body->GetPosition().x, body->GetPosition().y, RADIUS);
+			m_2dRenderer->setRenderColour(1, 0, 0, 1);
+			m_2dRenderer->drawLine(body->GetPosition().x, body->GetPosition().y, body->GetPosition().x + p2.x, body->GetPosition().y + p2.y);
+
+			if (body->GetPosition().y + RADIUS < 0)
+			{
+				p2Body* bye = body;
+				m_bodies.erase(std::remove(m_bodies.begin(), m_bodies.end(), bye), m_bodies.end());
+				m_p2World->DestroyBody(body);
+			}
+		}
 	}
 
 	//for (int i = 0; i < poly.GetVertexCount(); i++)
@@ -126,7 +137,7 @@ void PhysicsTestApp::CreateCircle(p2Vec2 pos)
 
 	p2FixtureDef fDef;
 	p2CircleShape shape;
-	shape.m_radius = 10;
+	shape.m_radius = RADIUS;
 	fDef.shape = &shape;
 	fDef.density = 0.001f;
 
