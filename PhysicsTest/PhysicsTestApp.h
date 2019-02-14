@@ -9,7 +9,7 @@
 class PhysicsTestApp : public aie::Application 
 {
 public:
-	const static int RADIUS = 10;
+	const static int RADIUS = 1;
 	PhysicsTestApp();
 	virtual ~PhysicsTestApp();
 

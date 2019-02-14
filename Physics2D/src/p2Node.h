@@ -22,7 +22,7 @@ enum NodeDir{TopLeft, TopRight, BotLeft, BotRight, Centre};
 
 class p2Node
 {
-	const static int MAX_FIXTURES = 10;
+	const static int MAX_FIXTURES = 5;
 
 public:
 	p2QuadTree* m_quadTree;
@@ -30,10 +30,10 @@ public:
 	void AddFixture(p2Fixture* fixture);
 	void Update();
 	bool m_isLeaf;
+	p2NodeBounds m_bounds;
 
 private:
 	std::vector<p2Fixture*> m_fixtures;
-	p2NodeBounds m_bounds;
 	p2Node* m_topLeft;
 	p2Node* m_topRight;
 	p2Node* m_botLeft;

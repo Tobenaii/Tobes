@@ -35,7 +35,7 @@ extern fn collisionsFunctionArray[5];
 
 void ResolveCollision(const CollisionData& data);
 
-void CheckCollisions(const std::vector<p2Fixture*>& fixtures);
+void CheckCollisions(const std::vector<p2Fixture*> fixtures);
 
 void p2CollideCircles(CollisionData* data, const p2Shape* circleA, const p2Vec2& bodyPosA, const p2Shape* circleB, const p2Vec2& bodyPosB);
 

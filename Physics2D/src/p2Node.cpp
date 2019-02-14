@@ -2,29 +2,40 @@
 #include "p2Collision.h"
 #include "p2QuadTree.h"
 #include "p2Fixture.h"
+#include <algorithm>
+#include "p2World.h"
 
 p2Node::p2Node(const p2NodeBounds & bounds, NodeDir dir, p2QuadTree* tree)
 {
+	m_isLeaf = true;
 	m_quadTree = tree;
-	m_bounds.width = bounds.width / 4;
-	m_bounds.height = bounds.height / 4;
+	m_bounds.width = bounds.width / 2;
+	m_bounds.height = bounds.height / 2;
 	switch (dir)
 	{
 	case TopLeft:
-		m_bounds.centre = p2Vec2(bounds.centre.x - bounds.width / 2, bounds.centre.y + bounds.height / 2);
+		m_bounds.centre = p2Vec2(bounds.centre.x - bounds.width / 4, bounds.centre.y + bounds.height / 4);
 		break;
 	case TopRight:
-		m_bounds.centre = p2Vec2(bounds.centre.x + bounds.width / 2, bounds.centre.y + bounds.height / 2);
+		m_bounds.centre = p2Vec2(bounds.centre.x + bounds.width / 4, bounds.centre.y + bounds.height / 4);
 		break;
 	case BotLeft:
-		m_bounds.centre = p2Vec2(bounds.centre.x - bounds.width / 2, bounds.centre.y - bounds.height / 2);
+		m_bounds.centre = p2Vec2(bounds.centre.x - bounds.width / 4, bounds.centre.y - bounds.height / 4);
 		break;
 	case BotRight:
-		m_bounds.centre = p2Vec2(bounds.centre.x + bounds.width / 2, bounds.centre.y - bounds.height / 2);
+		m_bounds.centre = p2Vec2(bounds.centre.x + bounds.width / 4, bounds.centre.y - bounds.height / 4);
 		break;
 	case Centre:
 		m_bounds.centre = bounds.centre;
+		m_isLeaf = false;
+		m_topLeft = new p2Node(bounds, TopLeft, tree);
+		m_topRight = new p2Node(bounds, TopRight, tree);
+		m_botLeft = new p2Node(bounds, BotLeft, tree);
+		m_botRight = new p2Node(bounds, BotRight, tree);
+		return;
 	}
+	m_quadTree->AddLeafNode(this);
+
 }
 
 void p2Node::AddFixture(p2Fixture* fixture)
@@ -32,11 +43,6 @@ void p2Node::AddFixture(p2Fixture* fixture)
 	if (!m_isLeaf)
 	{
 		AddToChildNode(fixture);
-		for (p2Fixture* fixture : m_fixtures)
-		{
-			AddToChildNode(fixture);
-		}
-		m_fixtures.clear();
 		return;
 	}
 
@@ -50,14 +56,8 @@ void p2Node::AddFixture(p2Fixture* fixture)
 		m_botRight = new p2Node(m_bounds, BotRight, m_quadTree);
 		for (p2Fixture* f : m_fixtures)
 			AddToChildNode(f);
-	}
-	else
-	{
-		if (!m_isLeaf)
-		{
-			m_quadTree->AddLeafNode(this);
-			m_isLeaf = true;
-		}
+		m_fixtures.empty();
+		m_quadTree->RemoveLeafNode(this);
 	}
 }
 
@@ -71,11 +71,14 @@ void p2Node::Update()
 		if (pos.x > m_bounds.centre.x + m_bounds.width / 2 || pos.x < m_bounds.centre.x - m_bounds.width / 2 || pos.y > m_bounds.centre.y + m_bounds.height / 2 || pos.y < m_bounds.centre.y - m_bounds.height / 2)
 		{
 			p2Fixture* fixture = m_fixtures[i];
-			m_fixtures[i] = nullptr;
+			m_fixtures.erase(std::remove(m_fixtures.begin(), m_fixtures.end(), fixture), m_fixtures.end());
 			m_quadTree->AddFixture(fixture);
 		}
 	}
-	CheckCollisions(m_fixtures);
+	std::vector<p2Fixture*> merp = m_quadTree->m_world->m_staticFixtures;
+	if (m_fixtures.size() > 0)
+		merp.insert(merp.end(), m_fixtures.begin(), m_fixtures.end());
+	CheckCollisions(merp);
 }
 
 void p2Node::AddToChildNode(p2Fixture * fixture)

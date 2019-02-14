@@ -28,7 +28,7 @@ void ResolveCollision(const CollisionData& data)
 	data.bodyB->ApplyForce(data.normal * (j) * -1, data.point);
 }
 
-void CheckCollisions(const std::vector<p2Fixture*>& fixtures)
+void CheckCollisions(const std::vector<p2Fixture*> fixtures)
 {
 	int fixtureCount = fixtures.size();
 	for (int f1 = 0; f1 < fixtureCount - 1; f1++)

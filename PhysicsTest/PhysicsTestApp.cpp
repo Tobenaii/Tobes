@@ -11,6 +11,7 @@
 #include <p2PolygonShape.h>
 #include <math.h>
 #include <algorithm>
+#include <p2Node.h>
 #define _USE_MATH_DEFINES
 
 PhysicsTestApp::PhysicsTestApp() {
@@ -28,20 +29,21 @@ bool PhysicsTestApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, -50), 0.01f);
+	m_p2World = new p2World(p2Vec2(0, -50), 0.001f);
 
 	p2BodyDef def;
+	def.position = p2Vec2(100, 100);
 	p2EdgeShape edge;
 	def.type = p2_kinematicBody;
 	edge.Setp1(p2Vec2(0, 800));
-	edge.Setp2(p2Vec2(380, 0));
+	edge.Setp2(p2Vec2(400, 0));
 	p2FixtureDef fDef;
 	fDef.shape = &edge;
 
 	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
 
 	edge.Setp1(p2Vec2(800, 800));
-	edge.Setp2(p2Vec2(420, 0));
+	edge.Setp2(p2Vec2(400, 0));
 	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
 
 
@@ -94,8 +96,8 @@ void PhysicsTestApp::draw() {
 	// output some text, uses the last used colour
 	m_2dRenderer->setRenderColour(1, 1, 1, 1);
 
-	m_2dRenderer->drawLine(0, 800, 380, 0);
-	m_2dRenderer->drawLine(800, 800, 420, 0);
+	m_2dRenderer->drawLine(0, 800, 400, 0);
+	m_2dRenderer->drawLine(800, 800, 400, 0);
 
 	for (p2Body* body : m_bodies)
 	{
@@ -114,6 +116,17 @@ void PhysicsTestApp::draw() {
 				m_p2World->DestroyBody(body);
 			}
 		}
+	}
+
+	for (p2Node* node : m_p2World->GetLeafNodes())
+	{
+		p2Vec2 centre = node->m_bounds.centre;
+		float width = node->m_bounds.width;
+		float height = node->m_bounds.height;
+		m_2dRenderer->drawLine(centre.x, centre.y, centre.x + width/2, centre.y);
+		m_2dRenderer->drawLine(centre.x, centre.y, centre.x, centre.y + height / 2);
+		m_2dRenderer->drawLine(centre.x, centre.y, centre.x - width / 2, centre.y);
+		m_2dRenderer->drawLine(centre.x, centre.y, centre.x, centre.y - width / 2);
 	}
 
 	//for (int i = 0; i < poly.GetVertexCount(); i++)

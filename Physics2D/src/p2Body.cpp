@@ -38,15 +38,15 @@ void p2Body::CreateFixture(const p2FixtureDef* shape)
 {
 	p2Fixture* fixture = new p2Fixture(this, shape);
 	m_fixtures.push_back(fixture);
-	//if (m_type != p2_dynamicBody)
-	//{
-	//	m_world->m_staticFixtures.push_back(fixture);
-	//}
-	//else
-	//{
-		m_world->m_fixtures.push_back(fixture);
-		//m_tree->AddFixture(fixture);
-	//}
+	if (m_type != p2_dynamicBody)
+	{
+		m_world->m_staticFixtures.push_back(fixture);
+	}
+	else
+	{
+		//m_world->m_fixtures.push_back(fixture);
+		m_tree->AddFixture(fixture);
+	}
 	CalculateMassData();
 }
 
