@@ -2,7 +2,6 @@
 #include "p2Math.h"
 #include "p2Fixture.h"
 #include <vector>
-#include "p2QuadTree.h"
 
 class p2World;
 
@@ -40,7 +39,7 @@ private:
 	friend class p2World;
 	friend class p2Fixture;
 
-	p2Body(const p2BodyDef* bodyDef, p2World* world, p2QuadTree* tree);
+	p2Body(const p2BodyDef* bodyDef, p2World* world);
 	~p2Body();
 
 	void Update(float dt, p2Vec2 gravity);
@@ -64,8 +63,6 @@ private:
 	p2Vec2 m_centre;
 
 	std::vector<p2Fixture*> m_fixtures;
-
-	p2QuadTree* m_tree;
 
 public:
 	inline p2Vec2 GetPosition() const { return m_position; }

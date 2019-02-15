@@ -9,7 +9,7 @@
 class PhysicsTestApp : public aie::Application 
 {
 public:
-	const static int RADIUS = 1;
+	const static int RADIUS = 30;
 	PhysicsTestApp();
 	virtual ~PhysicsTestApp();
 
@@ -31,4 +31,5 @@ protected:
 	p2Body* polyBody;
 
 	p2PolygonShape poly;
+	p2Vec2 polyPos;
 };

@@ -14,15 +14,24 @@ p2CollideEdgeAndPolygon, //3 + 1 = 4
 void ResolveCollision(const CollisionData& data)
 {
 	float j = (p2Dot(data.relativeVelocity * -(0.5f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
-	if (data.bodyA->GetType() != p2_kinematicBody)
-		data.bodyA->SetPosition(data.bodyA->GetPosition() - (data.normal * (data.overlap / 2)));
-	if (data.bodyB->GetType() != p2_kinematicBody)
-		data.bodyB->SetPosition(data.bodyB->GetPosition() + (data.normal * (data.overlap / 2)));
-
-	if (data.bodyA->GetType() == p2_kinematicBody)
-		data.bodyB->SetPosition(data.bodyB->GetPosition() + (data.normal * (data.overlap / 2)));
-	else if (data.bodyB->GetType() == p2_kinematicBody)
-		data.bodyA->SetPosition(data.bodyA->GetPosition() - (data.normal * (data.overlap / 2)));
+	//const float min = 0;
+	//float max = data.bodyA->GetMass() + data.bodyB->GetMass();
+	//float moveScaleA = (data.bodyA->GetMass() - min) / (max - min);
+	//float moveScaleB = (data.bodyB->GetMass() - min) / (max - min);
+	float moveScaleA = 0.5f;
+	float moveScaleB = 0.5f;
+	if (data.bodyA->GetType() != p2_dynamicBody)
+	{
+		moveScaleA = 0;
+		moveScaleB = 1;
+	}
+	if (data.bodyB->GetType() != p2_dynamicBody)
+	{
+		moveScaleA = 1;
+		moveScaleB = 0;
+	}
+	data.bodyA->SetPosition(data.bodyA->GetPosition() - (data.normal * (data.overlap * moveScaleA)));
+	data.bodyB->SetPosition(data.bodyB->GetPosition() + (data.normal * (data.overlap * moveScaleB)));
 
 	data.bodyA->ApplyForce(data.normal * (j), data.point);
 	data.bodyB->ApplyForce(data.normal * (j) * -1, data.point);
@@ -88,16 +97,15 @@ void p2CollidePolygonAndCircle(CollisionData* data, const p2Shape * polygonA, co
 
 	const p2CircleShape* cB = dynamic_cast<const p2CircleShape*>(circleB);
 
-	for (int i = 0; i < pA->GetVertexCount() - 1; i++)
+	for (int i = 0; i < pA->GetVertexCount(); i++)
 	{
 		p2EdgeShape edge;
 		edge.Setp1(bodyPosA + pA->GetVertex(i));
-		edge.Setp2(bodyPosA + pA->GetVertex(i + 1));
+		edge.Setp2(bodyPosA + pA->GetVertex((i == pA->GetVertexCount() - 1)?0:i + 1));
 		p2CollideEdgeAndCircle(data, &edge, bodyPosA, circleB, bodyPosB);
 		if (data->collision)
 			return;
 	}
-
 }
 
 void p2CollidePolygons(CollisionData* data, const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
@@ -154,7 +162,7 @@ void p2CollideEdgeAndPolygon(CollisionData* data, const p2Shape * edgeA, const p
 		p2EdgeShape e1;
 		e1.Setp1(p2Vec2(pB->GetVertex(i)));
 		e1.Setp2(p2Vec2(pB->GetVertex((i == pB->GetVertexCount() - 1)?(0):(i + 1))));
-
+	
 		float x1 = eA->Getp1().x;
 		float x2 = eA->Getp2().x;
 		float x3 = e1.Getp1().x + bodyPosB.x;
@@ -163,7 +171,7 @@ void p2CollideEdgeAndPolygon(CollisionData* data, const p2Shape * edgeA, const p
 		float y2 = eA->Getp2().y;
 		float y3 = e1.Getp1().y + bodyPosB.y;
 		float y4 = e1.Getp2().y + bodyPosB.y;
-
+	
 		float l1 = ((x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
 		float l2 = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
 		if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1)
@@ -171,6 +179,7 @@ void p2CollideEdgeAndPolygon(CollisionData* data, const p2Shape * edgeA, const p
 			data->collision = true;
 			p2Vec2 intersection(x1 + (l1 * (x2 - x1)), y1 + (l1 * (y2 - y1)));
 			data->normal = bodyPosB - intersection;
+
 			return;
 		}
 	}

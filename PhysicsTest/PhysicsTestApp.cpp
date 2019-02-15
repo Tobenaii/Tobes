@@ -11,7 +11,6 @@
 #include <p2PolygonShape.h>
 #include <math.h>
 #include <algorithm>
-#include <p2Node.h>
 #define _USE_MATH_DEFINES
 
 PhysicsTestApp::PhysicsTestApp() {
@@ -29,16 +28,33 @@ bool PhysicsTestApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, -50), 0.001f);
+	m_p2World = new p2World(p2Vec2(0, -50), 0.01f);
 
 	p2BodyDef def;
 	def.position = p2Vec2(100, 100);
 	p2EdgeShape edge;
+	p2FixtureDef fDef;
+
+	const int merp = 50;
+	poly.AddVertex(p2Vec2(-1, -1) * merp);
+	poly.AddVertex(p2Vec2(1, -1) * merp);
+	poly.AddVertex(p2Vec2(1, 1) * merp);
+	poly.AddVertex(p2Vec2(0, 1.5) * merp);
+	poly.AddVertex(p2Vec2(-1, 1) * merp);
+
+	def.position = p2Vec2(400, 800);
+	fDef.shape = &poly;
+	fDef.density = 0.001;
+	polyBody = m_p2World->CreateBody(&def);
+	polyBody->CreateFixture(&fDef);
+	fDef.density = 1;
 	def.type = p2_kinematicBody;
 	edge.Setp1(p2Vec2(0, 800));
 	edge.Setp2(p2Vec2(400, 0));
-	p2FixtureDef fDef;
 	fDef.shape = &edge;
+
+
+
 
 	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
 
@@ -55,8 +71,8 @@ bool PhysicsTestApp::startup() {
 	def.type = p2_dynamicBody;
 	def.position = p2Vec2(400, 800);
 	fDef.shape = &poly;
-	//polyBody = m_p2World->CreateBody(&def);
-	//polyBody->CreateFixture(&fDef);
+	polyBody = m_p2World->CreateBody(&def);
+	polyBody->CreateFixture(&fDef);
 	return true;
 }
 
@@ -75,11 +91,11 @@ void PhysicsTestApp::update(float deltaTime) {
 	{
 		CreateCircle(p2Vec2(input->getMouseX(), input->getMouseY()));
 	}
-
+	polyPos = polyBody->GetPosition();
 	//Update the physics world
 	m_p2World->Update(deltaTime);
 
-
+	m_p2World->Update(0);
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
@@ -118,24 +134,20 @@ void PhysicsTestApp::draw() {
 		}
 	}
 
-	for (p2Node* node : m_p2World->GetLeafNodes())
+	for (int i = 0; i < poly.GetVertexCount(); i++)
 	{
-		p2Vec2 centre = node->m_bounds.centre;
-		float width = node->m_bounds.width;
-		float height = node->m_bounds.height;
-		m_2dRenderer->drawLine(centre.x, centre.y, centre.x + width/2, centre.y);
-		m_2dRenderer->drawLine(centre.x, centre.y, centre.x, centre.y + height / 2);
-		m_2dRenderer->drawLine(centre.x, centre.y, centre.x - width / 2, centre.y);
-		m_2dRenderer->drawLine(centre.x, centre.y, centre.x, centre.y - width / 2);
+		p2Vec2 p1 = poly.GetVertex(i);
+		p2Vec2 p2 = poly.GetVertex((i == poly.GetVertexCount() - 1) ? 0 : i + 1);
+		m_2dRenderer->drawLine(polyPos.x + p1.x, polyPos.y + p1.y, polyPos.x + p2.x, polyPos.y + p2.y);
 	}
 
-	//for (int i = 0; i < poly.GetVertexCount(); i++)
-	//{
-	//	p2Vec2 vec1 = poly.GetVertex(i);
-	//	p2Vec2 vec2 = poly.GetVertex((i == poly.GetVertexCount() - 1) ? 0 : i + 1);
-	//	p2Vec2 pos = polyBody->GetPosition();
-	//	m_2dRenderer->drawLine(pos.x + vec1.x, pos.y + vec1.y, pos.x + vec2.x, pos.y + vec2.y);
-	//}
+	for (int i = 0; i < poly.GetVertexCount(); i++)
+	{
+		p2Vec2 vec1 = poly.GetVertex(i);
+		p2Vec2 vec2 = poly.GetVertex((i == poly.GetVertexCount() - 1) ? 0 : i + 1);
+		p2Vec2 pos = polyBody->GetPosition();
+		m_2dRenderer->drawLine(pos.x + vec1.x, pos.y + vec1.y, pos.x + vec2.x, pos.y + vec2.y);
+	}
 
 	
 	// done drawing sprites
@@ -152,7 +164,7 @@ void PhysicsTestApp::CreateCircle(p2Vec2 pos)
 	p2CircleShape shape;
 	shape.m_radius = RADIUS;
 	fDef.shape = &shape;
-	fDef.density = 0.001f;
+	fDef.density = 1;
 
 	p2Body* body = m_p2World->CreateBody(&def);
 	body->CreateFixture(&fDef);

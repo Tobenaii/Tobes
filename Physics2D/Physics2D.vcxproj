@@ -128,9 +128,7 @@
     <ClInclude Include="src\p2Fixture.h" />
     <ClInclude Include="src\p2Math.h" />
     <ClInclude Include="src\p2Body.h" />
-    <ClInclude Include="src\p2Node.h" />
     <ClInclude Include="src\p2PolygonShape.h" />
-    <ClInclude Include="src\p2QuadTree.h" />
     <ClInclude Include="src\p2Shape.h" />
     <ClInclude Include="src\p2World.h" />
   </ItemGroup>
@@ -140,9 +138,7 @@
     <ClCompile Include="src\p2Collision.cpp" />
     <ClCompile Include="src\p2EdgeShape.cpp" />
     <ClCompile Include="src\p2Fixture.cpp" />
-    <ClCompile Include="src\p2Node.cpp" />
     <ClCompile Include="src\p2PolygonShape.cpp" />
-    <ClCompile Include="src\p2QuadTree.cpp" />
     <ClCompile Include="src\p2World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

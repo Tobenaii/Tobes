@@ -1,6 +1,5 @@
 #pragma once
 #include "p2Math.h"
-#include "p2QuadTree.h"
 #include <vector>
 
 class p2Body;
@@ -22,13 +21,10 @@ public:
 	p2Vec2 GetGravity() const { return m_gravity; }
 	void SetGravity(const p2Vec2& gravity) { m_gravity = gravity; }
 	void DestroyBody(p2Body* body);
-	std::vector<p2Node*> GetLeafNodes();
-	std::vector<p2Fixture*> m_staticFixtures;
 
 private:
 	p2Vec2 m_gravity;
 	float m_fixedTimeStep;
 	std::vector<p2Body*> m_bodies;
 	std::vector<p2Fixture*> m_fixtures;
-	p2QuadTree* m_tree;
 };
