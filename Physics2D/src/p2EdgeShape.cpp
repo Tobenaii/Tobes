@@ -1,6 +1,8 @@
 #include "p2EdgeShape.h"
 
-void p2EdgeShape::ComputeMass(p2MassData * massData, float density)
+p2MassData* p2EdgeShape::ComputeMass(float density)
 {
-	massData->mass = 100;
+	m_massData = new p2MassData();
+	m_massData->mass = 100;
+	return m_massData;
 }

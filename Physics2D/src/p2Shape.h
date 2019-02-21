@@ -24,9 +24,11 @@ public:
 	Type m_type;
 	virtual p2Shape* Clone() const = 0;
 	int GetShapeID() { return m_shapeID; }
-	virtual void ComputeMass(p2MassData* massData, float density) = 0;
+	virtual p2MassData* ComputeMass(float density) = 0;
+	inline p2MassData* GetMassData() { return m_massData; }
+	inline Type GetType() { return m_type; }
 
 protected:
 	int m_shapeID;
-
+	p2MassData* m_massData;
 };

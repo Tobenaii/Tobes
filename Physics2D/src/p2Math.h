@@ -11,13 +11,23 @@ struct p2Vec2
 	p2Vec2 operator+(const p2Vec2& rhs) const { return p2Vec2(x + rhs.x, y + rhs.y); }
 	p2Vec2 operator-(const p2Vec2& rhs) const { return p2Vec2(x - rhs.x, y - rhs.y); }
 	p2Vec2 operator+=(const p2Vec2& rhs) { x += rhs.x; y += rhs.y; return *this; }
-	p2Vec2 operator-=(const p2Vec2& rhs) { x -= rhs.x; y -= rhs.y; }
+	p2Vec2 operator-=(const p2Vec2& rhs) { x -= rhs.x; y -= rhs.y; return *this; }
 	p2Vec2 operator*(const float& rhs) const { return p2Vec2(x * rhs, y * rhs); }
+	p2Vec2 operator*=(const float& rhs) { x *= rhs; y *= rhs; return *this; }
 	p2Vec2 operator/(const float& rhs) const { return p2Vec2(x / rhs, y / rhs); }
 	p2Vec2 operator/=(const float& rhs) { x /= rhs; y /= rhs; return *this; }
 	bool operator==(const p2Vec2& rhs) const { return (x == rhs.x && y == rhs.y); }
 
 	float x, y;
+};
+
+struct p2Vec4
+{
+	p2Vec4() : x(0), y(0), z(0), w(0) {}
+	p2Vec4(float x_, float y_, float z_, float w_) { x = x_; y = y_; z = z_; w = w_; }
+	void Set(float x_, float y_, float z_, float w_) { x = x_; y = y_; z = z_; w = w_; }
+
+	float x, y, z, w;
 };
 
 inline float p2Length(const p2Vec2& vec2)

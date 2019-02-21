@@ -20,6 +20,17 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 {
 	m_position += m_linearVelocity * dt;
 	m_rotation += m_angularVelocity * dt;
+
+	if (m_linearVelocity.x > 0)
+		m_linearVelocity.x -= 35 * dt;
+	if (m_linearVelocity.y > 0)
+		m_linearVelocity.y -= 35 * dt;
+
+	if (m_linearVelocity.x < 0)
+		m_linearVelocity.x += 35 * dt;
+	if (m_linearVelocity.y < 0)
+		m_linearVelocity.y += 35 * dt;
+
 	ApplyForce(gravity * m_mass * dt, m_centre);
 }
 
@@ -44,12 +55,12 @@ void p2Body::CreateFixture(const p2FixtureDef* shape)
 
 void p2Body::CalculateMassData()
 {
-	p2MassData massData;
+	p2MassData* massData = m_fixtures[0]->GetMassData();
 	//TODO: Do This for every fixture
-	m_fixtures[0]->GetMassData(&massData);
-	m_I = massData.I;
-	m_mass = massData.mass;
-	m_centre = m_position + massData.centre;
+	
+	m_I = massData->I;
+	m_mass = massData->mass;
+	m_centre = m_position + massData->centre;
 }
 
 

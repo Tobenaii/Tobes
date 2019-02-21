@@ -28,51 +28,64 @@ bool PhysicsTestApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, -50), 0.01f);
+	m_p2World = new p2World(p2Vec2(0, 0), 0.001f);
 
-	p2BodyDef def;
-	def.position = p2Vec2(100, 100);
-	p2EdgeShape edge;
+	p2BodyDef bDef;
 	p2FixtureDef fDef;
+	p2CircleShape cShape;
+	p2EdgeShape eShape;
+	
+	cShape.m_radius = BALL_RADIUS;
 
-	const int merp = 50;
-	poly.AddVertex(p2Vec2(-1, -1) * merp);
-	poly.AddVertex(p2Vec2(1, -1) * merp);
-	poly.AddVertex(p2Vec2(1, 1) * merp);
-	poly.AddVertex(p2Vec2(0, 1.5) * merp);
-	poly.AddVertex(p2Vec2(-1, 1) * merp);
+	bDef.type = p2_kinematicBody;
+	bDef.position = p2Vec2(0, 0);
+	fDef.shape = &eShape;
 
-	def.position = p2Vec2(400, 800);
-	fDef.shape = &poly;
-	fDef.density = 0.001;
-	polyBody = m_p2World->CreateBody(&def);
-	polyBody->CreateFixture(&fDef);
-	fDef.density = 1;
-	def.type = p2_kinematicBody;
-	edge.Setp1(p2Vec2(0, 800));
-	edge.Setp2(p2Vec2(400, 0));
-	fDef.shape = &edge;
+	eShape.Setp1(p2Vec2(100 + BALL_RADIUS * 1.6f, 100));
+	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f, 100));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
+	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f, 100));
+	eShape.Setp2(p2Vec2(sWidth - 100 - BALL_RADIUS * 1.6f, 100));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
+	eShape.Setp1(p2Vec2(100, 100 + BALL_RADIUS * 1.6f));
+	eShape.Setp2(p2Vec2(100, sHeight - 100 - BALL_RADIUS * 1.6f));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
+	//==============================================================================
+	eShape.Setp1(p2Vec2(100 + BALL_RADIUS * 1.6f, sHeight - 100));
+	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f, sHeight - 100));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
-	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
+	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f, sHeight - 100));
+	eShape.Setp2(p2Vec2(sWidth - 100 - BALL_RADIUS * 1.6f, sHeight - 100));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
-	edge.Setp1(p2Vec2(800, 800));
-	edge.Setp2(p2Vec2(400, 0));
-	m_p2World->CreateBody(&def)->CreateFixture(&fDef);
+	eShape.Setp1(p2Vec2(sWidth - 100, 100 + BALL_RADIUS * 1.6f));
+	eShape.Setp2(p2Vec2(sWidth - 100, sHeight - 100 - BALL_RADIUS * 1.6f));
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
-
-	//poly.AddVertex(p2Vec2(-1, 1) * 10);
-	//poly.AddVertex(p2Vec2(-1, -1) * 10);
-	//poly.AddVertex(p2Vec2(1, -1) * 10);
-	//poly.AddVertex(p2Vec2(1, 1) * 10);
-
-	def.type = p2_dynamicBody;
-	def.position = p2Vec2(400, 800);
-	fDef.shape = &poly;
-	polyBody = m_p2World->CreateBody(&def);
-	polyBody->CreateFixture(&fDef);
+	fDef.shape = &cShape;
+	fDef.density = 0.0001f;
+	bDef.type = p2_dynamicBody;
+	int row = 1;
+	p2Vec2 startPos = p2Vec2(sWidth - 100 - ((sWidth - 200) * 0.25f - BALL_RADIUS * 2), sHeight / 2);
+	for (int r = 0; r < 5; r++)
+	{
+		for (int c = 0; c < row; c++)
+		{
+			p2Vec2 pos(startPos.x + ((BALL_RADIUS + 10) * (row - 1)), startPos.y + ((BALL_RADIUS + 10) * c));
+			bDef.position = pos;
+			m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
+		}
+		row++;
+		startPos.y -= BALL_RADIUS / 2;
+	}
+	startPos = p2Vec2(100 + ((sWidth - 200) * 0.25f - BALL_RADIUS * 2), sHeight / 2);
+	bDef.position = startPos;
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(0, 1, 1, 1), m_p2World));
+	//m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
 	return true;
 }
 
@@ -87,15 +100,29 @@ void PhysicsTestApp::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
-	if (input->isMouseButtonDown(0))
-	{
-		CreateCircle(p2Vec2(input->getMouseX(), input->getMouseY()));
-	}
-	polyPos = polyBody->GetPosition();
 	//Update the physics world
 	m_p2World->Update(deltaTime);
 
-	m_p2World->Update(0);
+	for (Sprite* sprite : m_sprites)
+	{
+		if (p2Length(sprite->GetBody()->GetVelocity()) > 0.1f)
+		{
+			m_canShoot = false;
+			break;
+		}
+		m_canShoot = true;
+	}
+	m_mPos = p2Vec2(input->getMouseX(), input->getMouseY());
+
+	if (m_canShoot && input->wasMouseButtonPressed(0))
+	{
+		p2Vec2 ballPos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+		p2Vec2 dir = ballPos - m_mPos;
+		dir = dir / p2Length(dir);
+
+		m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 400, p2Vec2(0, 0));
+	}
+
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
 		quit();
@@ -112,61 +139,19 @@ void PhysicsTestApp::draw() {
 	// output some text, uses the last used colour
 	m_2dRenderer->setRenderColour(1, 1, 1, 1);
 
-	m_2dRenderer->drawLine(0, 800, 400, 0);
-	m_2dRenderer->drawLine(800, 800, 400, 0);
+	for (Sprite* sprite : m_sprites)
+		sprite->Draw(m_2dRenderer);
 
-	for (p2Body* body : m_bodies)
+	if (m_canShoot)
 	{
-		if (body)
-		{
-			p2Vec2 p2 = p2Vec2(cos(body->GetRotation()), sin(body->GetRotation())) * RADIUS;
-			m_2dRenderer->setRenderColour(1, 1, 1, 1);
-			m_2dRenderer->drawCircle(body->GetPosition().x, body->GetPosition().y, RADIUS);
-			m_2dRenderer->setRenderColour(1, 0, 0, 1);
-			m_2dRenderer->drawLine(body->GetPosition().x, body->GetPosition().y, body->GetPosition().x + p2.x, body->GetPosition().y + p2.y);
-
-			if (body->GetPosition().y + RADIUS < 0)
-			{
-				p2Body* bye = body;
-				m_bodies.erase(std::remove(m_bodies.begin(), m_bodies.end(), bye), m_bodies.end());
-				m_p2World->DestroyBody(body);
-			}
-		}
+		m_2dRenderer->setRenderColour(1, 0, 0, 1);
+		p2Vec2 ballPos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+		p2Vec2 dir = m_mPos - ballPos;
+		dir = dir / p2Length(dir);
+		dir *= BALL_RADIUS * 2;
+		m_2dRenderer->drawLine(ballPos.x, ballPos.y, ballPos.x + dir.x, ballPos.y + dir.y);
 	}
 
-	for (int i = 0; i < poly.GetVertexCount(); i++)
-	{
-		p2Vec2 p1 = poly.GetVertex(i);
-		p2Vec2 p2 = poly.GetVertex((i == poly.GetVertexCount() - 1) ? 0 : i + 1);
-		m_2dRenderer->drawLine(polyPos.x + p1.x, polyPos.y + p1.y, polyPos.x + p2.x, polyPos.y + p2.y);
-	}
-
-	for (int i = 0; i < poly.GetVertexCount(); i++)
-	{
-		p2Vec2 vec1 = poly.GetVertex(i);
-		p2Vec2 vec2 = poly.GetVertex((i == poly.GetVertexCount() - 1) ? 0 : i + 1);
-		p2Vec2 pos = polyBody->GetPosition();
-		m_2dRenderer->drawLine(pos.x + vec1.x, pos.y + vec1.y, pos.x + vec2.x, pos.y + vec2.y);
-	}
-
-	
 	// done drawing sprites
 	m_2dRenderer->end();
-}
-
-void PhysicsTestApp::CreateCircle(p2Vec2 pos)
-{
-	p2BodyDef def;
-	def.position = pos;
-	def.type = p2_dynamicBody;
-
-	p2FixtureDef fDef;
-	p2CircleShape shape;
-	shape.m_radius = RADIUS;
-	fDef.shape = &shape;
-	fDef.density = 1;
-
-	p2Body* body = m_p2World->CreateBody(&def);
-	body->CreateFixture(&fDef);
-	m_bodies.push_back(body);
 }

@@ -37,5 +37,6 @@ public:
 	p2Body* GetBody() const;
 	p2Vec2 GetBodyPos() const;
 	p2Vec2 GetBodyVelocity() const;
-	void GetMassData(p2MassData* massData) const;
+	p2MassData* GetMassData() const;
+	p2Shape::Type GetShapeType() { return m_shape->GetType(); }
 };

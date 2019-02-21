@@ -72,6 +72,8 @@ public:
 	inline p2BodyType GetType() const { return m_type; }
 	inline void SetVelocity(p2Vec2 vel) { if (m_type == p2_kinematicBody)return; m_linearVelocity = vel; }
 	inline void SetPosition(p2Vec2 newPos) { m_position = newPos; }
+	inline int GetFixtureCount() { return m_fixtures.size(); }
+	inline p2Fixture* GetFixture(int index) { return m_fixtures[index]; }
 	void CreateFixture(const p2FixtureDef* shape);
 	void ApplyForce(const p2Vec2& force, const p2Vec2& point);
 };
