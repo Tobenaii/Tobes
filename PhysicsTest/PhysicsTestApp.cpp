@@ -28,7 +28,7 @@ bool PhysicsTestApp::startup() {
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, 0), 0.001f);
+	m_p2World = new p2World(p2Vec2(0, 0), 0.005f);
 
 	p2BodyDef bDef;
 	p2FixtureDef fDef;
@@ -101,12 +101,17 @@ void PhysicsTestApp::update(float deltaTime) {
 	aie::Input* input = aie::Input::getInstance();
 
 	//Update the physics world
-	m_p2World->Update(deltaTime);
 
 	for (Sprite* sprite : m_sprites)
 	{
-		if (p2Length(sprite->GetBody()->GetVelocity()) > 0.1f)
+		if (p2Length(sprite->GetBody()->GetVelocity()) > 0.5f)
 		{
+			p2Vec2 merp = sprite->GetBody()->GetPosition();
+			if (merp.x < 0 || merp.x > sWidth || merp.y < 0 || merp.y > sHeight)
+			{
+				m_canShoot = true;
+				continue;
+			}
 			m_canShoot = false;
 			break;
 		}
@@ -114,14 +119,33 @@ void PhysicsTestApp::update(float deltaTime) {
 	}
 	m_mPos = p2Vec2(input->getMouseX(), input->getMouseY());
 
-	if (m_canShoot && input->wasMouseButtonPressed(0))
+	if (m_canShoot)
 	{
 		p2Vec2 ballPos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+
 		p2Vec2 dir = ballPos - m_mPos;
 		dir = dir / p2Length(dir);
+		if (input->wasMouseButtonPressed(0))
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 1000, p2Vec2(0, 0));
+		else
+		{
+			m_p2World->Simulate(0.005f);
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 1000, p2Vec2(0, 0));
+			bool col = m_sprites[m_sprites.size() - 1]->IsColliding();
+			while (!col)
+			{
+				m_p2World->Simulate(0.005f);
+				col = m_sprites[m_sprites.size() - 1]->IsColliding();
+				p2Vec2 pos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+			}
+			m_col = m_sprites[m_sprites.size() - 1]->GetBody()->GetCollision();
+			m_hitPoint = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
 
-		m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 400, p2Vec2(0, 0));
+			m_p2World->Simulate(0.005f);
+			m_colPoint = m_col->GetPosition();
+		}
 	}
+	m_p2World->Update(deltaTime);
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
@@ -150,6 +174,10 @@ void PhysicsTestApp::draw() {
 		dir = dir / p2Length(dir);
 		dir *= BALL_RADIUS * 2;
 		m_2dRenderer->drawLine(ballPos.x, ballPos.y, ballPos.x + dir.x, ballPos.y + dir.y);
+		m_2dRenderer->drawLine(ballPos.x, ballPos.y, m_hitPoint.x, m_hitPoint.y);
+		p2Vec2 dir2 = m_colPoint - m_col->GetPosition();
+		dir2 = dir2 / p2Length(dir2);
+		m_2dRenderer->drawLine(m_col->GetPosition().x, m_col->GetPosition().y, m_col->GetPosition().x + dir2.x * 100, m_col->GetPosition().y + dir2.y * 100);
 	}
 
 	// done drawing sprites

@@ -17,6 +17,8 @@ public:
 	p2Body* CreateBody(const p2BodyDef* bodyDef);
 	
 	void Update(const float dt);
+	void Simulate(const float dt);
+	void ResetSimulation();
 
 	p2Vec2 GetGravity() const { return m_gravity; }
 	void SetGravity(const p2Vec2& gravity) { m_gravity = gravity; }
@@ -27,4 +29,6 @@ private:
 	float m_fixedTimeStep;
 	std::vector<p2Body*> m_bodies;
 	std::vector<p2Fixture*> m_fixtures;
+	std::vector<p2BodyDef> m_defs;
+	bool m_firstSim;
 };

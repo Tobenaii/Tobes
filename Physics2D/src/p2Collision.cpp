@@ -13,7 +13,7 @@ p2CollideEdgeAndPolygon, //3 + 1 = 4
 
 void ResolveCollision(const CollisionData& data)
 {
-	float j = (p2Dot(data.relativeVelocity * -(0.5f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
+	float j = (p2Dot(data.relativeVelocity * -(0.6f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
 	//const float min = 0;
 	//float max = data.bodyA->GetMass() + data.bodyB->GetMass();
 	//float moveScaleA = (data.bodyA->GetMass() - min) / (max - min);
@@ -61,6 +61,10 @@ void CheckCollisions(const std::vector<p2Fixture*> fixtures)
 				data.relativeVelocity = fixtures[f1]->GetBodyVelocity() - fixtures[f2]->GetBodyVelocity();
 				data.bodyA = fixtures[f1]->GetBody();
 				data.bodyB = fixtures[f2]->GetBody();
+				data.bodyA->m_isColliding = true;
+				data.bodyB->m_isColliding = true;
+				data.bodyA->m_collision = data.bodyB;
+				data.bodyB->m_collision = data.bodyA;
 				ResolveCollision(data);
 			}
 		}

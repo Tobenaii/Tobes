@@ -27,10 +27,9 @@ void p2World::DestroyBody(p2Body * body)
 	m_bodies.erase(std::remove(m_bodies.begin(), m_bodies.end(), body), m_bodies.end());
 }
 
-
-
 void p2World::Update(const float dt)
 {
+	ResetSimulation();
 	static float accumulator = 0;
 	accumulator += dt;
 	while (accumulator >= m_fixedTimeStep)
@@ -41,6 +40,37 @@ void p2World::Update(const float dt)
 		accumulator -= m_fixedTimeStep;
 	}
 	//TODO: Handle extra time in accumulator
+}
+
+void p2World::Simulate(const float dt)
+{
+	for (p2Body* body : m_bodies)
+	{
+		if (m_firstSim)
+		{
+			p2BodyDef def;
+			def.position = body->m_position;
+			def.angle = body->m_rotation;
+			def.linearVelocity = body->m_linearVelocity;
+			def.angularVelocity = body->m_angularVelocity;
+			m_defs.push_back(def);
+		}
+		body->Update(dt, m_gravity);
+	}
+	m_firstSim = false;
+	CheckCollisions(m_fixtures);
+}
+
+void p2World::ResetSimulation()
+{
+	m_firstSim = true;
+	if (m_defs.size() == 0)
+		return;
+	for (int i = 0; i < m_bodies.size(); i++)
+	{
+		m_bodies[i]->SetState(m_defs[i]);
+	}
+	m_defs.clear();
 }
 
 

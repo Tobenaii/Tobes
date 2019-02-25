@@ -32,4 +32,8 @@ protected:
 	std::vector<Sprite*> m_sprites;
 	bool m_canShoot;
 	p2Vec2 m_mPos;
+
+	p2Vec2 m_hitPoint;
+	p2Body* m_col;
+	p2Vec2 m_colPoint;
 };

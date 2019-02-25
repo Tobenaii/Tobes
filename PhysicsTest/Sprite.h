@@ -11,6 +11,7 @@ public:
 	void Draw(aie::Renderer2D* renderer);
 	void DrawCircle(p2CircleShape* circle, aie::Renderer2D* renderer);
 	void DrawEdge(p2EdgeShape* edge, aie::Renderer2D* renderer);
+	bool IsColliding() { return m_body->IsColliding(); }
 	p2Body* GetBody() { return m_body; }
 
 private:

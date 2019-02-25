@@ -18,6 +18,8 @@ p2Body::~p2Body()
 
 void p2Body::Update(float dt, p2Vec2 gravity)
 {
+	m_collision = nullptr;
+	m_isColliding = false;
 	m_position += m_linearVelocity * dt;
 	m_rotation += m_angularVelocity * dt;
 
@@ -42,6 +44,26 @@ void p2Body::ApplyForce(const p2Vec2& force, const p2Vec2& point)
 	
 	float angularForce = p2Cross(m_centre - point, force);
 	m_angularVelocity += angularForce / m_I;
+}
+
+p2BodyDef p2Body::GetState()
+{
+	p2BodyDef def;
+	def.angle = m_rotation;
+	def.angularVelocity = m_angularVelocity;
+	def.gravityScale = m_gravityScale;
+	def.linearVelocity = m_linearVelocity;
+	def.position = m_position;
+	return def;
+}
+
+void p2Body::SetState(p2BodyDef def)
+{
+	m_rotation = def.angle;
+	m_angularVelocity = def.angularVelocity;
+	m_gravityScale = def.gravityScale;
+	m_linearVelocity = def.linearVelocity;
+	m_position = def.position;
 }
 
 void p2Body::CreateFixture(const p2FixtureDef* shape)

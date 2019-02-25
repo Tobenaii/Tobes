@@ -23,6 +23,7 @@ struct p2BodyDef
 		position.Set(0, 0);
 		angle = 0;
 		linearVelocity.Set(0, 0);
+		angularVelocity = 0;
 		gravityScale = 1.0f;
 	}
 
@@ -30,6 +31,7 @@ struct p2BodyDef
 	p2Vec2 position;
 	float angle;
 	p2Vec2 linearVelocity;
+	float angularVelocity;
 	float gravityScale;
 };
 
@@ -38,6 +40,7 @@ class p2Body
 private:
 	friend class p2World;
 	friend class p2Fixture;
+	friend void CheckCollisions(const std::vector<p2Fixture*> fixtures);
 
 	p2Body(const p2BodyDef* bodyDef, p2World* world);
 	~p2Body();
@@ -64,6 +67,10 @@ private:
 
 	std::vector<p2Fixture*> m_fixtures;
 
+	bool m_isColliding;
+
+	p2Body* m_collision;
+
 public:
 	inline p2Vec2 GetPosition() const { return m_position; }
 	inline p2Vec2 GetVelocity() const { return m_linearVelocity; }
@@ -74,6 +81,10 @@ public:
 	inline void SetPosition(p2Vec2 newPos) { m_position = newPos; }
 	inline int GetFixtureCount() { return m_fixtures.size(); }
 	inline p2Fixture* GetFixture(int index) { return m_fixtures[index]; }
+	inline bool IsColliding() { return m_isColliding; }
+	p2Body* GetCollision() { return m_collision; }
 	void CreateFixture(const p2FixtureDef* shape);
 	void ApplyForce(const p2Vec2& force, const p2Vec2& point);
+	p2BodyDef GetState();
+	void SetState(p2BodyDef def);
 };
