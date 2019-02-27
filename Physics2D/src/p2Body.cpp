@@ -16,12 +16,16 @@ p2Body::~p2Body()
 {
 }
 
+
+
 void p2Body::Update(float dt, p2Vec2 gravity)
 {
 	m_collision = nullptr;
 	m_isColliding = false;
 	m_position += m_linearVelocity * dt;
 	m_rotation += m_angularVelocity * dt;
+
+	//TODO: Clean this up
 
 	if (m_linearVelocity.x > 0)
 		m_linearVelocity.x -= 35 * dt;
@@ -34,9 +38,9 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 		m_linearVelocity.y += 35 * dt;
 
 	if (m_angularVelocity > 0)
-		m_angularVelocity -= 35 * dt;
+		m_angularVelocity -= 15 * dt;
 	if (m_angularVelocity < 0)
-		m_angularVelocity += 35 * dt;
+		m_angularVelocity += 15 * dt;
 
 	ApplyForce(gravity * m_mass * dt, m_centre);
 }
@@ -47,7 +51,7 @@ void p2Body::ApplyForce(const p2Vec2& force, const p2Vec2& point)
 		return;
 	m_linearVelocity += force / m_mass;
 	
-	float angularForce = p2Cross(m_centre - point, force * 0.03f);
+	float angularForce = p2Cross(m_centre - point, force * 0.005f);
 	m_angularVelocity += angularForce / m_I;
 }
 
@@ -84,7 +88,6 @@ void p2Body::CalculateMassData()
 {
 	p2MassData* massData = m_fixtures[0]->GetMassData();
 	//TODO: Do This for every fixture
-	
 	m_I = massData->I;
 	m_mass = massData->mass;
 	m_centre = m_position + massData->centre;

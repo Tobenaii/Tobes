@@ -53,7 +53,6 @@ void CheckCollisions(const std::vector<p2Fixture*> fixtures)
 			if (collisionId > 4)
 				continue;
 			collisionsFunctionArray[collisionId](&data, fixtures[f1]->GetShape(), fixtures[f1]->GetBodyPos(), fixtures[f2]->GetShape(), fixtures[f2]->GetBodyPos());
-			//TODO: Check data for collision
 			if (data.collision)
 			{
 				data.normal = data.normal / p2Length(data.normal);

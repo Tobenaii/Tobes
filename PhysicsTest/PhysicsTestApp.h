@@ -2,9 +2,9 @@
 
 #include "Application.h"
 #include "Renderer2D.h"
-#include <p2PolygonShape.h>
 #include <p2World.h>
 #include "Sprite.h"
+#include <vector>
 
 static int sWidth = 1600;
 static int sHeight = 800;
@@ -29,13 +29,14 @@ protected:
 	aie::Font*			m_font;
 	p2World* m_p2World;
 
-	std::vector<Sprite*> m_sprites;
 	bool m_canShoot;
 	p2Vec2 m_mPos;
 
 	p2Vec2 m_hitPoint;
 	p2Body* m_col;
 	p2Vec2 m_colPoint;
-
 	aie::Texture* m_ball2;
+
+private:
+	static void FixedUpdate();
 };

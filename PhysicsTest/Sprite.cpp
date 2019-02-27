@@ -7,9 +7,9 @@ Sprite::Sprite(const p2BodyDef * bDef, const p2FixtureDef * pDef, p2Vec4 colour,
 	m_body->CreateFixture(pDef);
 	m_colour = colour;
 	m_hasTexture = false;
+	m_alpha = 1;
+	m_inHole = false;
 }
-
-
 
 void Sprite::Draw(aie::Renderer2D * renderer)
 {
@@ -33,6 +33,7 @@ void Sprite::Draw(aie::Renderer2D * renderer)
 	}
 	else
 	{
+		renderer->setRenderColour(1, 1, 1, m_alpha);
 		renderer->drawSprite(m_texture, m_body->GetPosition().x, m_body->GetPosition().y, 0, 0, m_body->GetRotation());
 	}
 }
@@ -54,4 +55,21 @@ void Sprite::AssignTexture(aie::Texture * texture)
 {
 	m_hasTexture = true;
 	m_texture = texture;
+}
+
+void Sprite::FixedUpdate(std::vector<p2Vec2> holes)
+{
+	if (m_inHole)
+	{
+		m_body->SetVelocity(p2Vec2(0, 0));
+		m_alpha -= 0.01f; 
+		return;
+	}
+	for (p2Vec2 hole : holes)
+	{
+		if (p2Length(m_body->GetPosition() - hole) <= 30)
+		{
+			m_inHole = true;
+		}
+	}
 }
