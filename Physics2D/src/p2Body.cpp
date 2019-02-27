@@ -33,6 +33,11 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 	if (m_linearVelocity.y < 0)
 		m_linearVelocity.y += 35 * dt;
 
+	if (m_angularVelocity > 0)
+		m_angularVelocity -= 35 * dt;
+	if (m_angularVelocity < 0)
+		m_angularVelocity += 35 * dt;
+
 	ApplyForce(gravity * m_mass * dt, m_centre);
 }
 
@@ -42,7 +47,7 @@ void p2Body::ApplyForce(const p2Vec2& force, const p2Vec2& point)
 		return;
 	m_linearVelocity += force / m_mass;
 	
-	float angularForce = p2Cross(m_centre - point, force);
+	float angularForce = p2Cross(m_centre - point, force * 0.03f);
 	m_angularVelocity += angularForce / m_I;
 }
 

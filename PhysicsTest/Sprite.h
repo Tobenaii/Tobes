@@ -11,10 +11,13 @@ public:
 	void Draw(aie::Renderer2D* renderer);
 	void DrawCircle(p2CircleShape* circle, aie::Renderer2D* renderer);
 	void DrawEdge(p2EdgeShape* edge, aie::Renderer2D* renderer);
+	void AssignTexture(aie::Texture* texture);
 	bool IsColliding() { return m_body->IsColliding(); }
 	p2Body* GetBody() { return m_body; }
 
 private:
 	p2Body* m_body;
 	p2Vec4 m_colour;
+	aie::Texture* m_texture;
+	bool m_hasTexture;
 };
