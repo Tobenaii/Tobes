@@ -36,6 +36,7 @@ protected:
 	p2Body* m_col;
 	p2Vec2 m_colPoint;
 	aie::Texture* m_ball2;
+	aie::Texture* m_tableTexture;
 
 private:
 	static void FixedUpdate();

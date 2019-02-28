@@ -15,6 +15,7 @@ public:
 	void AssignTexture(aie::Texture* texture);
 	bool IsColliding() { return m_body->IsColliding(); }
 	p2Body* GetBody() { return m_body; }
+	void SetCue();
 	
 private:
 	p2Body* m_body;
@@ -23,4 +24,6 @@ private:
 	bool m_hasTexture;
 	float m_alpha;
 	bool m_inHole;
+	p2World* m_world;
+	bool m_isCue;
 };

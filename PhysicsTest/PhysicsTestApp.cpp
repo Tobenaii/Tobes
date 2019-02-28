@@ -32,6 +32,8 @@ bool PhysicsTestApp::startup() {
 
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
+	m_tableTexture = new aie::Texture("Table.png");
+
 	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
 	m_p2World = new p2World(p2Vec2(0, 0), 0.005f);
 	m_p2World->SetUpdateCallback(FixedUpdate);
@@ -86,7 +88,7 @@ bool PhysicsTestApp::startup() {
 	bDef.type = p2_dynamicBody;
 	int row = 1;
 	int ballNums[15]{ 1,2,14,12,8,3,15,7,10,4,6,11,5,9,13 };
-	p2Vec2 startPos = p2Vec2(sWidth - 100 - ((sWidth - 200) * 0.35f - BALL_RADIUS * 2), sHeight / 2);
+	p2Vec2 startPos = p2Vec2(sWidth - 100 - ((sWidth - 200) * 0.37f - BALL_RADIUS * 2), sHeight / 2);
 	int bawlNum = 0;
 	for (int r = 0; r < 5; r++)
 	{
@@ -104,9 +106,10 @@ bool PhysicsTestApp::startup() {
 		row++;
 		startPos.y -= BALL_RADIUS;
 	}
-	startPos = p2Vec2(100 + ((sWidth - 200) * 0.25f - BALL_RADIUS * 2), sHeight / 2);
+	startPos = p2Vec2(100 + ((sWidth - 200) * 0.29f - BALL_RADIUS * 2), sHeight / 2);
 	bDef.position = startPos;
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(0, 1, 1, 1), m_p2World));
+	m_sprites[m_sprites.size() - 1]->SetCue();
 	//m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
 	return true;
 }
@@ -191,7 +194,7 @@ void PhysicsTestApp::draw() {
 	// draw your stuff here!
 	// output some text, uses the last used colour
 	m_2dRenderer->setRenderColour(1, 1, 1, 1);
-
+	m_2dRenderer->drawSprite(m_tableTexture, (sWidth)/2, (sHeight) / 2, sWidth - 200 + 150, sHeight - 200 + 130);
 	for (Sprite* sprite : m_sprites)
 		sprite->Draw(m_2dRenderer);
 
@@ -211,10 +214,7 @@ void PhysicsTestApp::draw() {
 			m_2dRenderer->drawLine(m_col->GetPosition().x, m_col->GetPosition().y, m_col->GetPosition().x + dir2.x * 100, m_col->GetPosition().y + dir2.y * 100);
 		}
 	}
-	for (p2Vec2 vec : m_holes)
-	{
-		m_2dRenderer->drawCircle(vec.x, vec.y, 30);
-	}
+
 	// done drawing sprites
 	m_2dRenderer->end();
 }
@@ -223,5 +223,4 @@ void PhysicsTestApp::FixedUpdate()
 {
 	for (Sprite* sprite : m_sprites)
 		sprite->FixedUpdate(m_holes);
-	std::cout << "MERP" << std::endl;
 }
