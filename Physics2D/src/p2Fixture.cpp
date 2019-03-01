@@ -1,5 +1,19 @@
 #include "p2Fixture.h"
 #include "p2Body.h"
+#include "p2PolygonShape.h"
+
+void p2Fixture::UpdateRotation(float rotation)
+{
+	p2PolygonShape* poly = dynamic_cast<p2PolygonShape*>(m_shape);
+	if (!poly)
+		return;
+
+	for (int i = 0; i < poly->GetVertexCount(); i++)
+	{
+		p2Vec2 p = poly->m_init[i];
+		poly->SetVertex(i, p2Vec2(p.x * cos(rotation) - p.y * sin(rotation), p.x * sin(rotation) + p.y * cos(rotation)));
+	}
+}
 
 p2Shape * p2Fixture::GetShape() const
 {

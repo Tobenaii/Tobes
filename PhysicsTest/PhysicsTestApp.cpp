@@ -107,10 +107,40 @@ bool PhysicsTestApp::startup() {
 		startPos.y -= BALL_RADIUS;
 	}
 	startPos = p2Vec2(100 + ((sWidth - 200) * 0.29f - BALL_RADIUS * 2), sHeight / 2);
+	//startPos.y += 50000;
 	bDef.position = startPos;
+
+	p2PolygonShape pShape;
+	pShape.AddVertex({ -50, 0 });
+	pShape.AddVertex({ -50 ,-50 });
+	pShape.AddVertex({ 0,-100 });
+	pShape.AddVertex({ 50,0 });
+	pShape.AddVertex({ 0,50 });
+	pShape.AddVertex({ -50,50 });
+
+	p2PolygonShape pShape2;
+	pShape2.SetAsBox(100, 100);
+
+
+	fDef.shape = &pShape;
+	bDef.position.x -= 100;
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
+	m_sprites[m_sprites.size() - 1]->GetBody()->SetVelocity(p2Vec2(0, 0));
+	bDef.position.x += 300;
+	fDef.shape = &pShape;
+	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
+	m_sprites[m_sprites.size() - 1]->GetBody()->SetVelocity(p2Vec2(0, 0));
+	m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
+
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(0, 1, 1, 1), m_p2World));
 	m_sprites[m_sprites.size() - 1]->SetCue();
-	//m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
+	//startPos.y -= 50000;
+	bDef.position = startPos;
+
+
+
+
+
 	return true;
 }
 
@@ -151,22 +181,22 @@ void PhysicsTestApp::update(float deltaTime) {
 		p2Vec2 dir = ballPos - m_mPos;
 		dir = dir / p2Length(dir);
 		if (input->wasMouseButtonPressed(0))
-			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 1000, p2Vec2(0, 0));
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 20, p2Vec2(0, 0));
 		else
 		{
 			m_p2World->Simulate(0.005f);
-			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 1000, p2Vec2(0, 0));
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 20, p2Vec2(0, 0));
 			bool col = m_sprites[m_sprites.size() - 1]->IsColliding();
 			int escape = 0;
-			while (!col)
-			{
-				m_p2World->Simulate(0.005f);
-				col = m_sprites[m_sprites.size() - 1]->IsColliding();
-				p2Vec2 pos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
-				escape++;
-				if (escape > 200)
-					break;
-			}
+			//while (!col)
+			//{
+			//	m_p2World->Simulate(0.005f);
+			//	col = m_sprites[m_sprites.size() - 1]->IsColliding();
+			//	p2Vec2 pos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+			//	escape++;
+			//	if (escape > 200)
+			//		break;
+			//}
 			m_col = m_sprites[m_sprites.size() - 1]->GetBody()->GetCollision();
 			if (m_col)
 			{

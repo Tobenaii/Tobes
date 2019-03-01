@@ -29,6 +29,7 @@ private:
 	p2Shape* m_shape;
 	float m_restitution;
 	float m_density;
+	void UpdateRotation(float rotation);
 
 	//TODO: Friction
 

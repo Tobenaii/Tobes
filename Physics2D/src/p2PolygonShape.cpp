@@ -4,6 +4,7 @@
 void p2PolygonShape::AddVertex(const p2Vec2 pos)
 {
 	m_vertices.push_back(pos);
+	m_init.push_back(pos);
 	m_vertexCount++;
 }
 
@@ -35,6 +36,14 @@ p2Shape * p2PolygonShape::Clone() const
 p2MassData* p2PolygonShape::ComputeMass(float density)
 {
 	m_massData = new p2MassData();
-	m_massData->mass = 100;
+	m_massData->mass = 0.3f;
+	m_massData->centre = p2Vec2(0, 0);
+	float radius = p2Length(GetVertex(0));
+	for (int i = 1; i < GetVertexCount(); i++)
+	{
+		if (p2Length(GetVertex(i)) > radius)
+			radius = p2Length(GetVertex(i));
+	}
+	m_massData->I = m_massData->mass * (0.5f * 30 * 30 + p2Dot(p2Vec2(0,0), p2Vec2(0, 0)));
 	return m_massData;
 }

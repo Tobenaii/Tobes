@@ -3,6 +3,7 @@
 #include <Renderer2D.h>
 #include <p2CircleShape.h>
 #include <p2EdgeShape.h>
+#include <p2PolygonShape.h>
 
 class Sprite
 {
@@ -12,6 +13,7 @@ public:
 	void FixedUpdate(std::vector<p2Vec2> holes);
 	void DrawCircle(p2CircleShape* circle, aie::Renderer2D* renderer);
 	void DrawEdge(p2EdgeShape* edge, aie::Renderer2D* renderer);
+	void DrawPolygon(p2PolygonShape* poly, aie::Renderer2D* renderer);
 	void AssignTexture(aie::Texture* texture);
 	bool IsColliding() { return m_body->IsColliding(); }
 	p2Body* GetBody() { return m_body; }

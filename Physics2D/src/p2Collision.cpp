@@ -13,7 +13,7 @@ p2CollideEdgeAndPolygon, //3 + 1 = 4
 
 void ResolveCollision(const CollisionData& data)
 {
-	float j = (p2Dot(data.relativeVelocity * -(0.6f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
+	float j = (p2Dot(data.relativeVelocity * -(1 + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
 	//const float min = 0;
 	//float max = data.bodyA->GetMass() + data.bodyB->GetMass();
 	//float moveScaleA = (data.bodyA->GetMass() - min) / (max - min);
@@ -105,14 +105,139 @@ void p2CollidePolygonAndCircle(CollisionData* data, const p2Shape * polygonA, co
 		p2EdgeShape edge;
 		edge.Setp1(bodyPosA + pA->GetVertex(i));
 		edge.Setp2(bodyPosA + pA->GetVertex((i == pA->GetVertexCount() - 1)?0:i + 1));
-		p2CollideEdgeAndCircle(data, &edge, bodyPosA, circleB, bodyPosB);
+		p2CollideEdgeAndCircle(data, &edge, p2Vec2(0,0), circleB, bodyPosB);
 		if (data->collision)
+		{
+			data->normal *= -1;
 			return;
+		}
 	}
 }
 
 void p2CollidePolygons(CollisionData* data, const p2Shape * polygonA, const p2Vec2& bodyPosA, const p2Shape * polygonB, const p2Vec2& bodyPosB)
 {
+	const p2PolygonShape* pA = dynamic_cast<const p2PolygonShape*>(polygonA);
+	const p2PolygonShape* pB = dynamic_cast<const p2PolygonShape*>(polygonB);
+
+	//if (pA->GetVertexCount() < pB->GetVertexCount())
+	//{
+	//	const p2PolygonShape* b = pB;
+	//	pB = pA;
+	//	pA = b;
+	//}
+
+	bool isColliding = false;
+	float overlap1 = 9999;
+	float overlap2 = 9999;
+	p2Vec2 collisionNorm;
+	p2Vec2 point;
+	float minOverlap = 99999;
+	p2Vec2 collisionPointA;
+	for (int i = 0; i < pA->GetVertexCount() + pB->GetVertexCount(); i++)
+	{
+		p2EdgeShape edge;
+		if (i < pA->GetVertexCount())
+		{
+			edge.Setp1(pA->GetVertex(i));
+			int i2 = (i == pA->GetVertexCount() - 1) ? 0 : i + 1;
+			edge.Setp2(pA->GetVertex(i2));
+		}
+		else
+		{
+			edge.Setp1(pB->GetVertex(i - pA->GetVertexCount()));
+			int i2 = (i == pA->GetVertexCount() + pB->GetVertexCount() - 1) ? 0 : i - pA->GetVertexCount() + 1;
+			edge.Setp2(pB->GetVertex(i2));
+		}
+		p2Vec2 dir = p2Normalize(edge.Getp2() - edge.Getp1());
+
+		p2Vec2 normal = p2Vec2(dir.y, -dir.x);
+		
+		float highestProjA;
+		float lowestProjA;
+		p2Vec2 point;
+
+		if (normal.x > 0.1f && normal.x < 0.9f)
+		{
+			std::cout << "merp" << std::endl;
+		}
+
+		float proj = p2Dot(pA->GetVertex(0) + bodyPosA, normal);
+		lowestProjA = proj;
+		highestProjA = proj;
+		p2Vec2 highestPointA;
+		p2Vec2 lowestPointA;
+		for (int i = 1; i < pA->GetVertexCount(); i++)
+		{
+			proj = p2Dot(pA->GetVertex(i) + bodyPosA, normal);
+			if (proj > highestProjA)
+			{
+				highestProjA = proj;
+				highestPointA = pA->GetVertex(i);
+			}
+			if (proj < lowestProjA)
+			{
+				lowestProjA = proj;
+				lowestPointA = pA->GetVertex(i);
+			}
+		}
+
+		float highestProjB;
+		float lowestProjB;
+		proj = p2Dot(pB->GetVertex(0) + bodyPosB, normal);
+		lowestProjB = proj;
+		highestProjB = proj;
+		for (int i = 1; i < pB->GetVertexCount(); i++)
+		{
+			proj = p2Dot(pB->GetVertex(i) + bodyPosB, normal);
+			if (proj > highestProjB)
+			{
+				highestProjB = proj;
+			}
+			if (proj < lowestProjB)
+			{
+				lowestProjB = proj;
+			}
+		}
+
+		bool seperated = (highestProjB < lowestProjA) || (highestProjA < lowestProjB);
+		if (!seperated)
+		{
+			if (highestProjB > lowestProjA)
+				overlap1 = abs(highestProjB - lowestProjA);
+			if (highestProjA > lowestProjB)
+				overlap2 = abs(highestProjA - lowestProjB);
+			if (overlap1 < minOverlap)
+			{
+				collisionPointA = lowestPointA;
+				collisionNorm = normal;
+				minOverlap = overlap1;
+			}
+			if (overlap2 < minOverlap)
+			{
+				collisionPointA = highestPointA;
+				collisionNorm = normal;
+				minOverlap = overlap2;
+			}
+			isColliding = true;
+		}
+		else
+		{
+			isColliding = false;
+			break;
+		}
+	}
+
+	if (isColliding)
+	{
+		p2Vec2 dir = p2Normalize(bodyPosB - bodyPosA);
+		if (p2Dot(dir, collisionNorm) < 0)
+			collisionNorm *= -1;
+		data->overlap = minOverlap;
+		data->point = collisionPointA;
+		data->normal = collisionNorm;
+		data->collision = isColliding;
+		std::cout << "SAT" << std::endl;
+	}		
 }
 
 void p2CollideEdgeAndCircle(CollisionData* data, const p2Shape * edgeA, const p2Vec2& bodyPosA, const p2Shape * circleB, const p2Vec2& bodyPosB)
@@ -160,30 +285,42 @@ void p2CollideEdgeAndPolygon(CollisionData* data, const p2Shape * edgeA, const p
 	}
 	const p2PolygonShape* pB = dynamic_cast<const p2PolygonShape*>(polygonB);
 
-	for (int i = 0; i < pB->GetVertexCount(); i++)
-	{
-		p2EdgeShape e1;
-		e1.Setp1(p2Vec2(pB->GetVertex(i)));
-		e1.Setp2(p2Vec2(pB->GetVertex((i == pB->GetVertexCount() - 1)?(0):(i + 1))));
+	p2PolygonShape poly;
+	poly.AddVertex(eA->Getp1());
+	poly.AddVertex(eA->Getp2());
 	
-		float x1 = eA->Getp1().x;
-		float x2 = eA->Getp2().x;
-		float x3 = e1.Getp1().x + bodyPosB.x;
-		float x4 = e1.Getp2().x + bodyPosB.x;
-		float y1 = eA->Getp1().y;
-		float y2 = eA->Getp2().y;
-		float y3 = e1.Getp1().y + bodyPosB.y;
-		float y4 = e1.Getp2().y + bodyPosB.y;
-	
-		float l1 = ((x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
-		float l2 = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
-		if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1)
-		{
-			data->collision = true;
-			p2Vec2 intersection(x1 + (l1 * (x2 - x1)), y1 + (l1 * (y2 - y1)));
-			data->normal = bodyPosB - intersection;
+	const p2Vec2 dir = eA->Getp2() - eA->Getp1();
+	p2Vec2 bpa = eA->Getp1() + (p2Normalize(dir) * (p2Length(dir) / 2));
 
-			return;
-		}
-	}
+	p2PolygonShape localEdge;
+	localEdge.AddVertex(eA->Getp1() - bpa);
+	localEdge.AddVertex(eA->Getp2() - bpa);
+	p2CollidePolygons(data, &localEdge, bpa, polygonB, bodyPosB);
+
+	//for (int i = 0; i < pB->GetVertexCount(); i++)
+	//{
+	//	p2EdgeShape e1;
+	//	e1.Setp1(p2Vec2(pB->GetVertex(i)));
+	//	e1.Setp2(p2Vec2(pB->GetVertex((i == pB->GetVertexCount() - 1)?(0):(i + 1))));
+	//
+	//	float x1 = eA->Getp1().x;
+	//	float x2 = eA->Getp2().x;
+	//	float x3 = e1.Getp1().x + bodyPosB.x;
+	//	float x4 = e1.Getp2().x + bodyPosB.x;
+	//	float y1 = eA->Getp1().y;
+	//	float y2 = eA->Getp2().y;
+	//	float y3 = e1.Getp1().y + bodyPosB.y;
+	//	float y4 = e1.Getp2().y + bodyPosB.y;
+	//
+	//	float l1 = ((x4 - x3)*(y1 - y3) - (y4 - y3)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
+	//	float l2 = ((x2 - x1)*(y1 - y3) - (y2 - y1)*(x1 - x3)) / ((y4 - y3)*(x2 - x1) - (x4 - x3)*(y2 - y1));
+	//	if (l1 >= 0 && l1 <= 1 && l2 >= 0 && l2 <= 1)
+	//	{
+	//		data->collision = true;
+	//		p2Vec2 intersection(x1 + (l1 * (x2 - x1)), y1 + (l1 * (y2 - y1)));
+	//		data->normal = bodyPosB - intersection;
+
+	//		return;
+	//	}
+	//}
 }

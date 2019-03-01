@@ -27,20 +27,23 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 
 	//TODO: Clean this up
 
-	if (m_linearVelocity.x > 0)
-		m_linearVelocity.x -= 35 * dt;
-	if (m_linearVelocity.y > 0)
-		m_linearVelocity.y -= 35 * dt;
+	//if (m_linearVelocity.x > 0)
+	//	m_linearVelocity.x -= 35 * dt;
+	//if (m_linearVelocity.y > 0)
+	//	m_linearVelocity.y -= 35 * dt;
 
-	if (m_linearVelocity.x < 0)
-		m_linearVelocity.x += 35 * dt;
-	if (m_linearVelocity.y < 0)
-		m_linearVelocity.y += 35 * dt;
+	//if (m_linearVelocity.x < 0)
+	//	m_linearVelocity.x += 35 * dt;
+	//if (m_linearVelocity.y < 0)
+	//	m_linearVelocity.y += 35 * dt;
 
-	if (m_angularVelocity > 0)
-		m_angularVelocity -= 15 * dt;
-	if (m_angularVelocity < 0)
-		m_angularVelocity += 15 * dt;
+	//if (m_angularVelocity > 0)
+	//	m_angularVelocity -= 15 * dt;
+	//if (m_angularVelocity < 0)
+	//	m_angularVelocity += 15 * dt;
+
+	for (p2Fixture* fixture : m_fixtures)
+		fixture->UpdateRotation(m_rotation);
 
 	ApplyForce(gravity * m_mass * dt, m_centre);
 }

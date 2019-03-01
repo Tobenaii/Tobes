@@ -45,6 +45,11 @@ inline float p2Cross(const p2Vec2& p1, const p2Vec2& p2)
 	return (p1.x * p2.y - p1.y * p2.x);
 }
 
+inline p2Vec2 p2Normalize(const p2Vec2& v)
+{
+	return v / p2Length(v);
+}
+
 struct p2Rot
 {
 	p2Rot() {}

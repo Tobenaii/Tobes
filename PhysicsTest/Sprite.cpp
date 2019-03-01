@@ -30,6 +30,8 @@ void Sprite::Draw(aie::Renderer2D * renderer)
 			case p2Shape::s_edge:
 				DrawEdge(dynamic_cast<p2EdgeShape*>(shape), renderer);
 				break;
+			case p2Shape::s_polygon:
+				DrawPolygon(dynamic_cast<p2PolygonShape*>(shape), renderer);
 			}
 		}
 	}
@@ -51,6 +53,17 @@ void Sprite::DrawEdge(p2EdgeShape* edge, aie::Renderer2D* renderer)
 	p2Vec2 p1 = edge->Getp1() + m_body->GetPosition();
 	p2Vec2 p2 = edge->Getp2() + m_body->GetPosition();
 	renderer->drawLine(p1.x, p1.y, p2.x, p2.y);
+}
+
+void Sprite::DrawPolygon(p2PolygonShape * poly, aie::Renderer2D * renderer)
+{
+	for (int i = 0; i < poly->GetVertexCount(); i++)
+	{
+		p2EdgeShape edge;
+		edge.Setp1(m_body->GetPosition() + poly->GetVertex(i));
+		edge.Setp2(m_body->GetPosition() + poly->GetVertex((i == poly->GetVertexCount() - 1) ? 0 : i + 1));
+		renderer->drawLine(edge.Getp1().x, edge.Getp1().y, edge.Getp2().x, edge.Getp2().y);
+	}
 }
 
 void Sprite::AssignTexture(aie::Texture * texture)
