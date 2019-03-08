@@ -37,6 +37,10 @@ protected:
 	p2Vec2 m_colPoint;
 	aie::Texture* m_ball2;
 	aie::Texture* m_tableTexture;
+	aie::Texture* m_stickTexture;
+	std::vector<aie::Texture*> m_deadBalls;
+	float m_shotPower;
+	bool m_charging;
 
 private:
 	static void FixedUpdate();

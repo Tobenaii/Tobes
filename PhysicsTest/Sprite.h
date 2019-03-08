@@ -15,6 +15,7 @@ public:
 	void DrawEdge(p2EdgeShape* edge, aie::Renderer2D* renderer);
 	void DrawPolygon(p2PolygonShape* poly, aie::Renderer2D* renderer);
 	void AssignTexture(aie::Texture* texture);
+	aie::Texture* GetTexture() { return m_texture; }
 	bool IsColliding() { return m_body->IsColliding(); }
 	p2Body* GetBody() { return m_body; }
 	void SetCue();
@@ -28,4 +29,6 @@ private:
 	bool m_inHole;
 	p2World* m_world;
 	bool m_isCue;
+	static int deadBalls;
+	bool m_dead;
 };

@@ -27,37 +27,41 @@ std::vector<p2Vec2> m_holes;
 
 
 bool PhysicsTestApp::startup() {
-	
+	m_charging = false;
+	m_shotPower = 0;
 	m_2dRenderer = new aie::Renderer2D();
 
 	// TODO: remember to change this when redistributing a build!
 	// the following path would be used instead: "./font/consolas.ttf"
 	m_tableTexture = new aie::Texture("Table.png");
+	m_stickTexture = new aie::Texture("Stick.png");
 
-	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
-	m_p2World = new p2World(p2Vec2(0, 0), 0.005f);
+	m_font = new aie::Font("consolas.ttf", 32);
+	m_p2World = new p2World(p2Vec2(0, 0), 0.0001f);
 	m_p2World->SetUpdateCallback(FixedUpdate);
 	p2BodyDef bDef;
 	p2FixtureDef fDef;
 	p2CircleShape cShape;
 	p2EdgeShape eShape;
-	
+
 	cShape.m_radius = BALL_RADIUS;
 
 	bDef.type = p2_kinematicBody;
 	bDef.position = p2Vec2(0, 0);
 	fDef.shape = &eShape;
 
+	float shitsAllWrong = 7.0f;
+
 	float hyp = (BALL_RADIUS * 1.6f * 2) * (BALL_RADIUS * 1.6f * 2);
 	float edgeDif = sqrt(hyp) / 2;
-	eShape.Setp1(p2Vec2(100 + edgeDif, 100));
-	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f, 100));
+	eShape.Setp1(p2Vec2(100 + edgeDif + shitsAllWrong, 100));
+	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f + shitsAllWrong, 100));
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
 	m_holes.push_back(p2Vec2(sWidth / 2, 100));
 
-	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f, 100));
-	eShape.Setp2(p2Vec2(sWidth - 100 - edgeDif, 100));
+	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f - shitsAllWrong, 100));
+	eShape.Setp2(p2Vec2(sWidth - 100 - edgeDif - shitsAllWrong, 100));
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
 	eShape.Setp1(p2Vec2(100, 100 + edgeDif));
@@ -66,12 +70,12 @@ bool PhysicsTestApp::startup() {
 
 	m_holes.push_back(p2Vec2(sWidth / 2, sHeight - 100));
 
-	eShape.Setp1(p2Vec2(100 + edgeDif, sHeight - 100));
-	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f, sHeight - 100));
+	eShape.Setp1(p2Vec2(100 + edgeDif + shitsAllWrong, sHeight - 100));
+	eShape.Setp2(p2Vec2(sWidth / 2 - BALL_RADIUS * 1.6f + shitsAllWrong, sHeight - 100));
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
-	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f, sHeight - 100));
-	eShape.Setp2(p2Vec2(sWidth - 100 - edgeDif, sHeight - 100));
+	eShape.Setp1(p2Vec2(sWidth / 2 + BALL_RADIUS * 1.6f - shitsAllWrong, sHeight - 100));
+	eShape.Setp2(p2Vec2(sWidth - 100 - edgeDif - shitsAllWrong, sHeight - 100));
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
 
 	eShape.Setp1(p2Vec2(sWidth - 100, 100 + edgeDif));
@@ -107,40 +111,10 @@ bool PhysicsTestApp::startup() {
 		startPos.y -= BALL_RADIUS;
 	}
 	startPos = p2Vec2(100 + ((sWidth - 200) * 0.29f - BALL_RADIUS * 2), sHeight / 2);
-	//startPos.y += 50000;
 	bDef.position = startPos;
-
-	p2PolygonShape pShape;
-	pShape.AddVertex({ -50, 0 });
-	pShape.AddVertex({ -50 ,-50 });
-	pShape.AddVertex({ 0,-100 });
-	pShape.AddVertex({ 50,0 });
-	pShape.AddVertex({ 0,50 });
-	pShape.AddVertex({ -50,50 });
-
-	p2PolygonShape pShape2;
-	pShape2.SetAsBox(100, 100);
-
-
-	fDef.shape = &pShape;
-	bDef.position.x -= 100;
-	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
-	m_sprites[m_sprites.size() - 1]->GetBody()->SetVelocity(p2Vec2(0, 0));
-	bDef.position.x += 300;
-	fDef.shape = &pShape;
-	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(1, 1, 1, 1), m_p2World));
-	m_sprites[m_sprites.size() - 1]->GetBody()->SetVelocity(p2Vec2(0, 0));
-	m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
-
 	m_sprites.push_back(new Sprite(&bDef, &fDef, p2Vec4(0, 1, 1, 1), m_p2World));
 	m_sprites[m_sprites.size() - 1]->SetCue();
-	//startPos.y -= 50000;
-	bDef.position = startPos;
-
-
-
-
-
+	//m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(p2Vec2(500, 0), p2Vec2(0, 0));
 	return true;
 }
 
@@ -181,28 +155,38 @@ void PhysicsTestApp::update(float deltaTime) {
 		p2Vec2 dir = ballPos - m_mPos;
 		dir = dir / p2Length(dir);
 		if (input->wasMouseButtonPressed(0))
-			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 20, p2Vec2(0, 0));
+			m_charging = true;
+		if (m_charging)
+			m_shotPower += 3 * deltaTime;
+		if (m_shotPower > 10)
+			m_shotPower = 10;
+		if (input->wasMouseButtonReleased(0))
+		{
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * ((5 * (m_shotPower) * (5 * (m_shotPower)))), p2Vec2(0, 0));
+			m_charging = false;
+			m_shotPower = 0;
+		}
 		else
 		{
-			m_p2World->Simulate(0.005f);
-			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 20, p2Vec2(0, 0));
+			m_p2World->Simulate(0.001f);
+			m_sprites[m_sprites.size() - 1]->GetBody()->ApplyForce(dir * 5000, p2Vec2(0, 0));
 			bool col = m_sprites[m_sprites.size() - 1]->IsColliding();
 			int escape = 0;
-			//while (!col)
-			//{
-			//	m_p2World->Simulate(0.005f);
-			//	col = m_sprites[m_sprites.size() - 1]->IsColliding();
-			//	p2Vec2 pos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
-			//	escape++;
-			//	if (escape > 200)
-			//		break;
-			//}
+			while (!col)
+			{
+				m_p2World->Simulate(0.001f);
+				col = m_sprites[m_sprites.size() - 1]->IsColliding();
+				p2Vec2 pos = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
+				escape++;
+				if (escape > 200)
+					break;
+			}
 			m_col = m_sprites[m_sprites.size() - 1]->GetBody()->GetCollision();
 			if (m_col)
 			{
 				m_hitPoint = m_sprites[m_sprites.size() - 1]->GetBody()->GetPosition();
 
-				m_p2World->Simulate(0.005f);
+				m_p2World->Simulate(0.001f);
 				m_colPoint = m_col->GetPosition();
 			}
 		}
@@ -224,7 +208,7 @@ void PhysicsTestApp::draw() {
 	// draw your stuff here!
 	// output some text, uses the last used colour
 	m_2dRenderer->setRenderColour(1, 1, 1, 1);
-	m_2dRenderer->drawSprite(m_tableTexture, (sWidth)/2, (sHeight) / 2, sWidth - 200 + 150, sHeight - 200 + 130);
+	m_2dRenderer->drawSprite(m_tableTexture, (sWidth) / 2, (sHeight) / 2, sWidth - 200 + 150, sHeight - 200 + 130);
 	for (Sprite* sprite : m_sprites)
 		sprite->Draw(m_2dRenderer);
 
@@ -235,7 +219,7 @@ void PhysicsTestApp::draw() {
 		p2Vec2 dir = m_mPos - ballPos;
 		dir = dir / p2Length(dir);
 		dir *= BALL_RADIUS * 2;
-		m_2dRenderer->drawLine(ballPos.x, ballPos.y, ballPos.x + dir.x, ballPos.y + dir.y);
+		m_2dRenderer->drawSprite(m_stickTexture, ballPos.x + dir.x * (m_shotPower / 3 + 4.7f), ballPos.y + dir.y * (m_shotPower / 3 + 4.7f), 1027 / 2, 416 / 2, atan2(dir.y, dir.x));
 		if (m_col)
 		{
 			m_2dRenderer->drawLine(ballPos.x, ballPos.y, m_hitPoint.x, m_hitPoint.y);
@@ -243,6 +227,8 @@ void PhysicsTestApp::draw() {
 			dir2 = dir2 / p2Length(dir2);
 			m_2dRenderer->drawLine(m_col->GetPosition().x, m_col->GetPosition().y, m_col->GetPosition().x + dir2.x * 100, m_col->GetPosition().y + dir2.y * 100);
 		}
+		m_2dRenderer->drawText(m_font, std::to_string((int)m_shotPower).c_str(), ballPos.x - BALL_RADIUS / 4, ballPos.y - BALL_RADIUS / 4);
+
 	}
 
 	// done drawing sprites

@@ -34,12 +34,6 @@ struct p2BodyDef
 	float gravityScale;
 };
 
-class p2Object
-{
-protected:
-	virtual void FixedUpdate() = 0;
-};
-
 class p2Body
 {
 private:

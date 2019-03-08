@@ -8,6 +8,7 @@ p2World::p2World(const p2Vec2 & gravity, const float fixedTimeStep)
 {
 	m_gravity = gravity;
 	m_fixedTimeStep = fixedTimeStep;
+	m_firstSim = true;
 }
 
 p2World::~p2World()

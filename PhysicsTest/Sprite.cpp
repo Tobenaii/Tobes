@@ -1,6 +1,8 @@
 #include "Sprite.h"
 #include <p2World.h>
 
+int Sprite::deadBalls = 0;
+
 Sprite::Sprite(const p2BodyDef * bDef, const p2FixtureDef * pDef, p2Vec4 colour, p2World * world)
 {
 	m_body = world->CreateBody(bDef);
@@ -11,6 +13,7 @@ Sprite::Sprite(const p2BodyDef * bDef, const p2FixtureDef * pDef, p2Vec4 colour,
 	m_inHole = false;
 	m_world = world;
 	m_isCue = false;
+	m_dead = false;
 }
 
 void Sprite::Draw(aie::Renderer2D * renderer)
@@ -79,6 +82,8 @@ void Sprite::SetCue()
 
 void Sprite::FixedUpdate(std::vector<p2Vec2> holes)
 {
+	if (m_dead)
+		return;
 	for (p2Vec2 hole : holes)
 	{
 		if (p2Length(m_body->GetPosition() - hole) <= 15)
@@ -97,7 +102,12 @@ void Sprite::FixedUpdate(std::vector<p2Vec2> holes)
 				m_inHole = false;
 			}
 			else
-				m_world->DestroyBody(m_body);
+			{
+				deadBalls++;
+				m_alpha = 1;
+				m_body->SetPosition(p2Vec2(100 + (100 * deadBalls), 800));
+				m_dead = true;
+			}
 		}
 		else
 		{

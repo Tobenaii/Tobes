@@ -27,20 +27,32 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 
 	//TODO: Clean this up
 
-	//if (m_linearVelocity.x > 0)
-	//	m_linearVelocity.x -= 35 * dt;
-	//if (m_linearVelocity.y > 0)
-	//	m_linearVelocity.y -= 35 * dt;
+	float frictionL = 100 * dt;
+	if (p2Length(m_linearVelocity) > 0)
+	{
+		p2Vec2 fDir = p2Normalize(m_linearVelocity) * frictionL;
+		if (p2Length(m_linearVelocity) < p2Length(fDir))
+			m_linearVelocity = p2Vec2(0, 0);
+		else
+			m_linearVelocity -= fDir;
+	}
 
-	//if (m_linearVelocity.x < 0)
-	//	m_linearVelocity.x += 35 * dt;
-	//if (m_linearVelocity.y < 0)
-	//	m_linearVelocity.y += 35 * dt;
+	float frictionA = 50 * dt;
+	if (m_angularVelocity < 0)
+	{
+		if (m_angularVelocity > frictionA)
+			m_angularVelocity = 0;
+		else
+			m_angularVelocity += frictionA;
+	}
+	if (m_angularVelocity > 0)
+	{
+		if (m_angularVelocity < frictionA)
+			m_angularVelocity = 0;
+		else
+			m_angularVelocity -= frictionA;
+	}
 
-	//if (m_angularVelocity > 0)
-	//	m_angularVelocity -= 15 * dt;
-	//if (m_angularVelocity < 0)
-	//	m_angularVelocity += 15 * dt;
 
 	for (p2Fixture* fixture : m_fixtures)
 		fixture->UpdateRotation(m_rotation);

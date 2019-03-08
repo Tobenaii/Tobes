@@ -13,7 +13,7 @@ p2CollideEdgeAndPolygon, //3 + 1 = 4
 
 void ResolveCollision(const CollisionData& data)
 {
-	float j = (p2Dot(data.relativeVelocity * -(1 + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
+	float j = (p2Dot(data.relativeVelocity * -(0.6f + 1), data.normal)) / (p2Dot(data.normal, data.normal * (1 / data.bodyA->GetMass() + 1 / data.bodyB->GetMass())));
 	//const float min = 0;
 	//float max = data.bodyA->GetMass() + data.bodyB->GetMass();
 	//float moveScaleA = (data.bodyA->GetMass() - min) / (max - min);
@@ -156,11 +156,6 @@ void p2CollidePolygons(CollisionData* data, const p2Shape * polygonA, const p2Ve
 		float lowestProjA;
 		p2Vec2 point;
 
-		if (normal.x > 0.1f && normal.x < 0.9f)
-		{
-			std::cout << "merp" << std::endl;
-		}
-
 		float proj = p2Dot(pA->GetVertex(0) + bodyPosA, normal);
 		lowestProjA = proj;
 		highestProjA = proj;
@@ -236,7 +231,6 @@ void p2CollidePolygons(CollisionData* data, const p2Shape * polygonA, const p2Ve
 		data->point = collisionPointA;
 		data->normal = collisionNorm;
 		data->collision = isColliding;
-		std::cout << "SAT" << std::endl;
 	}		
 }
 

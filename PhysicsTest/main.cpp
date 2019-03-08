@@ -6,7 +6,7 @@ int main() {
 	auto app = new PhysicsTestApp();
 
 	// initialise and loop
-	app->run("Tobes Physics Test", sWidth, sHeight, false);
+	app->run("Tobes Physics Test", sWidth, sHeight + 50, false);
 
 	// deallocation
 	delete app;
