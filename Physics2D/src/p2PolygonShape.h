@@ -1,8 +1,7 @@
 #pragma once
 #include "p2Shape.h"
+#include <math.h>
 #include <vector>
-
-class p2Vec2;
 
 class p2PolygonShape : public p2Shape
 {

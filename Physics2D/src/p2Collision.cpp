@@ -39,7 +39,7 @@ void ResolveCollision(const CollisionData& data)
 
 void CheckCollisions(const std::vector<p2Fixture*> fixtures)
 {
-	int fixtureCount = fixtures.size();
+	size_t fixtureCount = fixtures.size();
 	for (int f1 = 0; f1 < fixtureCount - 1; f1++)
 	{
 		if (fixtures[f1] == nullptr)
