@@ -30,14 +30,18 @@ namespace Tobes
 
 		//Main Program Loop
 		Startup();
+		double prevTime = glfwGetTime();
+		double curTime = 0;
+		double deltaTime = 0;
 		while (!glfwWindowShouldClose(m_window))
 		{
+			curTime = glfwGetTime();
+			deltaTime = curTime - prevTime;
+			prevTime = curTime;
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			double prevTime = glfwGetTime();
 			glfwPollEvents();
-			Update(m_dt);
+			Update(deltaTime);
 			Draw();
-			m_dt = glfwGetTime() - prevTime;
 			glfwSwapBuffers(m_window);
 		}
 

@@ -4,6 +4,6 @@
 int main()
 {
 	ContentManager* contentManager = new ContentManager();
-	contentManager->LoadFile("H:\\Dev\\Projects\\Tobes\\Tobes\\ContentPipeline\\Content\\advancedCharacter.fbx");
+	contentManager->LoadFile("C:\\Users\\Tobenai\\Downloads\\soulspear\\soulspear\\soulspear.obj");
 	contentManager->SaveFile();
 }

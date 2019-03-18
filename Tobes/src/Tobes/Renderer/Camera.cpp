@@ -3,7 +3,7 @@
 
 Camera::Camera()
 {
-	m_viewMatrix = glm::lookAt(glm::vec3(0,10,30.f), {0,10,0}, {0,1,0});
+	m_viewMatrix = glm::lookAt(glm::vec3(0,0,5.f), {0,0,0}, {0,1,0});
 	m_projectionMatrix = glm::perspective<float>(glm::radians(45.0f), 1, 0.01f, 1000.0f);
 	//m_projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f, 0.1f,10.f);
 }

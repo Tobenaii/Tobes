@@ -24,7 +24,6 @@ namespace Tobes
 		void Cleanup();
 
 	private:
-		double m_dt;
 		GLFWwindow* m_window;
 	protected:
 		Renderer* m_renderer;
