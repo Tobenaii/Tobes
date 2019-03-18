@@ -1,6 +1,4 @@
 #pragma once
-#ifdef TB_PLATFORM_WINDOWS
-
 extern Tobes::Application* Tobes::CreateApplication();
 
 int main(int argc, char** argv)
@@ -10,6 +8,6 @@ int main(int argc, char** argv)
 	delete app;
 	return 0;
 }
-#endif
+
 
 
