@@ -1,5 +1,4 @@
 #pragma once
-
 #ifdef TB_BUILD_DLL
 	#define TOBES_API __declspec(dllexport)
 #else

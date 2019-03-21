@@ -11,7 +11,7 @@ public:
 
 private:
 	File* m_file;
-	const std::string m_supportedImageTypes[2]{".png", ".jpg"};
+	const std::string m_supportedImageTypes[3]{".png", ".jpg", ".tga"};
 	const std::string m_supportedModelTypes[2]{".obj", ".fbx"};
 	std::string m_fileName;
 };

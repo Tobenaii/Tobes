@@ -17,29 +17,26 @@ TestApp::~TestApp()
 
 void TestApp::Startup()
 {
-	Shader* shader = new Shader();
+	m_scene = new Scene();
 
-	shader->LoadVertexShader("H:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\shaders\\vertex.txt");
-	shader->LoadFragmentShader("H:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\shaders\\frag.txt");
-	shader->LinkProgram();
-	obj = new GameObject(glm::vec3(0, 0, 0));
+	Material* material = new Material();
+	material->LoadDiffuseMap("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\art\\soulspear_diffuse.tga");
 
-	obj->SetShader(shader);
+	m_soulspear = new GameObject(glm::vec3(0, 0, 0));
+	m_soulspear->LoadModel("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\art\\soulspear.tbs");
+	m_soulspear->SetGlobalMaterial(material);
 
-	Mesh* mesh = new Mesh("C:\\Users\\Tobenai\\Downloads\\soulspear\\soulspear\\soulspear.tbs");
-	obj->SetMesh(mesh);
+	m_scene->AddGameObject(m_soulspear);
 }
 
 void TestApp::Update(float dt)
 {
-
-	std::cout << dt << std::endl;
-	m_camera->SetPosition(m_camera->GetPosition() + glm::vec3(-0.1f,0,0) * dt);
+	m_soulspear->Rotate();
 }
 
 void TestApp::Draw()
 {
-	obj->Draw(m_renderer, m_camera);
+	m_scene->Draw(m_renderer, m_camera);
 }
 
 

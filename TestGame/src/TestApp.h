@@ -9,6 +9,7 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw();
 	virtual void Startup();
-	GameObject* obj;
+	GameObject* m_soulspear;
+	Scene* m_scene;
 };
 

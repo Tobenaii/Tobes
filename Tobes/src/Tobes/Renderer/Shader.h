@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include "Tobes/Core.h"
+#include <glm/mat4x4.hpp>
 
 class TOBES_API Shader
 {
+	friend class Material;
 private:
 	unsigned int m_programID = -1;
 	unsigned int m_shaderID;
@@ -15,6 +17,8 @@ public:
 	void ApplyShader();
 	unsigned int GetProgramID();
 	void LinkProgram();
+	void SetUniformMat4(std::string name, glm::mat4 mat);
+	void SetUniform1f(std::string name, float value);
 
 private:
 	char const* GetShaderSource(const std::string& filePath);
@@ -22,4 +26,7 @@ private:
 	void CreateProgram();
 	void AttachShader();
 	
+private:
+	unsigned int m_matrixID = -1;
+	unsigned int m_samplerID = -1;
 };

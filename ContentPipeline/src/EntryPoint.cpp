@@ -4,6 +4,8 @@
 int main()
 {
 	ContentManager* contentManager = new ContentManager();
-	contentManager->LoadFile("C:\\Users\\Tobenai\\Downloads\\soulspear\\soulspear\\soulspear.obj");
+	contentManager->LoadFile("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\art\\lambo.fbx");
 	contentManager->SaveFile();
+	//contentManager->LoadFile("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\art\\soulspear_diffuse.tga");
+	//contentManager->SaveFile();
 }

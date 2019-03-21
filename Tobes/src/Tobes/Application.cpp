@@ -26,13 +26,15 @@ namespace Tobes
 		m_renderer->Initialize();
 		std::cout << "OpenGL Version: ";
 		std::cout << glGetString(GL_VERSION) << std::endl;
-
-
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_DEPTH_TEST);
 		//Main Program Loop
 		Startup();
 		double prevTime = glfwGetTime();
 		double curTime = 0;
 		double deltaTime = 0;
+		
 		while (!glfwWindowShouldClose(m_window))
 		{
 			curTime = glfwGetTime();
@@ -53,8 +55,9 @@ namespace Tobes
 		{
 			std::cout << "Failed to initialize glfw" << std::endl;
 		}
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	}
 	void Application::CreateWindow()
@@ -68,3 +71,4 @@ namespace Tobes
 		glfwTerminate();
 	}
 }
+

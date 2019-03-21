@@ -1,10 +1,13 @@
 #include "Camera.h"
 #include <glm/ext.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/rotate_vector.hpp>
 
 Camera::Camera()
 {
-	m_viewMatrix = glm::lookAt(glm::vec3(0,0,5.f), {0,0,0}, {0,1,0});
-	m_projectionMatrix = glm::perspective<float>(glm::radians(45.0f), 1, 0.01f, 1000.0f);
+	m_viewMatrix = glm::lookAt(glm::vec3(0.0f,2.f,-10.f), {0.0f,2.f,0.0f}, {0.0f,1.0f,0.0f});
+	m_position = glm::vec3(5.0f, 0.0f, 0.0f);
+	m_projectionMatrix = glm::perspective<float>(glm::radians(45.0f), 1.0f, 0.1f, 10000.0f);
 	//m_projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f, 0.1f,10.f);
 }
 
@@ -18,16 +21,13 @@ Camera::Camera(glm::vec3 pos, glm::vec3 forward, float aspectRatio, float fov)
 
 glm::vec3 Camera::GetPosition()
 {
-	return glm::vec3(m_viewMatrix[3][0],
-		m_viewMatrix[3][1],
-		m_viewMatrix[3][2]);
+	return m_position;
 }
 
 void Camera::SetPosition(glm::vec3 pos)
 {
-	m_viewMatrix[3][0] = pos.x;
-	m_viewMatrix[3][1] = pos.y;
-	m_viewMatrix[3][2] = pos.z;
+	m_viewMatrix = glm::lookAt(pos, { 0.0f,0.0f,0.0f }, { 0.0f,1.0f,0.0f });
+	m_position = pos;
 }
 
 void Camera::SetForward(glm::vec3 forward)
@@ -69,4 +69,12 @@ glm::mat4 Camera::GetView()
 glm::mat4 Camera::GetProjectionView()
 {
 	return m_projectionMatrix * m_viewMatrix;
+}
+
+void Camera::Rotate()
+{
+	//static float rotation = 5.f;
+	//glm::vec3 pos = GetPosition();
+	//pos = glm::rotate(pos, glm::radians(rotation), glm::vec3(0, 1, 0));
+	//SetPosition(pos);
 }

@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <glm/common.hpp>
+#include <glm/ext.hpp>
 
 void Shader::LoadVertexShader(const std::string& filePath)
 {
@@ -55,7 +57,6 @@ void Shader::CompileShader(char const* source)
 
 	glShaderSource(m_shaderID, 1, &source, NULL);
 	glCompileShader(m_shaderID);
-
 	
 	glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logLength);
@@ -102,4 +103,18 @@ void Shader::LinkProgram()
 
 	glDetachShader(m_programID, m_shaderID);
 	glDeleteShader(m_shaderID);
+}
+
+void Shader::SetUniformMat4(std::string name, glm::mat4 mat)
+{
+	if (m_matrixID == -1)
+		m_matrixID = glGetUniformLocation(m_programID, name.c_str());
+	glUniformMatrix4fv(m_matrixID, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void Shader::SetUniform1f(std::string name, float value)
+{
+	if (m_samplerID == -1)
+		m_samplerID = glGetUniformLocation(m_programID, name.c_str());
+	glUniform1f(m_samplerID, value);
 }
