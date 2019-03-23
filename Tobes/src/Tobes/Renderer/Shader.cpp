@@ -6,6 +6,7 @@
 #include <vector>
 #include <glm/common.hpp>
 #include <glm/ext.hpp>
+#include <iterator>
 
 void Shader::LoadVertexShader(const std::string& filePath)
 {
@@ -105,16 +106,37 @@ void Shader::LinkProgram()
 	glDeleteShader(m_shaderID);
 }
 
+bool Shader::FindKey(std::string key)
+{
+	std::map<std::string, unsigned int>::iterator it = m_uniformIds.find(key);
+	if (it != m_uniformIds.end())
+		return true;
+	return false;
+}
+
+void Shader::AddKey(std::string key)
+{
+	unsigned int id = glGetUniformLocation(m_programID, key.c_str());
+	m_uniformIds[key] = id;
+}
+
 void Shader::SetUniformMat4(std::string name, glm::mat4 mat)
 {
-	if (m_matrixID == -1)
-		m_matrixID = glGetUniformLocation(m_programID, name.c_str());
-	glUniformMatrix4fv(m_matrixID, 1, GL_FALSE, glm::value_ptr(mat));
+	if (!FindKey(name))
+		AddKey(name);
+	glUniformMatrix4fv(m_uniformIds[name], 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 void Shader::SetUniform1f(std::string name, float value)
 {
-	if (m_samplerID == -1)
-		m_samplerID = glGetUniformLocation(m_programID, name.c_str());
-	glUniform1f(m_samplerID, value);
+	if (!FindKey(name))
+		AddKey(name);
+	glUniform1f(m_uniformIds[name], value);
+}
+
+void Shader::SetUniformVec3(std::string name, glm::vec3 vec)
+{
+	if (!FindKey(name))
+		AddKey(name);
+	glUniform3f(m_uniformIds[name], vec.x, vec.y, vec.z);
 }

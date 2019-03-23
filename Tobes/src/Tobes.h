@@ -2,8 +2,7 @@
 
 #include "Tobes/Application.h"
 #include "Tobes/EntryPoint.h"
-#include "Tobes/Renderer/Renderer.h"
-#include "Tobes/Renderer/GameObject.h"
-#include "Tobes/Renderer/Mesh.h"
+#include "Tobes/Common/GameObject.h"
 #include "Tobes/Renderer/Material.h"
-#include "Tobes/Renderer/Scene.h"
+#include "Tobes/Common/Scene.h"
+#include "Tobes/Common/Input.h"

@@ -1,6 +1,8 @@
 #include "Scene.h"
 #include <glew.h>
 
+unsigned int Scene::MAX_LIGHTS = 1;
+
 Scene::Scene()
 {
 }
@@ -8,6 +10,7 @@ Scene::Scene()
 void Scene::AddGameObject(GameObject * object)
 {
 	m_gameObjects.push_back(object);
+	object->m_scene = this;
 }
 
 void Scene::AddLight(Light* light)
@@ -17,11 +20,6 @@ void Scene::AddLight(Light* light)
 
 void Scene::Draw(Renderer * renderer, Camera* camera)
 {
-	glm::vec4 ambientCol(1,1,1,1);
-	for (Light* light : m_lights)
-	{
-		ambientCol *= light->m_ambientColour;
-	}
 	for (GameObject* obj : m_gameObjects)
 	{
 		obj->Draw(renderer, camera);

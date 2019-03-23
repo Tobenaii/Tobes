@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Terrain\Block.h" />
     <ClInclude Include="src\TestApp.h" />
   </ItemGroup>
   <ItemGroup>

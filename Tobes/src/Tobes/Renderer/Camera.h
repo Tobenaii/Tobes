@@ -24,6 +24,9 @@ public:
 	glm::mat4 GetProjection();
 	glm::mat4 GetView();
 	glm::mat4 GetProjectionView();
+	glm::vec3 GetForward();
+	glm::vec3 GetRight();
+	glm::vec3 GetLocalUp();
 	glm::vec3 m_position;
-	void Rotate();
+	glm::vec3 m_forward;
 };

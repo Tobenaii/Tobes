@@ -8,7 +8,7 @@
 void ModelFile::LoadFile(std::string filePath)
 {
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-	m_scene = aiImportFile((filePath).c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_GenUVCoords);
+	m_scene = aiImportFile((filePath).c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 	std::cout << duration << std::endl;
@@ -17,6 +17,8 @@ void ModelFile::LoadFile(std::string filePath)
 std::vector<std::string>* ModelFile::GetData()
 {
 	m_dataBuffer->push_back(std::to_string(m_scene->mNumMeshes));
+	aiString name;
+	m_scene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE, 0, &name);
 	for (int i = 0; i < m_scene->mNumMeshes; i++)
 	{
 		m_dataBuffer->push_back(m_scene->mMeshes[i]->mName.C_Str());
@@ -37,7 +39,7 @@ std::vector<std::string>* ModelFile::GetData()
 			{
 				m_dataBuffer->push_back(std::to_string(-1));
 			}
-			aiVector3D normal = m_scene->mMeshes[i]->mNormals[i];
+			aiVector3D normal = m_scene->mMeshes[i]->mNormals[n];
 			m_dataBuffer->push_back(std::to_string(normal.x));
 			m_dataBuffer->push_back(std::to_string(normal.y));
 			m_dataBuffer->push_back(std::to_string(normal.z));

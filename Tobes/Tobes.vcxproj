@@ -90,7 +90,7 @@ copy *.dll $(SolutionDir)bin\TestGame\$(Platform)\$(Configuration)\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Tobes\Application.cpp" />
-    <ClCompile Include="src\Tobes\Renderer\GameObject.cpp" />
+    <ClCompile Include="src\Tobes\Common\GameObject.cpp" />
     <ClCompile Include="src\Tobes\Physics2D\p2Body.cpp" />
     <ClCompile Include="src\Tobes\Physics2D\p2CircleShape.cpp" />
     <ClCompile Include="src\Tobes\Physics2D\p2Collision.cpp" />
@@ -99,17 +99,18 @@ copy *.dll $(SolutionDir)bin\TestGame\$(Platform)\$(Configuration)\
     <ClCompile Include="src\Tobes\Physics2D\p2PolygonShape.cpp" />
     <ClCompile Include="src\Tobes\Physics2D\p2World.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Tobes\Common\Input.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Material.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Tobes\Renderer\Scene.cpp" />
+    <ClCompile Include="src\Tobes\Common\Scene.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Shader.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Tobes.h" />
     <ClInclude Include="src\Tobes\Application.h" />
-    <ClInclude Include="src\Tobes\Renderer\GameObject.h" />
+    <ClInclude Include="src\Tobes\Common\GameObject.h" />
     <ClInclude Include="src\Tobes\Core.h" />
     <ClInclude Include="src\Tobes\EntryPoint.h" />
     <ClInclude Include="src\Tobes\Physics2D\p2Body.h" />
@@ -122,12 +123,12 @@ copy *.dll $(SolutionDir)bin\TestGame\$(Platform)\$(Configuration)\
     <ClInclude Include="src\Tobes\Physics2D\p2Shape.h" />
     <ClInclude Include="src\Tobes\Physics2D\p2World.h" />
     <ClInclude Include="src\Tobes\Renderer\Camera.h" />
+    <ClInclude Include="src\Tobes\Common\Input.h" />
     <ClInclude Include="src\Tobes\Renderer\Light.h" />
     <ClInclude Include="src\Tobes\Renderer\Material.h" />
     <ClInclude Include="src\Tobes\Renderer\Mesh.h" />
     <ClInclude Include="src\Tobes\Renderer\Renderer.h" />
-    <ClInclude Include="src\Tobes\Renderer\RenderObject.h" />
-    <ClInclude Include="src\Tobes\Renderer\Scene.h" />
+    <ClInclude Include="src\Tobes\Common\Scene.h" />
     <ClInclude Include="src\Tobes\Renderer\Shader.h" />
     <ClInclude Include="src\Tobes\Renderer\Texture.h" />
   </ItemGroup>

@@ -5,8 +5,10 @@
 
 Camera::Camera()
 {
-	m_viewMatrix = glm::lookAt(glm::vec3(0.0f,2.f,-10.f), {0.0f,2.f,0.0f}, {0.0f,1.0f,0.0f});
-	m_position = glm::vec3(5.0f, 0.0f, 0.0f);
+	m_position = glm::vec3(0, 0, -10);
+	m_forward = glm::vec3(0, 0, 1);
+	m_viewMatrix = glm::lookAt(m_position, m_position + m_forward, { 0.0f,1.0f,0.0f });
+
 	m_projectionMatrix = glm::perspective<float>(glm::radians(45.0f), 1.0f, 0.1f, 10000.0f);
 	//m_projectionMatrix = glm::ortho(-1.f, 1.f, -1.f, 1.f, 0.1f,10.f);
 }
@@ -26,22 +28,14 @@ glm::vec3 Camera::GetPosition()
 
 void Camera::SetPosition(glm::vec3 pos)
 {
-	m_viewMatrix = glm::lookAt(pos, { 0.0f,0.0f,0.0f }, { 0.0f,1.0f,0.0f });
 	m_position = pos;
+	m_viewMatrix = glm::lookAt(m_position, m_position + m_forward, { 0.0f,1.0f,0.0f });
 }
 
 void Camera::SetForward(glm::vec3 forward)
 {
-	glm::vec3 pos(m_viewMatrix[3][0], m_viewMatrix[3][1], m_viewMatrix[3][2]);
-	m_viewMatrix[2][0] = pos.x + forward.x;
-	m_viewMatrix[2][1] = pos.y + forward.y;
-	m_viewMatrix[2][2] = pos.z + forward.z;
-
-	glm::vec3 up(m_viewMatrix[1][0], m_viewMatrix[1][1], m_viewMatrix[1][2]);
-	glm::vec3 right = glm::cross(up, forward);
-	m_viewMatrix[0][0] = right.x;
-	m_viewMatrix[0][1] = right.y;
-	m_viewMatrix[0][2] = right.z;
+	m_forward = forward;
+	m_viewMatrix = glm::lookAt(m_position, m_position + m_forward, { 0.0f,1.0f,0.0f });
 }
 
 void Camera::SetAspectRatio(float aspectRatio)
@@ -71,10 +65,17 @@ glm::mat4 Camera::GetProjectionView()
 	return m_projectionMatrix * m_viewMatrix;
 }
 
-void Camera::Rotate()
+glm::vec3 Camera::GetForward()
 {
-	//static float rotation = 5.f;
-	//glm::vec3 pos = GetPosition();
-	//pos = glm::rotate(pos, glm::radians(rotation), glm::vec3(0, 1, 0));
-	//SetPosition(pos);
+	return m_forward;
+}
+
+glm::vec3 Camera::GetRight()
+{
+	return glm::cross(m_forward, glm::vec3(0, 1, 0));
+}
+
+glm::vec3 Camera::GetLocalUp()
+{
+	return glm::cross(GetForward(), GetRight());
 }

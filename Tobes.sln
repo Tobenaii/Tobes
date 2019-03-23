@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGame", "TestGame\TestGame.vcxproj", "{97FBBDC5-0E7F-410B-9219-7423C9DEB050}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tobes", "Tobes\Tobes.vcxproj", "{F62BE669-1276-4E27-9F86-5842243A74B4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContentPipeline", "ContentPipeline\ContentPipeline.vcxproj", "{622DF4A8-1EB4-4D9E-B869-2B7464BD3925}"
@@ -15,10 +13,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Debug|x64.ActiveCfg = Debug|x64
-		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Debug|x64.Build.0 = Debug|x64
-		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Release|x64.ActiveCfg = Release|x64
-		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Release|x64.Build.0 = Release|x64
 		{F62BE669-1276-4E27-9F86-5842243A74B4}.Debug|x64.ActiveCfg = Debug|x64
 		{F62BE669-1276-4E27-9F86-5842243A74B4}.Debug|x64.Build.0 = Debug|x64
 		{F62BE669-1276-4E27-9F86-5842243A74B4}.Release|x64.ActiveCfg = Release|x64

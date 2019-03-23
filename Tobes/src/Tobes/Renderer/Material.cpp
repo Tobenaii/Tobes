@@ -1,11 +1,10 @@
 #include "Material.h"
 
+Shader* Material::m_defaultShader = new Shader();
+
 Material::Material()
 {
-	m_shader = new Shader();
-	m_shader->LoadVertexShader("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\shaders\\vertex.txt");
-	m_shader->LoadFragmentShader("D:\\Dev\\Projects\\Tobes\\Tobes\\TestGame\\content\\shaders\\frag.txt");
-	m_shader->LinkProgram();
+
 }
 
 void Material::SetDiffuseMap(std::string filePath)
@@ -17,4 +16,11 @@ void Material::LoadDiffuseMap(std::string filePath)
 {
 	Texture* texture = new Texture(filePath);
 	m_diffuseMap = texture;
+}
+
+void Material::LoadDefaultShaders()
+{
+	m_defaultShader->LoadVertexShader(".\\content\\shaders\\vertex.txt");
+	m_defaultShader->LoadFragmentShader(".\\content\\shaders\\frag.txt");
+	m_defaultShader->LinkProgram();
 }

@@ -2,6 +2,7 @@
 #include <glew.h>
 #include <GLFW/glfw3.h>
 #include "Mesh.h"
+#include "Tobes/Common/Scene.h"
 
 Renderer::Renderer(GLFWwindow * window)
 	:m_window(window)
@@ -14,6 +15,8 @@ void Renderer::Initialize()
 	int width, height;
 	glfwGetFramebufferSize(m_window, &width, &height);
 	glViewport(0, 0, width, height);
+	Material::LoadDefaultShaders();
+	Scene::MAX_LIGHTS = 1;
 }
 
 void Renderer::DrawTriangle()

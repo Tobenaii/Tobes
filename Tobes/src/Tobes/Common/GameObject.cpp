@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <chrono>
+#include "Scene.h"
 
 GameObject::GameObject()
 {
@@ -106,16 +107,27 @@ void GameObject::Draw(Renderer * renderer, Camera* camera)
 {
 	for (const auto& it : m_meshes)
 	{
-		if (it.second->m_material->m_shader)
+		//TODO: Make functions in material to set uniforms
+		if (it.second->m_material->m_defaultShader)
 		{
-			it.second->m_material->m_shader->ApplyShader();
+			it.second->m_material->m_defaultShader->ApplyShader();
 			glm::mat4 mvp = camera->GetProjection() * camera->GetView() * m_modelMatrix;
-			it.second->m_material->m_shader->SetUniformMat4("MVP", mvp);
+			it.second->m_material->m_defaultShader->SetUniformMat4("mvp", mvp);
 		}
 		if (it.second->m_material->m_diffuseMap)
 		{
 			it.second->m_material->m_diffuseMap->ApplyTexture(0);
-			it.second->m_material->m_shader->SetUniform1f("textureSampler", 0);
+			it.second->m_material->m_defaultShader->SetUniform1f("textureSampler", 0);
+		}
+		for (int i = 0; i < Scene::MAX_LIGHTS; i++)
+		{
+			if (i >= m_scene->m_lights.size())
+				break;
+			it.second->m_material->m_defaultShader->SetUniform1f("ambientStrength1", m_scene->m_lights[i]->m_ambientStrength);
+			it.second->m_material->m_defaultShader->SetUniformVec3("lightColour1", m_scene->m_lights[i]->m_colour);
+			it.second->m_material->m_defaultShader->SetUniformVec3("lightPos1", m_scene->m_lights[i]->m_position);
+			it.second->m_material->m_defaultShader->SetUniformMat4("modelMatrix", m_modelMatrix);
+			it.second->m_material->m_defaultShader->SetUniformVec3("viewPos", camera->m_position);
 		}
 		renderer->DrawMesh(it.second);
 	}

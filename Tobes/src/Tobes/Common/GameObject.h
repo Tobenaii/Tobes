@@ -1,14 +1,16 @@
 #pragma once
-#include "Mesh.h"
-#include "Renderer.h"
+#include "Tobes/Renderer/Mesh.h"
+#include "Tobes/Renderer/Renderer.h"
 #include <glm/mat4x4.hpp>
-#include "Shader.h"
-#include "Camera.h"
-#include "Texture.h"
+#include "Tobes/Renderer/Shader.h"
+#include "Tobes/Renderer/Camera.h"
 #include <map>
+
+class Scene;
 
 class TOBES_API GameObject
 {
+	friend class Scene;
 public:
 	GameObject();
 	GameObject(glm::vec3 position);
@@ -27,6 +29,6 @@ private:
 	glm::mat4 m_modelMatrix;
 	unsigned int m_matrixID;
 	unsigned int m_samplerID;
-	
+	Scene* m_scene;
 	std::map<std::string, Mesh*> m_meshes;
 };

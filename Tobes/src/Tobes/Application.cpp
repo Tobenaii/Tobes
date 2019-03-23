@@ -3,8 +3,9 @@
 #include <GLFW/glfw3.h>
 #include "Renderer/Shader.h"
 #include <iostream>
-#include "Renderer/GameObject.h"
+#include "Tobes/Common/GameObject.h"
 #include "Renderer/Mesh.h"
+#include "Tobes/Common/Input.h"
 
 namespace Tobes
 {
@@ -34,7 +35,7 @@ namespace Tobes
 		double prevTime = glfwGetTime();
 		double curTime = 0;
 		double deltaTime = 0;
-		
+
 		while (!glfwWindowShouldClose(m_window))
 		{
 			curTime = glfwGetTime();
@@ -44,6 +45,7 @@ namespace Tobes
 			glfwPollEvents();
 			Update(deltaTime);
 			Draw();
+			Input::GetInstance()->Clear();
 			glfwSwapBuffers(m_window);
 		}
 
