@@ -21,6 +21,7 @@ Input::Input()
 		m_curKeys[i] = m_prevKeys[i] = glfwGetKey(glfwGetCurrentContext(), i);
 	}
 
+	//Callback for key press
 	auto KeyCallback = [](GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
 		if (key == -1)
@@ -28,6 +29,7 @@ Input::Input()
 		Input::GetInstance()->m_curKeys[key] = action;
 	};
 
+	//Callback for mouse move
 	auto MouseMoveCallback = [](GLFWwindow*, double x, double y)
 	{
 		if (Input::GetInstance()->m_mouseEntered || Input::GetInstance()->m_firstMouseMove)
@@ -41,11 +43,13 @@ Input::Input()
 		Input::GetInstance()->m_mouseY = y;
 	};
 
+	//Callback for mouse entered the screen
 	auto MouseEnteredCallback = [](GLFWwindow*, int entered)
 	{
 		Input::GetInstance()->m_mouseEntered = true;
 	};
 
+	//Assign callbacks to glfw
 	glfwSetCursorPosCallback(glfwGetCurrentContext(), MouseMoveCallback);
 	glfwSetCursorEnterCallback(glfwGetCurrentContext(), MouseEnteredCallback);
 	glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);

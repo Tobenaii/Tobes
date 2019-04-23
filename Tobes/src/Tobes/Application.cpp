@@ -22,21 +22,29 @@ namespace Tobes
 	{
 		Init();
 		CreateWindow();
+		//Disabled cursor for virtual infinite mouse movement
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+		//Initialize everything
 		m_camera = new Camera();
 		m_renderer = new Renderer(m_window);
 		m_renderer->Initialize();
 		std::cout << "OpenGL Version: ";
 		std::cout << glGetString(GL_VERSION) << std::endl;
+
+		//Enable alpha blending and depth test
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
 		//Main Program Loop
 		Startup();
+
+		//Initialize values for frame time
 		double prevTime = glfwGetTime();
 		double curTime = 0;
 		double deltaTime = 0;
 
+		//Main game loop
 		while (!glfwWindowShouldClose(m_window))
 		{
 			curTime = glfwGetTime();
@@ -58,6 +66,7 @@ namespace Tobes
 		{
 			std::cout << "Failed to initialize glfw" << std::endl;
 		}
+		//Set glfw window properties
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);

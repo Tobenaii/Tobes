@@ -53,6 +53,7 @@ char const* Shader::GetShaderSource(const std::string & filePath)
 
 void Shader::CompileShader(char const* source)
 {
+	//Compile shader and check for errors
 	GLint result = GL_FALSE;
 	int logLength;
 
@@ -88,6 +89,7 @@ void Shader::AttachShader()
 
 void Shader::LinkProgram()
 {
+	//Link current shader program
 	GLint result = GL_FALSE;
 	int logLength;
 	
@@ -120,6 +122,7 @@ void Shader::AddKey(std::string key)
 	m_uniformIds[key] = id;
 }
 
+//Set uniform data for matrix4
 void Shader::SetUniformMat4(std::string name, glm::mat4 mat)
 {
 	if (!FindKey(name))
@@ -127,6 +130,7 @@ void Shader::SetUniformMat4(std::string name, glm::mat4 mat)
 	glUniformMatrix4fv(m_uniformIds[name], 1, GL_FALSE, glm::value_ptr(mat));
 }
 
+//Set uniform data for float
 void Shader::SetUniform1f(std::string name, float value)
 {
 	if (!FindKey(name))
@@ -134,6 +138,7 @@ void Shader::SetUniform1f(std::string name, float value)
 	glUniform1f(m_uniformIds[name], value);
 }
 
+//Set uniform data for vector3
 void Shader::SetUniformVec3(std::string name, glm::vec3 vec)
 {
 	if (!FindKey(name))

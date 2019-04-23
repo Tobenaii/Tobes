@@ -32,6 +32,7 @@ glm::mat4 GameObject::GetModelMatrix()
 
 void GameObject::LoadModel(std::string path)
 {
+	//Start the clock to see how long the load took
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	std::ifstream buffer(path, std::ios::in | std::ios::binary);
 
@@ -41,8 +42,10 @@ void GameObject::LoadModel(std::string path)
 	{
 		std::getline(buffer, line);
 		meshCount = stof(line);
+		//Go through each mesh
 		for (int m = 0; m < meshCount; m++)
 		{
+			//Prepare to get the vertex data
 			unsigned int vertexCount;
 			Vertex* vertexData;
 			std::string meshName;
@@ -51,8 +54,10 @@ void GameObject::LoadModel(std::string path)
 			std::getline(buffer, line);
 			vertexCount = stof(line);
 			vertexData = new Vertex[vertexCount];
+			//Get vertex data
 			for (int i = 0; i < vertexCount; i++)
 			{
+				//Get position
 				glm::vec4 pos;
 				std::getline(buffer, line);
 				pos.x = stof(line);
@@ -61,6 +66,7 @@ void GameObject::LoadModel(std::string path)
 				std::getline(buffer, line);
 				pos.z = stof(line);
 				pos.w = 1.0f;
+				//Get texture coodrinate
 				glm::vec2 texCoord;
 				std::getline(buffer, line);
 				if (stof(line) != -1)
@@ -71,6 +77,7 @@ void GameObject::LoadModel(std::string path)
 				}
 				else
 					texCoord = glm::vec2(0, 0);
+				//Get normals
 				glm::vec3 norm;
 				std::getline(buffer, line);
 				norm.x = stof(line);
@@ -78,20 +85,24 @@ void GameObject::LoadModel(std::string path)
 				norm.y = stof(line);
 				std::getline(buffer, line);
 				norm.z = stof(line);
+				//Store vertex data in array
 				vertexData[i].position = pos;
 				vertexData[i].textureCoord = texCoord;
 				vertexData[i].normal = norm;
 			}
+			//Prepare to get indices
 			std::getline(buffer, line);
 			unsigned int indexCount;
 			unsigned int* indices;
 			indexCount = stof(line);
 			indices = new unsigned int[indexCount];
+			//Get indices
 			for (int i = 0; i < indexCount; i++)
 			{
 				std::getline(buffer, line);
 				indices[i] = stof(line);
 			}
+			//Create new mesh and set the mesh data
 			Mesh* mesh = new Mesh(vertexData, vertexCount, indices, indexCount);
 			m_meshes.insert(std::pair<std::string, Mesh*>(meshName, mesh));
 			mesh->SetData();
@@ -119,6 +130,8 @@ void GameObject::Draw(Renderer * renderer, Camera* camera)
 			it.second->m_material->m_diffuseMap->ApplyTexture(0);
 			it.second->m_material->m_defaultShader->SetUniform1f("textureSampler", 0);
 		}
+		//Add each light parameter to corresponding uniform
+		//TODO: This is stupid. Implement deferred lighting later
 		for (int i = 0; i < Scene::MAX_LIGHTS; i++)
 		{
 			if (i >= m_scene->m_lights.size())
@@ -140,6 +153,7 @@ void GameObject::SetMeshMaterial(std::string mesh, Material * mat)
 
 void GameObject::SetGlobalMaterial(Material * mat)
 {
+	//Set material for every mesh
 	for (auto const& i : m_meshes)
 	{
 		i.second->SetMaterial(mat);

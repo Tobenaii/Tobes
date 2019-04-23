@@ -32,7 +32,9 @@ void Renderer::DrawTriangle()
 
 void Renderer::DrawMesh(Mesh* mesh)
 {
+	//Bind current mesh vao and ibo
 	glBindVertexArray(mesh->m_vao);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_ibo);
+	//Draw the mesh triangles
 	glDrawElements(GL_TRIANGLES, mesh->m_indexCount, GL_UNSIGNED_INT, nullptr);
 }

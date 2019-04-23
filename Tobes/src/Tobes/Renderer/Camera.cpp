@@ -5,6 +5,7 @@
 
 Camera::Camera()
 {
+	//Set default values
 	m_position = glm::vec3(0, 0, -10);
 	m_forward = glm::vec3(0, 0, 1);
 	m_viewMatrix = glm::lookAt(m_position, m_position + m_forward, { 0.0f,1.0f,0.0f });

@@ -27,20 +27,30 @@ const Vertex* Mesh::GetVertexData()
 
 void Mesh::SetData()
 {
+	//Generate and bind vertex array object
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
 
+	//Generate and bind vertex buffer object
 	glGenBuffers(1, &m_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+
+	//Give vertex data to vbo
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * m_vertexCount, &m_vertexData->position, GL_STATIC_DRAW);
+
+	//Set vertex attributes (positions, texture coordinates, normals
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoord));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+
+	//Generate and bind index buffer object
 	glGenBuffers(1, &m_ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	
+	//Give index data to ibo
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_indexCount, m_indices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
