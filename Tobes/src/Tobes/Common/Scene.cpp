@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include <glew.h>
 
-unsigned int Scene::MAX_LIGHTS = 1;
+unsigned int Scene::MAX_LIGHTS = 2;
 
 Scene::Scene()
 {

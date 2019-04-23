@@ -20,7 +20,8 @@ public:
 	void SetMeshMaterial(std::string mesh, Material* mat);
 	void SetGlobalMaterial(Material* mat);
 	int GetMeshCount();
-	void Rotate();
+	void SetPosition(const glm::vec3& pos);
+	void Rotate(const glm::vec3& axis, const float rot);
 
 private:
 	glm::mat4 m_translationMatrix;

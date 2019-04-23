@@ -22,6 +22,7 @@ namespace Tobes
 	{
 		Init();
 		CreateWindow();
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		m_camera = new Camera();
 		m_renderer = new Renderer(m_window);
 		m_renderer->Initialize();

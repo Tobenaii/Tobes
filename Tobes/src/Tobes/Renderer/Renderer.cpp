@@ -16,7 +16,7 @@ void Renderer::Initialize()
 	glfwGetFramebufferSize(m_window, &width, &height);
 	glViewport(0, 0, width, height);
 	Material::LoadDefaultShaders();
-	Scene::MAX_LIGHTS = 1;
+	Scene::MAX_LIGHTS = 2;
 }
 
 void Renderer::DrawTriangle()

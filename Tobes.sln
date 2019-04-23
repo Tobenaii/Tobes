@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tobes", "Tobes\Tobes.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContentPipeline", "ContentPipeline\ContentPipeline.vcxproj", "{622DF4A8-1EB4-4D9E-B869-2B7464BD3925}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGame", "TestGame\TestGame.vcxproj", "{97FBBDC5-0E7F-410B-9219-7423C9DEB050}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{622DF4A8-1EB4-4D9E-B869-2B7464BD3925}.Debug|x64.Build.0 = Debug|x64
 		{622DF4A8-1EB4-4D9E-B869-2B7464BD3925}.Release|x64.ActiveCfg = Release|x64
 		{622DF4A8-1EB4-4D9E-B869-2B7464BD3925}.Release|x64.Build.0 = Release|x64
+		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Debug|x64.ActiveCfg = Debug|x64
+		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Debug|x64.Build.0 = Debug|x64
+		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Release|x64.ActiveCfg = Release|x64
+		{97FBBDC5-0E7F-410B-9219-7423C9DEB050}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

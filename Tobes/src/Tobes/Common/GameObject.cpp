@@ -11,7 +11,7 @@
 
 GameObject::GameObject()
 {
-	m_translationMatrix = glm::mat4(1.0f);
+	m_translationMatrix = glm::mat4(1.f);
 	m_scaleMatrix = glm::mat4(1.0f);
 	m_rotationMatrix = glm::mat4(1.0f);
 	m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
@@ -123,9 +123,9 @@ void GameObject::Draw(Renderer * renderer, Camera* camera)
 		{
 			if (i >= m_scene->m_lights.size())
 				break;
-			it.second->m_material->m_defaultShader->SetUniform1f("ambientStrength1", m_scene->m_lights[i]->m_ambientStrength);
-			it.second->m_material->m_defaultShader->SetUniformVec3("lightColour1", m_scene->m_lights[i]->m_colour);
-			it.second->m_material->m_defaultShader->SetUniformVec3("lightPos1", m_scene->m_lights[i]->m_position);
+			it.second->m_material->m_defaultShader->SetUniform1f("ambientStrength" + std::to_string(i), m_scene->m_lights[i]->m_ambientStrength);
+			it.second->m_material->m_defaultShader->SetUniformVec3("lightColour" + std::to_string(i), m_scene->m_lights[i]->m_colour);
+			it.second->m_material->m_defaultShader->SetUniformVec3("lightPos" + std::to_string(i), m_scene->m_lights[i]->m_position);
 			it.second->m_material->m_defaultShader->SetUniformMat4("modelMatrix", m_modelMatrix);
 			it.second->m_material->m_defaultShader->SetUniformVec3("viewPos", camera->m_position);
 		}
@@ -151,7 +151,17 @@ int GameObject::GetMeshCount()
 	return m_meshes.size();
 }
 
-void GameObject::Rotate()
+void GameObject::SetPosition(const glm::vec3& pos)
 {
-	m_modelMatrix = glm::rotate(m_modelMatrix, glm::radians(1.f), glm::vec3(0, 1, 0));
+	m_translationMatrix = glm::translate(glm::mat4(1.f), pos);
+	m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
 }
+
+void GameObject::Rotate(const glm::vec3& axis, const float rot)
+{
+	m_rotationMatrix = glm::rotate(m_rotationMatrix, glm::radians(rot), axis);
+	m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
+}
+
+
+
