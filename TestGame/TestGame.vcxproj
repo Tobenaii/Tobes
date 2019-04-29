@@ -65,6 +65,14 @@
       <SubSystem>
       </SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>IF NOT ($(ConfigurationName)) == (Debug) GOTO END
+cd $(SolutionDir)bin\Tobes\x64\Debug
+copy *.dll $(OutDir)
+cd $(SolutionDir)\DLLs
+copy glew32.dll $(OutDir)
+:END</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
