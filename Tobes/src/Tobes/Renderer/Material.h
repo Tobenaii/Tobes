@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Texture.h"
 
-class TOBES_API Material
+class Material
 {
 	friend class GameObject;
 	friend class Renderer;

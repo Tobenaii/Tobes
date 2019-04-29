@@ -4,7 +4,7 @@
 #include "Tobes/Renderer/Light.h"
 #include "Tobes/Renderer/Renderer.h"
 
-class TOBES_API Scene
+class Scene
 {
 	friend class GameObject;
 	friend class Renderer;

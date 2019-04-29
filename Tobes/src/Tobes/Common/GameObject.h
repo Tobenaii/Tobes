@@ -1,19 +1,19 @@
 #pragma once
 #include "Tobes/Renderer/Mesh.h"
 #include "Tobes/Renderer/Renderer.h"
-#include <glm/mat4x4.hpp>
 #include "Tobes/Renderer/Shader.h"
 #include "Tobes/Renderer/Camera.h"
+#include "Tobes/Common/Math.h"
 #include <map>
 
 class Scene;
 
-class TOBES_API GameObject
+class GameObject
 {
 	friend class Scene;
 public:
 	GameObject();
-	GameObject(glm::vec3 position);
+	GameObject(Vector3 position);
 	glm::mat4 GetModelMatrix();
 	void LoadModel(std::string path);
 	void Draw(Renderer* renderer, Camera* camera);

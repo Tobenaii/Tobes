@@ -1,11 +1,10 @@
 #pragma once
-#include "Tobes/Core.h"
 
 struct GLFWwindow;
 struct VertexData;
 class Mesh;
 
-class TOBES_API Renderer
+class Renderer
 {
 private:
 	GLFWwindow* m_window;

@@ -1,9 +1,8 @@
 #pragma once
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
-#include "Tobes/Core.h"
 
-class TOBES_API Camera
+class Camera
 {
 private:
 	glm::mat4 m_projectionMatrix;

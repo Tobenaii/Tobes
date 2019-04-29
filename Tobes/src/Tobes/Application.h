@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Camera.h"
 
@@ -7,7 +6,7 @@ struct GLFWwindow;
 
 namespace Tobes
 {
-	class TOBES_API Application
+	class Application
 	{
 	public:
 		Application();

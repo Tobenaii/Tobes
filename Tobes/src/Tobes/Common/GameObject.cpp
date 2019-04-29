@@ -17,9 +17,9 @@ GameObject::GameObject()
 	m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
 }
 
-GameObject::GameObject(glm::vec3 position)
+GameObject::GameObject(Vector3 position)
 {
-	m_translationMatrix = glm::translate(glm::mat4(1.0f), position);
+	m_translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
 	m_scaleMatrix = glm::mat4(1.0f);
 	m_rotationMatrix = glm::mat4(1.0f);
 	m_modelMatrix = m_translationMatrix * m_rotationMatrix * m_scaleMatrix;
@@ -41,9 +41,9 @@ void GameObject::LoadModel(std::string path)
 	if (buffer.is_open())
 	{
 		std::getline(buffer, line);
-		meshCount = stof(line);
+		meshCount = stoi(line);
 		//Go through each mesh
-		for (int m = 0; m < meshCount; m++)
+		for (unsigned int m = 0; m < meshCount; m++)
 		{
 			//Prepare to get the vertex data
 			unsigned int vertexCount;
@@ -52,10 +52,10 @@ void GameObject::LoadModel(std::string path)
 			std::getline(buffer, line);
 			meshName = line;
 			std::getline(buffer, line);
-			vertexCount = stof(line);
+			vertexCount = stoi(line);
 			vertexData = new Vertex[vertexCount];
 			//Get vertex data
-			for (int i = 0; i < vertexCount; i++)
+			for (unsigned int i = 0; i < vertexCount; i++)
 			{
 				//Get position
 				glm::vec4 pos;
@@ -94,13 +94,13 @@ void GameObject::LoadModel(std::string path)
 			std::getline(buffer, line);
 			unsigned int indexCount;
 			unsigned int* indices;
-			indexCount = stof(line);
+			indexCount = stoi(line);
 			indices = new unsigned int[indexCount];
 			//Get indices
-			for (int i = 0; i < indexCount; i++)
+			for (unsigned int i = 0; i < indexCount; i++)
 			{
 				std::getline(buffer, line);
-				indices[i] = stof(line);
+				indices[i] = stoi(line);
 			}
 			//Create new mesh and set the mesh data
 			Mesh* mesh = new Mesh(vertexData, vertexCount, indices, indexCount);
@@ -132,7 +132,7 @@ void GameObject::Draw(Renderer * renderer, Camera* camera)
 		}
 		//Add each light parameter to corresponding uniform
 		//TODO: This is stupid. Implement deferred lighting later
-		for (int i = 0; i < Scene::MAX_LIGHTS; i++)
+		for (unsigned int i = 0; i < Scene::MAX_LIGHTS; i++)
 		{
 			if (i >= m_scene->m_lights.size())
 				break;
@@ -162,7 +162,7 @@ void GameObject::SetGlobalMaterial(Material * mat)
 
 int GameObject::GetMeshCount()
 {
-	return m_meshes.size();
+	return (int)m_meshes.size();
 }
 
 void GameObject::SetPosition(const glm::vec3& pos)

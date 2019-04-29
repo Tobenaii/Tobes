@@ -3,7 +3,6 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
-#include "Tobes/Core.h"
 #include "Material.h"
 
 struct Vertex
@@ -27,7 +26,7 @@ struct Vertex
 
 class GameObject;
 
-class TOBES_API Mesh
+class Mesh
 {
 	friend class Renderer;
 	friend class GameObject;

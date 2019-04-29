@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
-#include "Tobes/Core.h"
 
-class TOBES_API Texture
+class Texture
 {
 	friend class Renderer;
 	friend class GameObject;

@@ -1,10 +1,9 @@
 #pragma once
 #include <string>
-#include "Tobes/Core.h"
 #include <glm/mat4x4.hpp>
 #include <map>
 
-class TOBES_API Shader
+class Shader
 {
 	friend class Material;
 private:

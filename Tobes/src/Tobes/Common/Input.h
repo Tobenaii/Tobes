@@ -124,9 +124,7 @@ struct GLFWwindow;
 #define 	KeyCode_MENU   348
 #define 	KeyCode_LAST   GLFW_KEY_MENU
 
-#include "Tobes/Core.h"
-
-class TOBES_API Input
+class Input
 {
 public:
 	static Input* GetInstance();
