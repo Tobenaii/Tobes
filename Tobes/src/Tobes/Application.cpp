@@ -4,8 +4,9 @@
 #include "Renderer/Shader.h"
 #include <iostream>
 #include "Tobes/Common/GameObject.h"
-#include "Renderer/Mesh.h"
+#include "Tobes/Renderer/Renderer.h"
 #include "Tobes/Common/Input.h"
+#include "Test.h"
 
 namespace Tobes
 {
@@ -57,7 +58,6 @@ namespace Tobes
 			Input::GetInstance()->Clear();
 			glfwSwapBuffers(m_window);
 		}
-
 	}
 	void Application::Init()
 	{
@@ -66,6 +66,10 @@ namespace Tobes
 		{
 			std::cout << "Failed to initialize glfw" << std::endl;
 		}
+
+		TestEnet* wot = new TestEnet();
+		wot->Init();
+
 		//Set glfw window properties
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

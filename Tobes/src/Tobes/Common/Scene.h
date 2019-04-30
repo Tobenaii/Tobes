@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "GameObject.h"
-#include "Tobes/Renderer/Light.h"
+#include "Tobes/Renderer3D/Light.h"
 #include "Tobes/Renderer/Renderer.h"
 
 class Scene

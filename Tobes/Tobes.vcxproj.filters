@@ -48,9 +48,6 @@
     <ClCompile Include="src\Tobes\Renderer\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tobes\Renderer\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tobes\Renderer\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -64,6 +61,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Tobes\Common\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tobes\Renderer3D\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,13 +113,7 @@
     <ClInclude Include="src\Tobes\Renderer\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Tobes\Renderer\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Tobes\Renderer\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tobes\Renderer\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Renderer\Material.h">
@@ -135,6 +129,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Common\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Renderer3D\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Renderer3D\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Renderer2D\Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Common\Math\Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Common\Math\Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Common\Math\Matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Common\Math\Vector4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

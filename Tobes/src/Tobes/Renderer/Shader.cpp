@@ -4,8 +4,6 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include <glm/common.hpp>
-#include <glm/ext.hpp>
 #include <iterator>
 
 void Shader::LoadVertexShader(const std::string& filePath)
@@ -123,11 +121,11 @@ void Shader::AddKey(std::string key)
 }
 
 //Set uniform data for matrix4
-void Shader::SetUniformMat4(std::string name, glm::mat4 mat)
+void Shader::SetUniformMat4(std::string name, Matrix mat)
 {
 	if (!FindKey(name))
 		AddKey(name);
-	glUniformMatrix4fv(m_uniformIds[name], 1, GL_FALSE, glm::value_ptr(mat));
+	glUniformMatrix4fv(m_uniformIds[name], 1, GL_FALSE, &mat.m11);
 }
 
 //Set uniform data for float
@@ -139,7 +137,7 @@ void Shader::SetUniform1f(std::string name, float value)
 }
 
 //Set uniform data for vector3
-void Shader::SetUniformVec3(std::string name, glm::vec3 vec)
+void Shader::SetUniformVec3(std::string name, Vector3 vec)
 {
 	if (!FindKey(name))
 		AddKey(name);

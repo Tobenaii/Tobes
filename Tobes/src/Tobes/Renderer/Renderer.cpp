@@ -1,7 +1,7 @@
 #include "Renderer.h"
 #include <glew.h>
 #include <GLFW/glfw3.h>
-#include "Mesh.h"
+#include "Tobes/Renderer3D/Mesh.h"
 #include "Tobes/Common/Scene.h"
 
 Renderer::Renderer(GLFWwindow * window)

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <glm/mat4x4.hpp>
+#include "Tobes/Common/Math/Matrix.h"
+#include "Tobes/Common/Math/Vector3.h"
 #include <map>
 
 class Shader
@@ -18,9 +19,9 @@ public:
 	void ApplyShader();
 	unsigned int GetProgramID();
 	void LinkProgram();
-	void SetUniformMat4(std::string name, glm::mat4 mat);
+	void SetUniformMat4(std::string name, Matrix mat);
 	void SetUniform1f(std::string name, float value);
-	void SetUniformVec3(std::string name, glm::vec3 vec);
+	void SetUniformVec3(std::string name, Vector3 vec);
 
 private:
 	char const* GetShaderSource(const std::string& filePath);
