@@ -123,10 +123,6 @@ void GameObject::Draw(Renderer * renderer, Camera* camera)
 			Matrix mvp = camera->GetProjection() * camera->GetView() * m_modelMatrix;
 			mvp = m_modelMatrix * camera->GetView() * camera->GetProjection();
 			it.second->m_material->m_defaultShader->SetUniformMat4("mvp", mvp);
-			for (int i = 0; i < 16; i++)
-			{
-				std::cout << *(&(mvp.m11) + i) << std::endl;
-			}
 		}
 		if (it.second->m_material->m_diffuseMap)
 		{
