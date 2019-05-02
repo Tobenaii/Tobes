@@ -6,7 +6,7 @@
 
 class Scene
 {
-	friend class GameObject;
+	friend class Model;
 	friend class Renderer;
 public:
 	Scene();

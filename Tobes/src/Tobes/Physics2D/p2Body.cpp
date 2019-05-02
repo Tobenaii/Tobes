@@ -18,7 +18,7 @@ p2Body::~p2Body()
 
 
 
-void p2Body::Update(float dt, p2Vec2 gravity)
+void p2Body::Update(float dt, Vector2 gravity)
 {
 	m_collision = nullptr;
 	m_isColliding = false;
@@ -28,11 +28,11 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 	//TODO: Clean this up
 
 	float frictionL = 100 * dt;
-	if (p2Length(m_linearVelocity) > 0)
+	if (Vector2::Length(m_linearVelocity) > 0)
 	{
-		p2Vec2 fDir = p2Normalize(m_linearVelocity) * frictionL;
-		if (p2Length(m_linearVelocity) < p2Length(fDir))
-			m_linearVelocity = p2Vec2(0, 0);
+		Vector2 fDir = Vector2::Normalize(m_linearVelocity) * frictionL;
+		if (Vector2::Length(m_linearVelocity) < Vector2::Length(fDir))
+			m_linearVelocity = Vector2(0, 0);
 		else
 			m_linearVelocity -= fDir;
 	}
@@ -60,13 +60,13 @@ void p2Body::Update(float dt, p2Vec2 gravity)
 	ApplyForce(gravity * m_mass * dt, m_centre);
 }
 
-void p2Body::ApplyForce(const p2Vec2& force, const p2Vec2& point)
+void p2Body::ApplyForce(const Vector2& force, const Vector2& point)
 {
 	if (m_type == p2_kinematicBody)
 		return;
 	m_linearVelocity += force / m_mass;
 	
-	float angularForce = p2Cross(m_centre - point, force * 0.005f);
+	float angularForce = Vector2::Cross(m_centre - point, force * 0.005f);
 	m_angularVelocity += angularForce / m_I;
 }
 

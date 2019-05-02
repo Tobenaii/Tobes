@@ -1,8 +1,9 @@
 #pragma once
 #include "Tobes/Common/Math/Vector3.h"
 #include "Tobes/Common/Math/Matrix.h"
+#include "Tobes/Common/GameObject.h"
 
-class Camera
+class Camera : public GameObject
 {
 private:
 	Matrix m_projectionMatrix;
@@ -14,18 +15,7 @@ private:
 
 public:
 	Camera();
-	Camera(Vector3 pos, Vector3 forward, float aspectRatio, float fov);
-	Vector3 GetPosition();
-	void SetPosition(Vector3 pos);
-	void SetForward(Vector3 forward);
-	void SetAspectRatio(float aspectRatio);
-	void SetFov(float fov);
-	Matrix GetProjection();
-	Matrix GetView();
-	Matrix GetProjectionView();
-	Vector3 GetForward();
-	Vector3 GetRight();
-	Vector3 GetLocalUp();
-	Vector3 m_position;
-	Vector3 m_forward;
+	void SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);
+	void SetOrthographic(float width, float height, float zNearPlane, float zFarPlane);
+	Matrix GetViewProjection();
 };

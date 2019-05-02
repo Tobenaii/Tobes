@@ -1,6 +1,6 @@
 #pragma once
 #include "p2Shape.h"
-#include "p2Math.h"
+#include "Tobes/Common/Math/Vector2.h"
 
 struct p2FixtureDef
 {
@@ -36,8 +36,8 @@ private:
 public:
 	p2Shape* GetShape() const;
 	p2Body* GetBody() const;
-	p2Vec2 GetBodyPos() const;
-	p2Vec2 GetBodyVelocity() const;
+	Vector2 GetBodyPos() const;
+	Vector2 GetBodyVelocity() const;
 	p2MassData* GetMassData() const;
 	p2Shape::Type GetShapeType() { return m_shape->GetType(); }
 };

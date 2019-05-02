@@ -19,25 +19,27 @@ struct Vector3
 	Vector3 operator/(const float& rhs) const { return Vector3(x / rhs, y / rhs, z / rhs); }
 	Vector3 operator/=(const float& rhs) { x /= rhs; y /= rhs; z /= rhs; return *this; }
 	bool operator==(const Vector3& rhs) const { return (x == rhs.x && y == rhs.y && z == rhs.z); }
+
+	static inline float Length(const Vector3& vec3)
+	{
+		return (float)sqrt(vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z);
+	}
+
+	static inline float Dot(const Vector3& p1, const Vector3& p2)
+	{
+		return ((p1.x * p2.x) + (p1.y * p2.y) + (p1.z * p2.z));
+	}
+
+	static inline Vector3 Cross(const Vector3& p1, const Vector3& p2)
+	{
+		return Vector3(p1.y * p2.z - p1.z * p2.y, p1.z * p2.x - p1.x * p2.z, p1.x * p2.y - p1.y * p2.x);
+	}
+
+	static inline Vector3 Normalize(const Vector3& v)
+	{
+		return v / Length(v);
+	}
 };
 
-inline float Length(const Vector3& vec3)
-{
-	return (float)sqrt(vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z);
-}
 
-inline float Dot(const Vector3& p1, const Vector3& p2)
-{
-	return ((p1.x * p2.x) + (p1.y * p2.y) + (p1.z * p2.z));
-}
-
-inline Vector3 Cross(const Vector3& p1, const Vector3& p2)
-{
-	return Vector3(p1.y * p2.z - p1.z * p2.y, p1.z * p2.x - p1.x * p2.z, p1.x * p2.y - p1.y * p2.x);
-}
-
-inline Vector3 Normalize(const Vector3& v)
-{
-	return v / Length(v);
-}
 

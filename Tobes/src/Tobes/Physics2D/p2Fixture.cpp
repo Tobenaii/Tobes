@@ -10,8 +10,8 @@ void p2Fixture::UpdateRotation(float rotation)
 
 	for (int i = 0; i < poly->GetVertexCount(); i++)
 	{
-		p2Vec2 p = poly->m_init[i];
-		poly->SetVertex(i, p2Vec2(p.x * cos(rotation) - p.y * sin(rotation), p.x * sin(rotation) + p.y * cos(rotation)));
+		Vector2 p = poly->m_init[i];
+		poly->SetVertex(i, Vector2(p.x * cos(rotation) - p.y * sin(rotation), p.x * sin(rotation) + p.y * cos(rotation)));
 	}
 }
 
@@ -25,12 +25,12 @@ p2Body * p2Fixture::GetBody() const
 	return m_body;
 }
 
-p2Vec2 p2Fixture::GetBodyPos() const
+Vector2 p2Fixture::GetBodyPos() const
 {
 	return m_body->GetPosition();
 }
 
-p2Vec2 p2Fixture::GetBodyVelocity() const
+Vector2 p2Fixture::GetBodyVelocity() const
 {
 	return m_body->GetVelocity();
 }

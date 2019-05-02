@@ -2,6 +2,7 @@
 
 struct GLFWwindow;
 struct VertexData;
+struct Vector3;
 class Mesh;
 
 class Renderer
@@ -14,4 +15,5 @@ public:
 	void Initialize();
 	void DrawTriangle();
 	void DrawMesh(Mesh* mesh);
+	void DrawLine(Vector3 start, Vector3 end);
 };

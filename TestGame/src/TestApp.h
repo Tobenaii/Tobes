@@ -1,5 +1,6 @@
 #pragma once
 #include <Tobes.h>
+#include <Tobes/Renderer3D/Model.h>
 
 class TestApp : public Tobes::Application
 {
@@ -9,9 +10,9 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw();
 	virtual void Startup();
-	GameObject* m_soulspear;
-	GameObject* lamp1;
-	GameObject* lamp2;
+	Model* m_soulspear;
+	Model* lamp1;
+	Model* lamp2;
 	Scene* m_scene;
 	Light* light1;
 	Light* light2;

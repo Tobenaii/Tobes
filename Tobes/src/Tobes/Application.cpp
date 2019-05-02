@@ -6,7 +6,6 @@
 #include "Tobes/Common/GameObject.h"
 #include "Tobes/Renderer/Renderer.h"
 #include "Tobes/Common/Input.h"
-#include "Test.h"
 
 namespace Tobes
 {
@@ -66,9 +65,6 @@ namespace Tobes
 		{
 			std::cout << "Failed to initialize glfw" << std::endl;
 		}
-
-		TestEnet* wot = new TestEnet();
-		wot->Init();
 
 		//Set glfw window properties
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);

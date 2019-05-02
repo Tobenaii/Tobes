@@ -4,7 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
-p2World::p2World(const p2Vec2 & gravity, const float fixedTimeStep)
+p2World::p2World(const Vector2 & gravity, const float fixedTimeStep)
 {
 	m_gravity = gravity;
 	m_fixedTimeStep = fixedTimeStep;

@@ -66,6 +66,9 @@
     <ClCompile Include="src\Tobes\Renderer3D\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tobes\Renderer3D\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Tobes\Physics2D\p2Body.h">
@@ -81,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Physics2D\p2Fixture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tobes\Physics2D\p2Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Physics2D\p2PolygonShape.h">
@@ -150,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Common\Math\Vector4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tobes\Renderer3D\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

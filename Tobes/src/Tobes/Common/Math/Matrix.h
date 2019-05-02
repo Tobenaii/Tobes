@@ -75,68 +75,153 @@ struct Matrix
 		result.m44 = (((m41 * rhs.m14) + (m42 * rhs.m24)) + (m43 * rhs.m34)) + (m44 * rhs.m44);
 		return result;
 	}
+
+	static inline Matrix CreateRotationX(const float angle)
+	{
+		float s = (float)sin(angle);
+		float c = (float)cos(angle);
+		Matrix result;
+		result.m22 = c;
+		result.m32 = -s;
+		result.m23 = s;
+		result.m33 = c;
+		return result;
+	}
+
+	static inline Matrix CreateRotationY(const float angle)
+	{
+		float s = (float)sin(angle);
+		float c = (float)cos(angle);
+		Matrix result;
+		result.m11 = c;
+		result.m31 = s;
+		result.m13 = -s;
+		result.m33 = c;
+		return result;
+	}
+
+	static inline Matrix CreateRotationZ(const float angle)
+	{
+		float s = (float)sin(angle);
+		float c = (float)cos(angle);
+		Matrix result;
+		result.m11 = c;
+		result.m21 = -s;
+		result.m12 = s;
+		result.m22 = c;
+		return result;
+	}
+
+	static inline Matrix CreateFromAxisAngle(const Vector3& axis, const float angle)
+	{
+		Matrix result;
+		float x = axis.x;
+		float y = axis.y;
+		float z = axis.z;
+		float num2 = (float)sin((double)angle);
+		float num = (float)cos((double)angle);
+		float num11 = x * x;
+		float num10 = y * y;
+		float num9 = z * z;
+		float num8 = x * y;
+		float num7 = x * z;
+		float num6 = y * z;
+		result.m11 = num11 + (num * (1.f - num11));
+		result.m12 = (num8 - (num * num8)) + (num2 * z);
+		result.m13 = (num7 - (num * num7)) - (num2 * y);
+		result.m14 = 0;
+		result.m21 = (num8 - (num * num8)) - (num2 * z);
+		result.m22 = num10 + (num * (1.f - num10));
+		result.m23 = (num6 - (num * num6)) + (num2 * x);
+		result.m24 = 0;
+		result.m31 = (num7 - (num * num7)) + (num2 * y);
+		result.m32 = (num6 - (num * num6)) - (num2 * x);
+		result.m33 = num9 + (num * (1.f - num9));
+		result.m34 = 0;
+		result.m41 = 0;
+		result.m42 = 0;
+		result.m43 = 0;
+		result.m44 = 1;
+		return result;
+	}
+
+	static inline Matrix CreateTranslation(const Vector3& position)
+	{
+		Matrix result;
+		result.m11 = 1;
+		result.m12 = 0;
+		result.m13 = 0;
+		result.m14 = 0;
+		result.m21 = 0;
+		result.m22 = 1;
+		result.m23 = 0;
+		result.m24 = 0;
+		result.m31 = 0;
+		result.m32 = 0;
+		result.m33 = 1;
+		result.m34 = 0;
+		result.m41 = position.x;
+		result.m42 = position.y;
+		result.m43 = position.z;
+		result.m44 = 1;
+		return result;
+	}
+
+	static inline Matrix Perspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
+	{
+		Matrix result;
+		float num = 1.f / ((float)tan((double)(fieldOfView * 0.5f)));
+		float num9 = num / aspectRatio;
+		result.m11 = num9;
+		result.m12 = result.m13 = result.m14 = 0;
+		result.m22 = num;
+		result.m21 = result.m23 = result.m24 = 0;
+		result.m31 = result.m32 = 0.f;
+		result.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+		result.m34 = -1;
+		result.m41 = result.m42 = result.m44 = 0;
+		result.m43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
+		return result;
+	}
+
+	static inline Matrix Orthographic(float width, float height, float zNearPlane, float zFarPlane)
+	{
+		Matrix result;
+		result.m11 = 2.f / width;
+		result.m12 = result.m13 = result.m14 = 0.f;
+		result.m22 = 2.f / height;
+		result.m21 = result.m23 = result.m24 = 0.f;
+		result.m33 = 1.f / (zNearPlane - zFarPlane);
+		result.m31 = result.m32 = result.m34 = 0.f;
+		result.m41 = result.m42 = 0.f;
+		result.m43 = zNearPlane / (zNearPlane - zFarPlane);
+		result.m44 = 1.f;
+		return result;
+	}
+
+	static inline Matrix LookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector)
+	{
+		Matrix result;
+		Vector3 zAxis = Vector3::Normalize(cameraPosition - cameraTarget);
+		Vector3 xAxis = Vector3::Normalize(Vector3::Cross(cameraUpVector, zAxis));
+		Vector3 yAxis = Vector3::Cross(zAxis, xAxis);
+		result.m11 = xAxis.x;
+		result.m12 = yAxis.x;
+		result.m13 = zAxis.x;
+		result.m14 = 0.f;
+		result.m21 = xAxis.y;
+		result.m22 = yAxis.y;
+		result.m23 = zAxis.y;
+		result.m24 = 0.f;
+		result.m31 = xAxis.z;
+		result.m32 = yAxis.z;
+		result.m33 = zAxis.z;
+		result.m34 = 0.f;
+		result.m41 = -Vector3::Dot(xAxis, cameraPosition);
+		result.m42 = -Vector3::Dot(yAxis, cameraPosition);
+		result.m43 = -Vector3::Dot(zAxis, cameraPosition);
+		result.m44 = 1.f;
+		return result;
+	}
 };
 
-inline Matrix Translate(const Vector3& position)
-{
-	Matrix result;
-	result.m11 = 1;
-	result.m12 = 0;
-	result.m13 = 0;
-	result.m14 = 0;
-	result.m21 = 0;
-	result.m22 = 1;
-	result.m23 = 0;
-	result.m24 = 0;
-	result.m31 = 0;
-	result.m32 = 0;
-	result.m33 = 1;
-	result.m34 = 0;
-	result.m41 = position.x;
-	result.m42 = position.y;
-	result.m43 = position.z;
-	result.m44 = 1;
-	return result;
-}
-
-inline Matrix Perspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
-{
-	Matrix result;
-	float num = 1.f / ((float)tan((double)(fieldOfView * 0.5f)));
-	float num9 = num / aspectRatio;
-	result.m11 = num9;
-	result.m12 = result.m13 = result.m14 = 0;
-	result.m22 = num;
-	result.m21 = result.m23 = result.m24 = 0;
-	result.m31 = result.m32 = 0.f;
-	result.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-	result.m34 = -1;
-	result.m41 = result.m42 = result.m44 = 0;
-	result.m43 = (nearPlaneDistance * farPlaneDistance) / (nearPlaneDistance - farPlaneDistance);
-	return result;
-}
-
-inline Matrix LookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector)
-{
-	Matrix result;
-	Vector3 vector = Normalize(cameraPosition - cameraTarget);
-	Vector3 vector2 = Normalize(Cross(cameraUpVector, vector));
-	Vector3 vector3 = Cross(vector, vector2);
-	result.m11 = vector2.x;
-	result.m12 = vector3.x;
-	result.m13 = vector.x;
-	result.m14 = 0.f;
-	result.m21 = vector2.y;
-	result.m22 = vector3.y;
-	result.m23 = vector.y;
-	result.m24 = 0.f;
-	result.m31 = vector2.z;
-	result.m32 = vector3.z;
-	result.m33 = vector.z;
-	result.m34 = 0.f;
-	result.m41 = -Dot(vector2, cameraPosition);
-	result.m42 = -Dot(vector3, cameraPosition);
-	result.m43 = -Dot(vector, cameraPosition);
-	result.m44 = 1.f;
-	return result;
-}

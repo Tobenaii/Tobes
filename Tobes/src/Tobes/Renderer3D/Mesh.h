@@ -29,7 +29,7 @@ class GameObject;
 class Mesh
 {
 	friend class Renderer;
-	friend class GameObject;
+	friend class Model;
 public:
 	Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
 	Mesh(GameObject* gameObject);

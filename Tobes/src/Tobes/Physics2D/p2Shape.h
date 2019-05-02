@@ -1,12 +1,12 @@
 #pragma once
-#include "p2Math.h"
+#include "Tobes/Common/Math/Vector2.h"
 
 struct p2MassData
 {
 	//Mass of shape
 	float mass;
 	//Centre of mass
-	p2Vec2 centre;
+	Vector2 centre;
 	//Moment of inertia
 	float I;
 };

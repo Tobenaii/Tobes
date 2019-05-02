@@ -4,7 +4,7 @@
 
 class Material
 {
-	friend class GameObject;
+	friend class Model;
 	friend class Renderer;
 	friend class Mesh;
 	friend class Scene;
