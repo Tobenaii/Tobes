@@ -6,17 +6,15 @@
 #include <chrono>
 #include "Tobes/Renderer/Material.h"
 
+
 Mesh::Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount)
 {
 	m_vertexData = vertices;
 	m_vertexCount = vertexCount;
 	m_indices = indices;
 	m_indexCount = indexCount;
-}
-
-Mesh::Mesh(GameObject * gameObject)
-{
-	m_gameObject = gameObject;
+	m_material = new Material();
+	m_name = "";
 }
 
 const Vertex* Mesh::GetVertexData()
@@ -55,6 +53,11 @@ void Mesh::SetData()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+}
+
+std::string Mesh::GetName()
+{
+	return m_name;
 }
 
 void Mesh::SetMaterial(Material * mat)

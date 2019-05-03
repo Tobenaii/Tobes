@@ -1,7 +1,8 @@
 #pragma once
+#include "Tobes/Core.h"
 #include "Tobes/Common/Math/Vector3.h"
 
-struct Matrix
+struct TOBES_API Matrix
 {
 	float m11;
 	float m12;
@@ -47,7 +48,7 @@ struct Matrix
 	{
 		for (int i = 0; i < 15; i++)
 		{
-			*(&(m11) + i) = *(ptr + i);
+			*(&(m11)+i) = *(ptr + i);
 		}
 	}
 

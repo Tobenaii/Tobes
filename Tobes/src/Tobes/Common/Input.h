@@ -124,29 +124,47 @@ struct GLFWwindow;
 #define 	KeyCode_MENU   348
 #define 	KeyCode_LAST   GLFW_KEY_MENU
 
+#include <vector>
+#include "Core.h"
+#include "Application.h"
+
 class Input
 {
+	friend class Application;
 public:
-	static Input* GetInstance();
-	bool IsKeyDown(int key);
-	bool WasKeyPressed(int key);
-	double GetMouseDeltaX();
-	double GetMouseDeltaY();
-	void Clear();
+	TOBES_API static Input* GetInstance();
+	TOBES_API bool IsKeyDown(int key);
+	TOBES_API bool WasKeyPressed(int key);
+
+	TOBES_API bool IsButtonDown(int button);
+	TOBES_API bool WasButtonPressed(int button);
+
+	TOBES_API double GetMouseDeltaX();
+	TOBES_API double GetMouseDeltaY();
+	TOBES_API double GetScrollDeltaY();
 
 private:
 	Input();
 
 private:
+	void AddApplication(Application* app);
+	void Clear();
+
 	static Input* m_instance;
 	int* m_curKeys;
 	int* m_prevKeys;
+	int* m_curButtons;
+	int* m_prevButtons;
 
 	bool m_mouseEntered;
 	bool m_firstMouseMove;
 
 	double m_mouseX;
 	double m_prevMouseX;
+
+	double m_scrollY;
+
 	double m_mouseY;
 	double m_prevMouseY;
+	std::vector<Application*> m_applications;
 };

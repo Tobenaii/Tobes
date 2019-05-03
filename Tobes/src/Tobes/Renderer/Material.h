@@ -1,4 +1,6 @@
 #pragma once
+#include "Core.h"
+#include <string>
 #include "Shader.h"
 #include "Texture.h"
 
@@ -8,14 +10,14 @@ class Material
 	friend class Renderer;
 	friend class Mesh;
 	friend class Scene;
-	
+
 public:
-	Material();
-	void SetDiffuseMap(std::string filePath);
-	void LoadDiffuseMap(std::string filePath);
+	TOBES_API Material();
+	TOBES_API void LoadDiffuseMap(std::string filePath);
 
 private:
 	static void LoadDefaultShaders();
 	static Shader* m_defaultShader;
+
 	Texture* m_diffuseMap;
 };

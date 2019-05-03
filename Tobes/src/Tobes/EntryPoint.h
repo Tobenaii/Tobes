@@ -1,10 +1,10 @@
 #pragma once
-extern Tobes::Application* Tobes::CreateApplication();
+extern Application* CreateApplication();
 
 //Main entry point
 int main(int argc, char** argv)
 {
-	auto app = Tobes::CreateApplication();
+	auto app = CreateApplication();
 	app->Run();
 	delete app;
 	return 0;

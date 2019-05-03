@@ -7,9 +7,9 @@ Camera::Camera()
 {
 	GameObject();
 	//Set default values
-	Translate(Vector3(0, 0, -200));
+	Translate(Vector3(0, 0, -10));
 	m_viewMatrix = Matrix::LookAt(GetPosition(), GetPosition() + GetForward(), GetUp());
-	SetPerspective(1.f, 1.0f, 0.1f, 10000.0f);
+	SetPerspective(1.f, 1.0f, 0.1f, 1000000.0f);
 }
 
 void Camera::SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)

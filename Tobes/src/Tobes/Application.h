@@ -1,32 +1,31 @@
 #pragma once
-#include "Renderer/Renderer.h"
-#include "Renderer/Camera.h"
+#include "Tobes/Core.h"
+#include <GLFW/glfw3.h>
+#include "Renderer.h"
+#include "Camera.h"
 
-struct GLFWwindow;
-
-namespace Tobes
+class TOBES_API Application
 {
-	class Application
-	{
-	public:
-		Application();
-		virtual ~Application();
-		void Run();
-		virtual void Startup() {};
-		virtual void Update(float dt) {}
-		virtual void Draw() {}
-		void ClearScreen() {}
+public:
+	Application();
+	virtual ~Application();
+	void Run();
+	virtual void Startup() {};
+	virtual void Update(float dt) {}
+	virtual void Draw() {}
+	virtual void OnFileDrop(int count, const char ** paths) {}
+	void ClearScreen() {}
 
-	private:
-		void Init();
-		void CreateWindow();
-		void Cleanup();
+private:
+	void Init();
+	void CreateWindow();
+	void Cleanup();
 
-	private:
-		GLFWwindow* m_window;
-	protected:
-		Renderer* m_renderer;
-		Camera* m_camera;
-	};
-	Application* CreateApplication();
-}
+private:
+	GLFWwindow* m_window;
+protected:
+	Renderer* m_renderer;
+	Camera* m_camera;
+};
+
+Application* CreateApplication();

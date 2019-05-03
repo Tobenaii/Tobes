@@ -1,33 +1,29 @@
 #pragma once
-#include "Tobes/Renderer3D/Mesh.h"
-#include "Tobes/Renderer/Renderer.h"
-#include "Tobes/Renderer/Shader.h"
-#include "Tobes/Common/Math/Matrix.h"
+#include "Core.h"
+#include "Mesh.h"
+#include "Renderer.h"
+#include "Shader.h"
+#include "Math/Matrix.h"
 #include <map>
 
-class Scene;
 class Camera;
+class Scene;
 
 class GameObject
 {
 	friend class Scene;
 public:
-	GameObject();
-	Matrix GetModelMatrix();
-	
-	virtual void Draw(Renderer* renderer, Camera* camera);
-
-	virtual void Translate(const Vector3& pos);
-	virtual void Rotate(const Vector3& axis, const float angle);
-
-	void SetPosition(const Vector3& pos);
-
-	Vector3 GetPosition();
-	Vector3 GetForward();
-	Vector3 GetRight();
-	Vector3 GetUp();
+	TOBES_API GameObject();
+	TOBES_API virtual void Translate(const Vector3& pos);
+	TOBES_API virtual void Rotate(const Vector3& axis, const float angle);
+	TOBES_API void SetPosition(const Vector3& pos);
+	TOBES_API Vector3 GetPosition();
+	TOBES_API Vector3 GetForward();
+	TOBES_API Vector3 GetRight();
+	TOBES_API Vector3 GetUp();
 
 protected:
+	virtual void Draw(Renderer* renderer, Camera* camera);
 	Matrix m_translationMatrix;
 	Matrix m_scaleMatrix;
 	Matrix m_rotationMatrix;
@@ -37,6 +33,7 @@ protected:
 	Scene* m_scene;
 
 private:
-	Vector3 m_forward;
+	Matrix GetModelMatrix();
+	Vector3 m_forward;  
 	Vector3 m_right;
 };

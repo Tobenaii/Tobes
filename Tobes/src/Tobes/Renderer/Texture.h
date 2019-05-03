@@ -1,18 +1,26 @@
 #pragma once
 #include <string>
+#include "Tobes/Core.h"
+
 
 class Texture
 {
 	friend class Renderer;
 	friend class GameObject;
+	friend class Model;
+	friend class Material;
 public:
-	Texture(std::string filePath);
-	void ApplyTexture(unsigned int slot);
+	TOBES_API Texture(std::string filePath);
 
 private:
+	Texture();
+	void ApplyTexture(unsigned int slot);
+
 	int m_width;
 	int m_height;
 	int m_bpp;
 	unsigned char* m_data;
 	unsigned int m_textureID;
+
+	void GenerateTexture();
 };

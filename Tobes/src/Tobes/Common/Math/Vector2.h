@@ -1,7 +1,8 @@
 #pragma once
 #include <math.h>
+#include "Tobes/Core.h"
 
-struct Vector2
+struct TOBES_API Vector2
 {
 	float x, y;
 
@@ -42,8 +43,6 @@ struct Vector2
 };
 
 
-
-
 struct Rotation
 {
 	Rotation() {}
@@ -61,7 +60,7 @@ struct Rotation
 struct Transform
 {
 	Transform() {}
-	
+
 	Transform(const Vector2& position, const Rotation& rotation) : pos(position), rot(rotation) {}
 
 	Vector2 pos;

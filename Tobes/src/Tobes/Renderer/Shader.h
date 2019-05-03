@@ -1,18 +1,19 @@
 #pragma once
 #include <string>
-#include "Tobes/Common/Math/Matrix.h"
-#include "Tobes/Common/Math/Vector3.h"
+#include "Math/Matrix.h"
+#include "Math/Vector3.h"
 #include <map>
 
 class Shader
 {
 	friend class Material;
+	friend class Model;
 private:
 	unsigned int m_programID = -1;
 	unsigned int m_shaderID;
 	std::string m_source;
 
-public:
+private:
 	Shader() {}
 	void LoadVertexShader(const std::string& filePath);
 	void LoadFragmentShader(const std::string& filePath);
@@ -23,14 +24,13 @@ public:
 	void SetUniform1f(std::string name, float value);
 	void SetUniformVec3(std::string name, Vector3 vec);
 
-private:
 	char const* GetShaderSource(const std::string& filePath);
 	void CompileShader(char const*);
 	void CreateProgram();
 	void AttachShader();
 	bool FindKey(std::string key);
 	void AddKey(std::string key);
-	
+
 private:
 	std::map<std::string, unsigned int> m_uniformIds;
 };

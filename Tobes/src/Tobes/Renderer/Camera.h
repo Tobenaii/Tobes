@@ -1,10 +1,12 @@
 #pragma once
-#include "Tobes/Common/Math/Vector3.h"
-#include "Tobes/Common/Math/Matrix.h"
-#include "Tobes/Common/GameObject.h"
+#include "Math/Vector3.h"
+#include "Math/Matrix.h"
+#include "GameObject.h"
 
 class Camera : public GameObject
 {
+	friend class Model;
+	friend class Application;
 private:
 	Matrix m_projectionMatrix;
 	Matrix m_viewMatrix;
@@ -13,7 +15,7 @@ private:
 	float m_near;
 	float m_far;
 
-public:
+private:
 	Camera();
 	void SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);
 	void SetOrthographic(float width, float height, float zNearPlane, float zFarPlane);

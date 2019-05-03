@@ -1,14 +1,18 @@
 #pragma once
-#include "Tobes/Common/GameObject.h"
+#include "Core.h"
+#include <string>
+#include "Mesh.h"
+#include <vector>
 
 class Model : public GameObject
 {
 public:
-	void LoadModel(std::string path);
-	void SetGlobalMaterial(Material* mat);
-	int GetMeshCount();
-	void Draw(Renderer* renderer, Camera* camera);
+	TOBES_API bool LoadModel(std::string path);
+	TOBES_API void SetGlobalMaterial(Material* mat);
 
 private:
+	int GetMeshCount();
+	Mesh* GetMesh(int index);
+	void Draw(Renderer* renderer, Camera* camera);
 	std::vector<Mesh*> m_meshes;
 };

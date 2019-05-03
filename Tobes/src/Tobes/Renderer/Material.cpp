@@ -1,15 +1,12 @@
 #include "Material.h"
+#include "Shader.h"
+#include "Texture.h"
 
 Shader* Material::m_defaultShader = new Shader();
 
 Material::Material()
 {
-
-}
-
-void Material::SetDiffuseMap(std::string filePath)
-{
-	m_diffuseMap = new Texture(filePath);
+	m_diffuseMap = new Texture();
 }
 
 void Material::LoadDiffuseMap(std::string filePath)

@@ -1,19 +1,18 @@
 #pragma once
+#include "Tobes/Core.h"
+#include "Mesh.h"
 
 struct GLFWwindow;
-struct VertexData;
-struct Vector3;
-class Mesh;
 
 class Renderer
 {
+	friend class Model;
+	friend class Application;
 private:
 	GLFWwindow* m_window;
 
-public:
+private:
 	Renderer(GLFWwindow* window);
 	void Initialize();
-	void DrawTriangle();
 	void DrawMesh(Mesh* mesh);
-	void DrawLine(Vector3 start, Vector3 end);
 };

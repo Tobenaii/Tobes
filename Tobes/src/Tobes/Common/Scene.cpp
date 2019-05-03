@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include <glew.h>
+#include "GameObject.h"
 
 unsigned int Scene::MAX_LIGHTS = 2;
 

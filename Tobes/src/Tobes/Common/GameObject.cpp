@@ -1,12 +1,5 @@
 #include "GameObject.h"
-#include <glew.h>
-#include <GLFW/glfw3.h>
-#include <fstream>
-#include <string>
-#include <iostream>
-#include <chrono>
-#include <math.h>
-#include "Tobes/Renderer/Camera.h"
+#include "Camera.h"
 
 GameObject::GameObject()
 {
@@ -24,7 +17,7 @@ Matrix GameObject::GetModelMatrix()
 
 void GameObject::Draw(Renderer * renderer, Camera * camera)
 {
-	renderer->DrawLine(GetPosition(), GetPosition() + GetRight() * 10);
+	//TODO: Draw debug lines?
 }
 
 void GameObject::Translate(const Vector3& pos)

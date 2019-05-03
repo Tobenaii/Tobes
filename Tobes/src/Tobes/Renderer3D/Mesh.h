@@ -3,7 +3,8 @@
 #include "Tobes/Common/Math/Vector2.h"
 #include "Tobes/Common/Math/Vector3.h"
 #include "Tobes/Common/Math/Vector4.h"
-#include "Tobes/Renderer/Material.h"
+#include "Material.h"
+#include "GameObject.h"
 
 struct Vertex
 {
@@ -24,20 +25,16 @@ struct Vertex
 	Vector3 normal;
 };
 
-class GameObject;
-
 class Mesh
 {
 	friend class Renderer;
 	friend class Model;
-public:
-	Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
-	Mesh(GameObject* gameObject);
-
-	const Vertex* GetVertexData();
-	void SetData();
 
 private:
+	Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
+	const Vertex* GetVertexData();
+	void SetData();
+	std::string GetName();
 	void SetMaterial(Material* mat);
 
 private:
@@ -51,7 +48,8 @@ private:
 	unsigned int m_ibo;
 	unsigned int m_vao;
 
-	Material* m_material;
+	std::string m_name;
 
+	Material* m_material;
 	GameObject* m_gameObject;
 };

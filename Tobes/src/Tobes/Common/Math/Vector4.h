@@ -1,6 +1,7 @@
 #pragma once
+#include "Tobes/Core.h"
 
-struct Vector4
+struct TOBES_API Vector4
 {
 	float x, y, z, w;
 

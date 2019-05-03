@@ -22,36 +22,31 @@ void TestApp::Startup()
 	light1 = new Light();
 	light1->m_colour = Vector3(1.f,1.f,1.f);
 	light1->m_ambientStrength = 0.3f;
-	light1->m_position = Vector3(0.f, 100.f, -200.f);
+	light1->m_position = Vector3(0.f, 0.f,-10.f);
 	m_scene->AddLight(light1);
 
-	Material* material = new Material();
-	material->LoadDiffuseMap(".\\content\\art\\House.jpg");
-
 	m_soulspear = new Model();
-	m_soulspear->LoadModel(".\\content\\art\\House.tbs");
-	m_soulspear->SetGlobalMaterial(material);
+	m_soulspear->LoadModel(".\\content\\art\\soulspear.tbs");
 	m_scene->AddGameObject(m_soulspear);
 }
 
 void TestApp::Update(float dt)
 {
-	if (Input::GetInstance()->IsKeyDown(KeyCode_W))
-		m_camera->Translate(m_camera->GetForward() * dt * 10);
-	if (Input::GetInstance()->IsKeyDown(KeyCode_S))
-		m_camera->Translate(m_camera->GetForward() * -dt * 10);
-	if (Input::GetInstance()->IsKeyDown(KeyCode_D))
-		m_camera->Translate(m_camera->GetRight() * dt * 10);
-	if (Input::GetInstance()->IsKeyDown(KeyCode_A))
-		m_camera->Translate(m_camera->GetRight() * -dt * 10);
-	if (Input::GetInstance()->IsKeyDown(KeyCode_SPACE))
-		m_camera->Translate(Vector3(0,1,0) * dt * 10);
-	if (Input::GetInstance()->IsKeyDown(KeyCode_LEFT_SHIFT))
-		m_camera->Translate(Vector3(0,1,0) * -dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_W))
+	//	m_camera->Translate(m_camera->GetForward() * dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_S))
+	//	m_camera->Translate(m_camera->GetForward() * -dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_D))
+	//	m_camera->Translate(m_camera->GetRight() * dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_A))
+	//	m_camera->Translate(m_camera->GetRight() * -dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_SPACE))
+	//	m_camera->Translate(Vector3(0,1,0) * dt * 10);
+	//if (Input::GetInstance()->IsKeyDown(KeyCode_LEFT_SHIFT))
+	//	m_camera->Translate(Vector3(0,1,0) * -dt * 10);
 
-	m_camera->Rotate(m_camera->GetRight(), Input::GetInstance()->GetMouseDeltaY() * dt * -0.01f);
-	m_camera->Rotate(Vector3(0,1,0), Input::GetInstance()->GetMouseDeltaX() * dt * -0.01f);
-	std::cout << m_camera->GetRight().y << std::endl;
+	//m_camera->Rotate(m_camera->GetRight(), Input::GetInstance()->GetMouseDeltaY() * dt * -0.01f);
+	//m_camera->Rotate(Vector3(0,1,0), Input::GetInstance()->GetMouseDeltaX() * dt * -0.01f);
 }
 
 void TestApp::Draw()

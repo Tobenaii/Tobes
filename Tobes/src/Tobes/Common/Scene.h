@@ -1,20 +1,24 @@
 #pragma once
+#include "Core.h"
 #include <vector>
+#include "Light.h"
 #include "GameObject.h"
-#include "Tobes/Renderer3D/Light.h"
-#include "Tobes/Renderer/Renderer.h"
+#include "Renderer.h"
+
+class Camera;
 
 class Scene
 {
 	friend class Model;
 	friend class Renderer;
 public:
-	Scene();
-	void AddGameObject(GameObject* object);
-	void AddLight(Light* light);
-	void Draw(Renderer* renderer, Camera* camera);
+	TOBES_API Scene();
+	TOBES_API void AddGameObject(GameObject* object);
+	TOBES_API void AddLight(Light* light);
 
 private:
+	void Draw(Renderer* renderer, Camera* camera);
+
 	std::vector<GameObject*> m_gameObjects;
 	std::vector<Light*> m_lights;
 	unsigned int m_ambientID;
