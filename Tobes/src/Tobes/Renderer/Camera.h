@@ -1,7 +1,8 @@
 #pragma once
-#include "Math/Vector3.h"
-#include "Math/Matrix.h"
-#include "GameObject.h"
+#include "Tobes/Common/Math/Vector3.h"
+#include "Tobes/Common/Math/Matrix.h"
+#include "Tobes/Core.h"
+#include "Tobes/Common/GameObject.h"
 
 namespace Tobes
 {

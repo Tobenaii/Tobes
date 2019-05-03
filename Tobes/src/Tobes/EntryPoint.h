@@ -1,5 +1,5 @@
 #pragma once
-extern Application* CreateApplication();
+extern Tobes::Application* CreateApplication();
 
 //Main entry point
 int main(int argc, char** argv)

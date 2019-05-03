@@ -1,9 +1,9 @@
 #include "Renderer.h"
 #include <glew.h>
 #include <GLFW/glfw3.h>
-#include "Mesh.h"
-#include "Scene.h"
-#include "Math/Vector3.h"
+#include "Tobes/Renderer3D/Mesh.h"
+#include "Tobes/Common/Scene.h"
+#include "Tobes/Renderer/Material.h"
 
 namespace Tobes
 {

@@ -3,9 +3,9 @@
 #include <GLFW/glfw3.h>
 #include "Renderer/Shader.h"
 #include <iostream>
-#include "GameObject.h"
-#include "Renderer.h"
-#include "Camera.h"
+#include "Tobes/Common/GameObject.h"
+#include "Tobes/Renderer/Renderer.h"
+#include "Tobes/Renderer/Camera.h"
 #include "Tobes/Common/Input.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"

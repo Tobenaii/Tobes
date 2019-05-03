@@ -125,8 +125,7 @@ struct GLFWwindow;
 #define 	KeyCode_LAST   GLFW_KEY_MENU
 
 #include <vector>
-#include "Core.h"
-#include "Application.h"
+#include "Tobes/Core.h"
 
 namespace Tobes
 {

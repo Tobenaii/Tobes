@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 #include <iterator>
+#include "Tobes/Common/Math/Matrix.h"
+#include "Tobes/Common/Math/Vector3.h"
 
 namespace Tobes
 {

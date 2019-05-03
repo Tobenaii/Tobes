@@ -1,9 +1,6 @@
 #pragma once
-#include "Core.h"
+#include "Tobes/Core.h"
 #include <vector>
-#include "Light.h"
-#include "GameObject.h"
-#include "Renderer.h"
 
 namespace Tobes
 {

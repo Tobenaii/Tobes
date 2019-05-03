@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "Camera.h"
+#include "Tobes/Renderer/Camera.h"
 
 namespace Tobes
 {

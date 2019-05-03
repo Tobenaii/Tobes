@@ -1,7 +1,7 @@
 #pragma once
-#include "Core.h"
+#include "Tobes/Core.h"
 #include <string>
-#include "Mesh.h"
+#include "Tobes/Common/GameObject.h" 
 #include <vector>
 
 namespace Tobes

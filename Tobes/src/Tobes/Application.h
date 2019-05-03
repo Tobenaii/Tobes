@@ -1,8 +1,7 @@
 #pragma once
 #include "Tobes/Core.h"
-#include <GLFW/glfw3.h>
-#include "Renderer.h"
-#include "Camera.h"
+
+struct GLFWwindow;
 
 namespace Tobes
 {

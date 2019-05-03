@@ -1,11 +1,9 @@
 #pragma once
 #include <vector>
+#include "Tobes/Core.h"
 #include "Tobes/Common/Math/Vector2.h"
 #include "Tobes/Common/Math/Vector3.h"
 #include "Tobes/Common/Math/Vector4.h"
-#include "Material.h"
-#include "GameObject.h"
-
 namespace Tobes
 {
 	struct Vertex

@@ -1,6 +1,6 @@
 #include "ContentPipeline.h"
 
-Tobes::Application* Tobes::CreateApplication()
+Tobes::Application* CreateApplication()
 {
 	return new ContentPipeline();
 }

@@ -1,10 +1,13 @@
 #include "Model.h"
-#include "Renderer.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "Shader.h"
-#include "Camera.h"
-#include "Scene.h"
+#include "Tobes/Renderer/Renderer.h"
+#include "Tobes/Renderer3D/Mesh.h"
+#include "Tobes/Renderer/Material.h"
+#include "Tobes/Renderer/Shader.h"
+#include "Tobes/Renderer/Camera.h"
+#include "Tobes/Common/Scene.h"
+#include "Tobes/Content/ContentManager.h"
+#include "Tobes/Renderer/Texture.h"
+#include "Tobes/Renderer3D/Light.h"
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -14,6 +17,9 @@ namespace Tobes
 {
 	bool Model::LoadModel(std::string path)
 	{
+		
+		ContentManager* content = new ContentManager();
+		std::string file = content->LoadFile(path);
 		//Start the clock to see how long the load took
 		std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 		std::ifstream buffer(path, std::ios::in | std::ios::binary);

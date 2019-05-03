@@ -1,8 +1,6 @@
 #pragma once
-#include "Core.h"
+#include "Tobes/Core.h"
 #include <string>
-#include "Shader.h"
-#include "Texture.h"
 
 namespace Tobes
 {

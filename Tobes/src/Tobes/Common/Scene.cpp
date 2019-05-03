@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "GameObject.h"
+#include "Tobes/Renderer3D/Light.h"
 
 namespace Tobes
 {

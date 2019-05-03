@@ -61,7 +61,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src/Tobes;$(ProjectDir)src/Tobes/Renderer3D;$(ProjectDir)src/Tobes/Renderer;$(ProjectDir)src/Tobes/Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -82,7 +83,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)src/Tobes;$(ProjectDir)src/Tobes/Renderer3D;$(ProjectDir)src/Tobes/Renderer;$(ProjectDir)src/Tobes/Common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -93,6 +95,8 @@
   <ItemGroup>
     <ClCompile Include="src\Tobes\Application.cpp" />
     <ClCompile Include="src\Tobes\Common\GameObject.cpp" />
+    <ClCompile Include="src\Tobes\Content\ContentManager.cpp" />
+    <ClCompile Include="src\Tobes\Content\ModelFile.cpp" />
     <ClCompile Include="src\Tobes\imgui\imgui.cpp" />
     <ClCompile Include="src\Tobes\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\Tobes\imgui\imgui_draw.cpp" />
@@ -117,6 +121,9 @@
     <ClInclude Include="src\Tobes\Common\Math\Vector2.h" />
     <ClInclude Include="src\Tobes\Common\Math\Vector3.h" />
     <ClInclude Include="src\Tobes\Common\Math\Vector4.h" />
+    <ClInclude Include="src\Tobes\Content\ContentManager.h" />
+    <ClInclude Include="src\Tobes\Content\File.h" />
+    <ClInclude Include="src\Tobes\Content\ModelFile.h" />
     <ClInclude Include="src\Tobes\Core.h" />
     <ClInclude Include="src\Tobes\imgui\imconfig.h" />
     <ClInclude Include="src\Tobes\imgui\imgui.h" />

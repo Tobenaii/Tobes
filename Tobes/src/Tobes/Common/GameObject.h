@@ -1,9 +1,6 @@
 #pragma once
-#include "Core.h"
-#include "Mesh.h"
-#include "Renderer.h"
-#include "Shader.h"
-#include "Math/Matrix.h"
+#include "Tobes/Core.h"
+#include "Tobes/Common/Math/Matrix.h"
 #include <map>
 
 namespace Tobes

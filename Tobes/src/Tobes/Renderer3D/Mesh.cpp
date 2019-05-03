@@ -61,7 +61,7 @@ namespace Tobes
 		return m_name;
 	}
 
-	void Mesh::SetMaterial(Material * mat)
+	void Mesh::SetMaterial(Material* mat)
 	{
 		m_material = mat;
 	}
