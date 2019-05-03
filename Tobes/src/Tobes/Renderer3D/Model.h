@@ -4,15 +4,18 @@
 #include "Mesh.h"
 #include <vector>
 
-class Model : public GameObject
+namespace Tobes
 {
-public:
-	TOBES_API bool LoadModel(std::string path);
-	TOBES_API void SetGlobalMaterial(Material* mat);
+	class Model : public GameObject
+	{
+	public:
+		TOBES_API bool LoadModel(std::string path);
+		TOBES_API void SetGlobalMaterial(Material* mat);
 
-private:
-	int GetMeshCount();
-	Mesh* GetMesh(int index);
-	void Draw(Renderer* renderer, Camera* camera);
-	std::vector<Mesh*> m_meshes;
-};
+	private:
+		int GetMeshCount();
+		Mesh* GetMesh(int index);
+		void Draw(Renderer* renderer, Camera* camera);
+		std::vector<Mesh*> m_meshes;
+	};
+}

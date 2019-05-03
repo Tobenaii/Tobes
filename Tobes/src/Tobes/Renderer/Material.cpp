@@ -2,22 +2,25 @@
 #include "Shader.h"
 #include "Texture.h"
 
-Shader* Material::m_defaultShader = new Shader();
-
-Material::Material()
+namespace Tobes
 {
-	m_diffuseMap = new Texture();
-}
+	Shader* Material::m_defaultShader = new Shader();
 
-void Material::LoadDiffuseMap(std::string filePath)
-{
-	Texture* texture = new Texture(filePath);
-	m_diffuseMap = texture;
-}
+	Material::Material()
+	{
+		m_diffuseMap = new Texture();
+	}
 
-void Material::LoadDefaultShaders()
-{
-	m_defaultShader->LoadVertexShader(".\\content\\shaders\\vertex.txt");
-	m_defaultShader->LoadFragmentShader(".\\content\\shaders\\frag.txt");
-	m_defaultShader->LinkProgram();
+	void Material::LoadDiffuseMap(std::string filePath)
+	{
+		Texture* texture = new Texture(filePath);
+		m_diffuseMap = texture;
+	}
+
+	void Material::LoadDefaultShaders()
+	{
+		m_defaultShader->LoadVertexShader(".\\content\\shaders\\vertex.txt");
+		m_defaultShader->LoadFragmentShader(".\\content\\shaders\\frag.txt");
+		m_defaultShader->LinkProgram();
+	}
 }

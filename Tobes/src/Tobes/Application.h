@@ -4,28 +4,31 @@
 #include "Renderer.h"
 #include "Camera.h"
 
-class TOBES_API Application
+namespace Tobes
 {
-public:
-	Application();
-	virtual ~Application();
-	void Run();
-	virtual void Startup() {};
-	virtual void Update(float dt) {}
-	virtual void Draw() {}
-	virtual void OnFileDrop(int count, const char ** paths) {}
-	void ClearScreen() {}
+	class TOBES_API Application
+	{
+	public:
+		Application();
+		virtual ~Application();
+		void Run();
+		virtual void Startup() {};
+		virtual void Update(float dt) {}
+		virtual void Draw() {}
+		virtual void OnFileDrop(int count, const char ** paths) {}
+		void ClearScreen() {}
 
-private:
-	void Init();
-	void CreateWindow();
-	void Cleanup();
+	private:
+		void Init();
+		void CreateWindow();
+		void Cleanup();
 
-private:
-	GLFWwindow* m_window;
-protected:
-	Renderer* m_renderer;
-	Camera* m_camera;
-};
+	private:
+		GLFWwindow* m_window;
+	protected:
+		Renderer* m_renderer;
+		Camera* m_camera;
+	};
 
-Application* CreateApplication();
+	Application* CreateApplication();
+}
