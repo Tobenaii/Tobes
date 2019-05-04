@@ -129,6 +129,11 @@ namespace Tobes
 		}
 	}
 
+	void Model::SetMeshMaterial(int mesh, Material * mat)
+	{
+		GetMesh(mesh)->SetMaterial(mat);
+	}
+
 	int Model::GetMeshCount()
 	{
 		return (int)m_meshes.size();

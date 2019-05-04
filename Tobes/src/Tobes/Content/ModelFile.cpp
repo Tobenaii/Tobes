@@ -13,7 +13,7 @@ namespace Tobes
 		//Start clock to get load time
 		std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 		//Load file using assimp
-		m_scene = aiImportFile((filePath).c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+		m_scene = aiImportFile((filePath).c_str(), aiProcessPreset_TargetRealtime_Fast);
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count();
 		std::cout << duration << std::endl;

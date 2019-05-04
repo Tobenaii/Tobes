@@ -14,6 +14,7 @@ namespace Tobes
 	public:
 		TOBES_API Material();
 		TOBES_API void LoadDiffuseMap(std::string filePath);
+		TOBES_API void SetDiffuseMap(Texture* texture);
 
 	private:
 		static void LoadDefaultShaders();

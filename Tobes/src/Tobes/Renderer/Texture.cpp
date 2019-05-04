@@ -19,6 +19,11 @@ namespace Tobes
 		GenerateTexture();
 	}
 
+	unsigned int Texture::GetTextureID()
+	{
+		return m_textureID;
+	}
+
 	Texture::Texture()
 	{
 		m_data = new unsigned char[4];

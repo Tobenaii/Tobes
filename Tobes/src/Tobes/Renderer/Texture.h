@@ -12,6 +12,7 @@ namespace Tobes
 		friend class Material;
 	public:
 		TOBES_API Texture(std::string filePath);
+		TOBES_API unsigned int GetTextureID();
 
 	private:
 		Texture();

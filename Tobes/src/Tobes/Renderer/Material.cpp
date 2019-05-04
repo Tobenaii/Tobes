@@ -14,6 +14,11 @@ namespace Tobes
 	void Material::LoadDiffuseMap(std::string filePath)
 	{
 		Texture* texture = new Texture(filePath);
+		SetDiffuseMap(texture);
+	}
+
+	void Material::SetDiffuseMap(Texture * texture)
+	{
 		m_diffuseMap = texture;
 	}
 

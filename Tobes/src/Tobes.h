@@ -7,3 +7,7 @@
 #include "Tobes/Renderer3D/Model.h"
 #include "Tobes/Renderer3D/Light.h"
 #include "Tobes/Renderer3D/Mesh.h"
+#include "Tobes/Content/ContentManager.h"
+#include "Tobes/Renderer/Texture.h"
+#include "Tobes/Renderer/Material.h"
+#include "Tobes/imgui/imgui.h"

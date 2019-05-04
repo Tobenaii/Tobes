@@ -1,20 +1,25 @@
 #pragma once
 #include <string>
+#include "Tobes/Core.h"
 
 namespace Tobes
 {
 	class File;
-
 	class ContentManager
 	{
+		friend class Model;
 	public:
-		std::string LoadFile(std::string filePath);
 		void SaveFile();
+		TOBES_API static bool CheckModelFile(std::string path);
+		TOBES_API static bool CheckImageFile(std::string path);
 
 	private:
 		File* m_file;
-		const std::string m_supportedImageTypes[3]{ ".png", ".jpg", ".tga" };
-		const std::string m_supportedModelTypes[3]{ ".obj", ".fbx", ".FBX" };
+		static const char* m_supportedImageTypes[3];
+		static const char* m_supportedModelTypes[4];
 		std::string m_fileName;
+
+	private:
+		std::string LoadFile(std::string filePath);
 	};
 }
