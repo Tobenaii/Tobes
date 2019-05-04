@@ -1,7 +1,9 @@
 #pragma once
-
 #include "Tobes/Application.h"
 #include "Tobes/EntryPoint.h"
 #include "Tobes/Common/GameObject.h"
 #include "Tobes/Common/Scene.h"
 #include "Tobes/Common/Input.h"
+#include "Tobes/Renderer3D/Model.h"
+#include "Tobes/Renderer3D/Light.h"
+#include "Tobes/Renderer3D/Mesh.h"

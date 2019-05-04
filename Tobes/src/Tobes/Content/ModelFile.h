@@ -1,5 +1,6 @@
 #pragma once
 #include "File.h"
+#include "Tobes/Core.h"
 
 struct aiScene;
 namespace Tobes
@@ -11,6 +12,6 @@ namespace Tobes
 		virtual void LoadFile(std::string filePath);
 		virtual std::vector<std::string>* GetData();
 		int m_dataBufferSize;
-		~ModelFile();
+		TOBES_API ~ModelFile();
 	};
 }

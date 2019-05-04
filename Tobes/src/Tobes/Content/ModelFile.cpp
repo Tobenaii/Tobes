@@ -2,7 +2,6 @@
 #include <assimp/scene.h>
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
-#include <filesystem>
 #include "ContentManager.h"
 #include <chrono>
 #include <iostream>
@@ -11,15 +10,6 @@ namespace Tobes
 {
 	void ModelFile::LoadFile(std::string filePath)
 	{
-		std::filesystem::path p = filePath;
-		if (p.extension() != ".tbs")
-		{
-			ContentManager* content = new ContentManager();
-			filePath = content->LoadFile(filePath);
-			if (filePath == "")
-				return;
-		}
-
 		//Start clock to get load time
 		std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 		//Load file using assimp
@@ -89,7 +79,6 @@ namespace Tobes
 
 	ModelFile::~ModelFile()
 	{
-		delete m_scene;
 	}
 }
 

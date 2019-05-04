@@ -65,4 +65,10 @@ namespace Tobes
 	{
 		m_material = mat;
 	}
+	Mesh::~Mesh()
+	{
+		delete[] m_vertexData;
+		delete[] m_indices;
+		delete m_material;
+	}
 }

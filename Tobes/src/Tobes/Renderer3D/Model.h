@@ -11,11 +11,13 @@ namespace Tobes
 	public:
 		TOBES_API bool LoadModel(std::string path);
 		TOBES_API void SetGlobalMaterial(Material* mat);
+		TOBES_API int GetMeshCount();
+		TOBES_API Mesh* GetMesh(int index);
 
 	private:
-		int GetMeshCount();
-		Mesh* GetMesh(int index);
-		void Draw(Renderer* renderer, Camera* camera);
+
+		TOBES_API ~Model();
+		TOBES_API void Draw(Renderer* renderer, Camera* camera);
 		std::vector<Mesh*> m_meshes;
 	};
 }

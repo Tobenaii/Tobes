@@ -154,6 +154,11 @@ copy *.dll $(OutDir)
   <ItemGroup>
     <ClCompile Include="src\ContentPipeline.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tobes\Tobes.vcxproj">
+      <Project>{f62be669-1276-4e27-9f86-5842243a74b4}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

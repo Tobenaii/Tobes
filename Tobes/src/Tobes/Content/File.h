@@ -10,6 +10,6 @@ namespace Tobes
 		virtual void LoadFile(std::string filePath) = 0;
 		std::vector<std::string>* m_dataBuffer = new std::vector<std::string>();
 		virtual std::vector<std::string>* GetData() { return nullptr; }
-		virtual ~File() {}
+		virtual ~File();
 	};
 }

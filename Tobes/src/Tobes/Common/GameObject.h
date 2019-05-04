@@ -29,6 +29,7 @@ namespace Tobes
 		unsigned int m_matrixID;
 		unsigned int m_samplerID;
 		Scene* m_scene;
+		TOBES_API virtual ~GameObject();
 
 	private:
 		Matrix GetModelMatrix();

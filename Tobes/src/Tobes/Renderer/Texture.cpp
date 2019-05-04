@@ -37,6 +37,11 @@ namespace Tobes
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 	}
 
+	Texture::~Texture()
+	{
+		delete[] m_data;
+	}
+
 	void Texture::GenerateTexture()
 	{
 		//Generate and bind texture buffer 

@@ -16,6 +16,7 @@ namespace Tobes
 	private:
 		Texture();
 		void ApplyTexture(unsigned int slot);
+		~Texture();
 
 		int m_width;
 		int m_height;

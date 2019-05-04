@@ -18,6 +18,7 @@ namespace Tobes
 	private:
 		static void LoadDefaultShaders();
 		static Shader* m_defaultShader;
+		~Material();
 
 		Texture* m_diffuseMap;
 	};

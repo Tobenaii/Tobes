@@ -30,12 +30,15 @@ namespace Tobes
 		friend class Renderer;
 		friend class Model;
 
+	public:
+		TOBES_API std::string GetName();
+
 	private:
 		Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
 		const Vertex* GetVertexData();
 		void SetData();
-		std::string GetName();
 		void SetMaterial(Material* mat);
+		~Mesh();
 
 	private:
 		Vertex* m_vertexData;

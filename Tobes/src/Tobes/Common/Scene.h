@@ -13,10 +13,11 @@ namespace Tobes
 	public:
 		TOBES_API Scene();
 		TOBES_API void AddGameObject(GameObject* object);
+		TOBES_API void RemoveGameObject(GameObject* object);
 		TOBES_API void AddLight(Light* light);
+		TOBES_API void Draw(Renderer* renderer, Camera* camera);
 
 	private:
-		void Draw(Renderer* renderer, Camera* camera);
 
 		std::vector<GameObject*> m_gameObjects;
 		std::vector<Light*> m_lights;

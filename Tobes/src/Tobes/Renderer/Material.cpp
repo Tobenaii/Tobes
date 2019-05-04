@@ -23,4 +23,8 @@ namespace Tobes
 		m_defaultShader->LoadFragmentShader(".\\content\\shaders\\frag.txt");
 		m_defaultShader->LinkProgram();
 	}
+	Material::~Material()
+	{
+		delete m_diffuseMap;
+	}
 }

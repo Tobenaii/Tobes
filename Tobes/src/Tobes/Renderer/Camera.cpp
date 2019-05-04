@@ -7,7 +7,6 @@ namespace Tobes
 {
 	Camera::Camera()
 	{
-		GameObject();
 		//Set default values
 		Translate(Vector3(0, 0, -10));
 		m_viewMatrix = Matrix::LookAt(GetPosition(), GetPosition() + GetForward(), GetUp());

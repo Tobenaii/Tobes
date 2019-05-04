@@ -29,11 +29,13 @@ namespace Tobes
 	{
 		if (!m_file)
 			return;
+		m_file->GetData();
 		//Save data buffer to file
 		std::vector<std::string>* data = m_file->GetData();
 		std::ofstream file(m_fileName, std::ios::out | std::ios::binary);
 		std::ostream_iterator<std::string> iterator(file, "\n");
 		std::copy(data->begin(), data->end(), iterator);
 		file.close();
+		delete m_file;
 	}
 }

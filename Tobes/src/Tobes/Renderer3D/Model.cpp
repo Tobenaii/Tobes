@@ -8,6 +8,7 @@
 #include "Tobes/Content/ContentManager.h"
 #include "Tobes/Renderer/Texture.h"
 #include "Tobes/Renderer3D/Light.h"
+#include <filesystem>
 #include <iostream>
 #include <chrono>
 #include <fstream>
@@ -17,9 +18,15 @@ namespace Tobes
 {
 	bool Model::LoadModel(std::string path)
 	{
-		
-		ContentManager* content = new ContentManager();
-		std::string file = content->LoadFile(path);
+		std::filesystem::path p = path;
+		if (p.extension() != ".tbs")
+		{
+			ContentManager* content = new ContentManager();
+			path = content->LoadFile(path);
+			if (path == "")
+				return false;
+			content->SaveFile();
+		}
 		//Start the clock to see how long the load took
 		std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 		std::ifstream buffer(path, std::ios::in | std::ios::binary);
@@ -42,6 +49,8 @@ namespace Tobes
 					std::string meshName;
 					std::getline(buffer, line);
 					meshName = line;
+					if (meshName == "")
+						meshName = "Mesh: " + std::to_string(m + 1);
 					std::getline(buffer, line);
 					vertexCount = stoi(line);
 					vertexData = new Vertex[vertexCount];
@@ -130,6 +139,12 @@ namespace Tobes
 		if (index < 0 || index >= GetMeshCount())
 			return nullptr;
 		return m_meshes[index];
+	}
+
+	Model::~Model()
+	{
+		m_meshes.clear();
+		m_meshes.shrink_to_fit();
 	}
 
 	void Model::Draw(Renderer * renderer, Camera* camera)

@@ -12,6 +12,10 @@ namespace Tobes
 		m_modelMatrix = m_scaleMatrix * m_rotationMatrix * m_translationMatrix;
 	}
 
+	GameObject::~GameObject()
+	{
+	}
+
 	Matrix GameObject::GetModelMatrix()
 	{
 		return m_modelMatrix;

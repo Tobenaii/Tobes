@@ -1,6 +1,9 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "Tobes/Renderer3D/Light.h"
+#include "Tobes/Renderer/Renderer.h"
+#include "Tobes/Renderer/Camera.h"
+#include <algorithm>
 
 namespace Tobes
 {
@@ -14,6 +17,12 @@ namespace Tobes
 	{
 		m_gameObjects.push_back(object);
 		object->m_scene = this;
+	}
+
+	void Scene::RemoveGameObject(GameObject* object)
+	{
+		delete object;
+		m_gameObjects.erase(std::remove(m_gameObjects.begin(), m_gameObjects.end(), object), m_gameObjects.end());
 	}
 
 	void Scene::AddLight(Light* light)
