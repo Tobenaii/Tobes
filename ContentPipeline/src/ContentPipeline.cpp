@@ -8,13 +8,11 @@ Tobes::Application* CreateApplication()
 
 void ContentPipeline::Startup()
 {
-	m_scene = new Tobes::Scene();
 	Tobes::Light* light = new Tobes::Light();
 	light->ambientStrength = 0.3f;
 	light->colour = Vector3(1, 1, 1);
 	light->direction = Vector3(0, 0, 1);
 	light->position = Vector3(0, 0, -100);
-	m_scene->AddLight(light);
 }
 
 void ContentPipeline::OnFileDrop(int count, const char ** paths)
@@ -89,10 +87,10 @@ void ContentPipeline::Update(float dt)
 		return;
 	double scroll = input->GetScrollDeltaY();
 	if (scroll != 0)
-		m_currentModel->Translate(Vector3(0, 0, scroll));
+		m_currentModel->Translate(Vector3(0, 0, (float)scroll));
 
-	float mouseDeltaX = input->GetMouseDeltaX();
-	float mouseDeltaY = input->GetMouseDeltaY();
+	float mouseDeltaX = (float)input->GetMouseDeltaX();
+	float mouseDeltaY = (float)input->GetMouseDeltaY();
 
 	if (input->IsButtonDown(0))
 	{

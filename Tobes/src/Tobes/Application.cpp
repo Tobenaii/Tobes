@@ -7,12 +7,15 @@
 #include "Tobes/Renderer/Renderer.h"
 #include "Tobes/Renderer/Camera.h"
 #include "Tobes/Common/Input.h"
+#include "Tobes/Common/Scene.h"
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
 namespace Tobes
 {
+	Scene* Application::m_scene = nullptr;
+
 	Application::Application()
 	{
 
@@ -34,8 +37,8 @@ namespace Tobes
 		//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		//Initialize everything
-		m_camera = new Camera();
 		m_renderer = new Renderer(m_window);
+		m_scene = new Scene();
 		m_renderer->Initialize();
 		std::cout << "OpenGL Version: ";
 		const char* version = "#version 130";
@@ -48,6 +51,8 @@ namespace Tobes
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
+		GameObject* camera = new GameObject();
+		m_camera = camera->AddComponent<Camera>();
 		//Main Program Loop
 		Startup();
 
@@ -76,6 +81,12 @@ namespace Tobes
 			glfwSwapBuffers(m_window);
 		}
 	}
+
+	Scene * Application::GetCurrentScene()
+	{
+		return m_scene;
+	}
+
 	void Application::Init()
 	{
 		std::cout << "Starting Tobes" << std::endl;
@@ -99,6 +110,11 @@ namespace Tobes
 	{
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
+	}
+
+	void Application::Draw()
+	{
+		m_scene->Draw(m_renderer, m_camera);
 	}
 }
 

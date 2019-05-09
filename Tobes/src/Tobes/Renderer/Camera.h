@@ -2,14 +2,19 @@
 #include "Tobes/Common/Math/Vector3.h"
 #include "Tobes/Common/Math/Matrix.h"
 #include "Tobes/Core.h"
-#include "Tobes/Common/GameObject.h"
+#include "Tobes/Common/Component.h"
 
 namespace Tobes
 {
-	class Camera : public GameObject
+	class Camera : public Component
 	{
 		friend class Model;
 		friend class Application;
+
+	public:
+		TOBES_API void SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);
+		TOBES_API void SetOrthographic(float width, float height, float zNearPlane, float zFarPlane);
+
 	private:
 		Matrix m_projectionMatrix;
 		Matrix m_viewMatrix;
@@ -19,9 +24,8 @@ namespace Tobes
 		float m_far;
 
 	private:
-		Camera();
-		void SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);
-		void SetOrthographic(float width, float height, float zNearPlane, float zFarPlane);
 		Matrix GetViewProjection();
+	public:
+		virtual void Start();
 	};
 }

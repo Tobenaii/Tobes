@@ -1,39 +1,42 @@
 #pragma once
 #include "Tobes/Core.h"
 #include "Tobes/Common/Math/Matrix.h"
+#include "Tobes/Common/Component.h"
+#include <vector>
 #include <map>
 
 namespace Tobes
 {
-	class Camera;
-	class Scene;
+	class Transform;
 	class GameObject
 	{
 		friend class Scene;
+		friend class Application;
 	public:
 		TOBES_API GameObject();
-		TOBES_API virtual void Translate(const Vector3& pos);
-		TOBES_API virtual void Rotate(const Vector3& axis, const float angle);
-		TOBES_API void SetPosition(const Vector3& pos);
-		TOBES_API Vector3 GetPosition();
-		TOBES_API Vector3 GetForward();
-		TOBES_API Vector3 GetRight();
-		TOBES_API Vector3 GetUp();
+		TOBES_API ~GameObject();
+		template<class T>
+		inline T* AddComponent()
+		{
+			T* component = new T();
+			component->m_scene = m_scene;
+			component->m_gameObject = this;
+			component->m_transform = m_transform;
+			component->Start();
+			m_components.push_back(component);
+			return component;
+		}
 
-	protected:
+	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
-		Matrix m_translationMatrix;
-		Matrix m_scaleMatrix;
-		Matrix m_rotationMatrix;
-		Matrix m_modelMatrix;
+		virtual void Update(float dt);
 		unsigned int m_matrixID;
 		unsigned int m_samplerID;
 		Scene* m_scene;
-		TOBES_API virtual ~GameObject();
 
 	private:
 		Matrix GetModelMatrix();
-		Vector3 m_forward;
-		Vector3 m_right;
+		Transform* m_transform;
+		std::vector<Component*> m_components;
 	};
 }

@@ -15,6 +15,7 @@ namespace Tobes
 	class Application;
 	class File;
 	class Material;
+	class Component;
 }
 
 #ifdef TB_BUILD_DLL

@@ -140,8 +140,8 @@ namespace Tobes
 		TOBES_API bool IsButtonDown(int button);
 		TOBES_API bool WasButtonPressed(int button);
 
-		TOBES_API double GetMouseDeltaX();
-		TOBES_API double GetMouseDeltaY();
+		TOBES_API float GetMouseDeltaX();
+		TOBES_API float GetMouseDeltaY();
 		TOBES_API double GetScrollDeltaY();
 
 	private:
@@ -160,13 +160,13 @@ namespace Tobes
 		bool m_mouseEntered;
 		bool m_firstMouseMove;
 
-		double m_mouseX;
-		double m_prevMouseX;
+		float m_mouseX;
+		float m_prevMouseX;
 
 		double m_scrollY;
 
-		double m_mouseY;
-		double m_prevMouseY;
+		float m_mouseY;
+		float m_prevMouseY;
 		std::vector<Application*> m_applications;
 	};
 }

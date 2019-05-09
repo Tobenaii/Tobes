@@ -13,19 +13,19 @@ namespace Tobes
 		void Run();
 		virtual void Startup() {};
 		virtual void Update(float dt) {}
-		virtual void Draw() {}
 		virtual void OnFileDrop(int count, const char ** paths) {}
-		void ClearScreen() {}
+		static Scene* GetCurrentScene();
 
 	private:
 		void Init();
 		void CreateWindow();
 		void Cleanup();
+		void Draw();
 
 	private:
 		GLFWwindow* m_window;
-	protected:
 		Renderer* m_renderer;
+		static Scene* m_scene;
 		Camera* m_camera;
 	};
 

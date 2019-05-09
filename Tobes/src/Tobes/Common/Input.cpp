@@ -47,13 +47,13 @@ namespace Tobes
 		{
 			if (Input::GetInstance()->m_mouseEntered || Input::GetInstance()->m_firstMouseMove)
 			{
-				Input::GetInstance()->m_prevMouseX = x;
-				Input::GetInstance()->m_prevMouseY = y;
+				Input::GetInstance()->m_prevMouseX = (float)x;
+				Input::GetInstance()->m_prevMouseY = (float)y;
 				Input::GetInstance()->m_mouseEntered = false;
 				Input::GetInstance()->m_firstMouseMove = false;
 			}
-			Input::GetInstance()->m_mouseX = x;
-			Input::GetInstance()->m_mouseY = y;
+			Input::GetInstance()->m_mouseX = (float)x;
+			Input::GetInstance()->m_mouseY = (float)y;
 		};
 
 		//Callback for mouse entered the screen
@@ -113,12 +113,12 @@ namespace Tobes
 		return m_curButtons[button] == GLFW_PRESS && m_curButtons[button] == GLFW_RELEASE;
 	}
 
-	double Input::GetMouseDeltaX()
+	float Input::GetMouseDeltaX()
 	{
 		return m_mouseX - m_prevMouseX;
 	}
 
-	double Input::GetMouseDeltaY()
+	float Input::GetMouseDeltaY()
 	{
 		return m_mouseY - m_prevMouseY;
 	}

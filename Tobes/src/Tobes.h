@@ -11,3 +11,5 @@
 #include "Tobes/Renderer/Texture.h"
 #include "Tobes/Renderer/Material.h"
 #include "Tobes/imgui/imgui.h"
+#include "Tobes/Renderer/Camera.h"
+#include "Tobes/Common/Component.h"

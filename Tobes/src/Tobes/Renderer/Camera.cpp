@@ -2,17 +2,10 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <iostream>
+#include "Tobes/Common/Components/Transform.h"
 
 namespace Tobes
 {
-	Camera::Camera()
-	{
-		//Set default values
-		Translate(Vector3(0, 0, -10));
-		m_viewMatrix = Matrix::LookAt(GetPosition(), GetPosition() + GetForward(), GetUp());
-		SetPerspective(1.f, 1.0f, 0.1f, 1000000.0f);
-	}
-
 	void Camera::SetPerspective(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
 	{
 		m_projectionMatrix = Matrix::Perspective(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance);
@@ -25,8 +18,15 @@ namespace Tobes
 
 	Matrix Camera::GetViewProjection()
 	{
-		m_viewMatrix = Matrix::LookAt(GetPosition(), GetPosition() + GetForward(), GetUp());
+		m_viewMatrix = Matrix::LookAt(m_transform->GetPosition(), m_transform->GetPosition() + m_transform->GetForward(), m_transform->GetUp());
 		return m_viewMatrix * m_projectionMatrix;
+	}
+	void Camera::Start()
+	{
+		//Set default values
+		m_transform->Translate(Vector3(0, 0, -10));
+		m_viewMatrix = Matrix::LookAt(m_transform->GetPosition(), m_transform->GetPosition() + m_transform->GetForward(), m_transform->GetUp());
+		SetPerspective(1.f, 1.0f, 0.1f, 1000000.0f);
 	}
 }
 

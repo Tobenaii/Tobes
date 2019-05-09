@@ -26,7 +26,7 @@ namespace Tobes
 		aiString name;
 		m_scene->mMaterials[0]->GetTexture(aiTextureType_DIFFUSE, 0, &name);
 		//Loop through every mesh in file
-		for (int i = 0; i < m_scene->mNumMeshes; i++)
+		for (unsigned int i = 0; i < m_scene->mNumMeshes; i++)
 		{
 			//Get mesh name
 			m_dataBuffer->push_back(m_scene->mMeshes[i]->mName.C_Str());
@@ -34,7 +34,7 @@ namespace Tobes
 			m_dataBuffer->push_back(std::to_string(m_scene->mMeshes[i]->mNumVertices));
 			aiVector3D* t = m_scene->mMeshes[i]->mTextureCoords[0];
 			//Loop through all vertices
-			for (int n = 0; n < m_scene->mMeshes[i]->mNumVertices; n++)
+			for (unsigned int n = 0; n < m_scene->mMeshes[i]->mNumVertices; n++)
 			{
 				//Save vertex data
 				aiVector3D v = m_scene->mMeshes[i]->mVertices[n];
@@ -60,14 +60,14 @@ namespace Tobes
 			}
 			//Save data to buffer
 			unsigned int numIndices = 0;
-			for (int f = 0; f < m_scene->mMeshes[i]->mNumFaces; f++)
+			for (unsigned int f = 0; f < m_scene->mMeshes[i]->mNumFaces; f++)
 			{
 				numIndices += m_scene->mMeshes[i]->mFaces[f].mNumIndices;
 			}
 			m_dataBuffer->push_back(std::to_string(numIndices));
-			for (int f = 0; f < m_scene->mMeshes[i]->mNumFaces; f++)
+			for (unsigned int f = 0; f < m_scene->mMeshes[i]->mNumFaces; f++)
 			{
-				for (int in = 0; in < m_scene->mMeshes[i]->mFaces[f].mNumIndices; in++)
+				for (unsigned int in = 0; in < m_scene->mMeshes[i]->mFaces[f].mNumIndices; in++)
 				{
 					unsigned int index = m_scene->mMeshes[i]->mFaces[f].mIndices[in];
 					m_dataBuffer->push_back(std::to_string(index));

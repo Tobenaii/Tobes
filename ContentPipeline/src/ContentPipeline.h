@@ -11,7 +11,6 @@ private:
 	virtual void Update(float dt);
 
 private:
-	Tobes::Scene* m_scene;
 	Tobes::Model* m_currentModel;
 	std::vector<Tobes::Texture*> m_textures;
 	std::vector<Tobes::Material*> m_materials;

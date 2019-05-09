@@ -1,12 +1,13 @@
 #pragma once
 #include "Tobes/Core.h"
 #include <string>
-#include "Tobes/Common/GameObject.h" 
+#include "Tobes/Common/Component.h"
+#include "Tobes/Renderer3D/Vertex.h"
 #include <vector>
 
 namespace Tobes
 {
-	class Model : public GameObject
+	class Model : public Component
 	{
 	public:
 		TOBES_API bool LoadModel(std::string path);
@@ -14,11 +15,11 @@ namespace Tobes
 		TOBES_API void SetMeshMaterial(int mesh, Material* mat);
 		TOBES_API int GetMeshCount();
 		TOBES_API Mesh* GetMesh(int index);
+		TOBES_API void CreateMesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
 
 	private:
-
-		TOBES_API ~Model();
-		TOBES_API void Draw(Renderer* renderer, Camera* camera);
+		~Model();
+		TOBES_API virtual void Draw(Renderer* renderer, Camera* camera);
 		std::vector<Mesh*> m_meshes;
 	};
 }

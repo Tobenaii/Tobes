@@ -13,6 +13,7 @@
 #include <chrono>
 #include <fstream>
 #include <string>
+#include "Tobes/Common/Components/Transform.h"
 
 namespace Tobes
 {
@@ -146,6 +147,13 @@ namespace Tobes
 		return m_meshes[index];
 	}
 
+	void Model::CreateMesh(Vertex * vertices, unsigned int vertexCount, unsigned int * indices, unsigned int indexCount)
+	{
+		Mesh* mesh = new Mesh(vertices, vertexCount, indices, indexCount);
+		m_meshes.push_back(mesh);
+		mesh->SetData();
+	}
+
 	Model::~Model()
 	{
 		m_meshes.clear();
@@ -160,7 +168,7 @@ namespace Tobes
 			if (it->m_material->m_defaultShader)
 			{
 				Material::m_defaultShader->ApplyShader();
-				Matrix mvp = m_modelMatrix * camera->GetViewProjection();
+				Matrix mvp = m_transform->m_transformMatrix * camera->GetViewProjection();
 				Material::m_defaultShader->SetUniformMat4("mvp", mvp);
 			}
 			if (it->m_material->m_diffuseMap)
@@ -176,12 +184,11 @@ namespace Tobes
 					break;
 				it->m_material->m_defaultShader->SetUniform1f("ambientStrength" + std::to_string(i), m_scene->m_lights[i]->ambientStrength);
 				it->m_material->m_defaultShader->SetUniformVec3("lightColour" + std::to_string(i), m_scene->m_lights[i]->colour);
-				it->m_material->m_defaultShader->SetUniformVec3("lightPos" + std::to_string(i), m_scene->m_lights[i]->position);
-				it->m_material->m_defaultShader->SetUniformMat4("modelMatrix", m_modelMatrix);
-				it->m_material->m_defaultShader->SetUniformVec3("viewPos", camera->GetPosition());
+				it->m_material->m_defaultShader->SetUniformVec3("lightPos" + std::to_string(i), m_scene->m_lights[i]->GetTransform()->GetPosition());
+				it->m_material->m_defaultShader->SetUniformMat4("modelMatrix", m_transform->m_transformMatrix);
+				it->m_material->m_defaultShader->SetUniformVec3("viewPos", camera->m_transform->GetPosition());
 			}
 			renderer->DrawMesh(it);
 		}
-		GameObject::Draw(renderer, camera);
 	}
 }
