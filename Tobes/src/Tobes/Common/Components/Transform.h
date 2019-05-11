@@ -8,7 +8,8 @@ namespace Tobes
 	class Transform : public Component
 	{
 		friend class GameObject;
-		friend class Model;
+		friend class MeshRenderer;
+
 	private:
 		Matrix m_translationMatrix;
 		Matrix m_scaleMatrix;

@@ -16,6 +16,9 @@ namespace Tobes
 		virtual void OnFileDrop(int count, const char ** paths) {}
 		static Scene* GetCurrentScene();
 
+	protected:
+		Camera* m_camera;
+
 	private:
 		void Init();
 		void CreateWindow();
@@ -26,7 +29,6 @@ namespace Tobes
 		GLFWwindow* m_window;
 		Renderer* m_renderer;
 		static Scene* m_scene;
-		Camera* m_camera;
 	};
 
 	Application* CreateApplication();

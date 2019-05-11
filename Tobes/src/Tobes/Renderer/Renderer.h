@@ -5,10 +5,13 @@ struct GLFWwindow;
 
 namespace Tobes
 {
+	struct Instance;
 	class Renderer
 	{
-		friend class Model;
+		friend class MeshRenderer;
 		friend class Application;
+		friend class Scene;
+
 	private:
 		GLFWwindow* m_window;
 
@@ -16,5 +19,7 @@ namespace Tobes
 		Renderer(GLFWwindow* window);
 		void Initialize();
 		void DrawMesh(Mesh* mesh);
+		void DrawInstancedMesh(Instance* instance);
+
 	};
 }

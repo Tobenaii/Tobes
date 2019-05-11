@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 extern Tobes::Application* CreateApplication();
 
 //Main entry point
@@ -9,6 +11,7 @@ int main(int argc, char** argv)
 	delete app;
 	return 0;
 }
+
 
 
 

@@ -21,6 +21,11 @@ namespace Tobes
 		return m_transform->m_transformMatrix;
 	}
 
+	Transform* GameObject::GetTransform()
+	{
+		return m_transform;
+	}
+
 	void GameObject::Draw(Renderer * renderer, Camera * camera)
 	{
 		for (Component* component : m_components)

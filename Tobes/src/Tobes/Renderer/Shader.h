@@ -10,7 +10,8 @@ namespace Tobes
 	class Shader
 	{
 		friend class Material;
-		friend class Model;
+		friend class MeshRenderer;
+
 	private:
 		unsigned int m_programID = -1;
 		unsigned int m_shaderID;

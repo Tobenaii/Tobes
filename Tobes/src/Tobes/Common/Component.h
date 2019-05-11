@@ -7,18 +7,20 @@ namespace Tobes
 	class Component
 	{
 		friend class GameObject;
-
-	protected:
-		Transform* m_transform;
-		Scene* m_scene;
-		GameObject* m_gameObject;
-		GameObject* Instantiate(GameObject* gameObject);
+		friend class MeshRenderer;
+		friend class Light;
 
 	public:
+		Transform* transform;
+		GameObject* gameObject;
+
+	public:
+		virtual void Start() {};
 		virtual void Update(float dt) {};
 		virtual void FixedUpdate(float dt) {};
 		virtual void Draw(Renderer* renderer, Camera* camera) {}
-		virtual void Start() {};
-		inline Transform* GetTransform() { return m_transform; }
+
+	private:
+		Scene* m_scene;
 	};
 }

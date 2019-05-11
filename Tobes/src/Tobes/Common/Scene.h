@@ -8,17 +8,19 @@ namespace Tobes
 
 	class Scene
 	{
-		friend class Model;
+		friend class MeshRenderer;
 		friend class Renderer;
+		friend class Material;
+
 	public:
 		TOBES_API Scene();
 		TOBES_API void AddGameObject(GameObject* object);
 		TOBES_API void RemoveGameObject(GameObject* object);
 		TOBES_API void AddLight(Light* light);
 		TOBES_API void Draw(Renderer* renderer, Camera* camera);
+		TOBES_API void Update(float dt);
 
 	private:
-
 		std::vector<GameObject*> m_gameObjects;
 		std::vector<Light*> m_lights;
 		unsigned int m_ambientID;

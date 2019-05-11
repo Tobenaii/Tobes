@@ -4,6 +4,7 @@
 #include "Tobes/Renderer3D/Mesh.h"
 #include "Tobes/Common/Scene.h"
 #include "Tobes/Renderer/Material.h"
+#include <iostream>
 
 namespace Tobes
 {
@@ -29,5 +30,11 @@ namespace Tobes
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->m_ibo);
 		//Draw the mesh triangles
 		glDrawElements(GL_TRIANGLES, mesh->m_indexCount, GL_UNSIGNED_INT, nullptr);
+	}
+	void Renderer::DrawInstancedMesh(Instance* instance)
+	{
+		glBindVertexArray(instance->mesh->m_vao);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, instance->mesh->m_ibo);
+		glDrawElementsInstanced(GL_TRIANGLES, instance->mesh->m_indexCount, GL_UNSIGNED_INT, nullptr, instance->instances);
 	}
 }

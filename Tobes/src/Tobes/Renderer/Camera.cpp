@@ -18,14 +18,14 @@ namespace Tobes
 
 	Matrix Camera::GetViewProjection()
 	{
-		m_viewMatrix = Matrix::LookAt(m_transform->GetPosition(), m_transform->GetPosition() + m_transform->GetForward(), m_transform->GetUp());
+		m_viewMatrix = Matrix::LookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
 		return m_viewMatrix * m_projectionMatrix;
 	}
 	void Camera::Start()
 	{
 		//Set default values
-		m_transform->Translate(Vector3(0, 0, -10));
-		m_viewMatrix = Matrix::LookAt(m_transform->GetPosition(), m_transform->GetPosition() + m_transform->GetForward(), m_transform->GetUp());
+		transform->Translate(Vector3(0, 0, -10));
+		m_viewMatrix = Matrix::LookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
 		SetPerspective(1.f, 1.0f, 0.1f, 1000000.0f);
 	}
 }

@@ -20,22 +20,22 @@ namespace Tobes
 		{
 			T* component = new T();
 			component->m_scene = m_scene;
-			component->m_gameObject = this;
-			component->m_transform = m_transform;
+			component->gameObject = this;
+			component->transform = m_transform;
 			component->Start();
 			m_components.push_back(component);
 			return component;
 		}
+		TOBES_API Transform* GetTransform();
 
 	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
 		virtual void Update(float dt);
+		Matrix GetModelMatrix();
+
 		unsigned int m_matrixID;
 		unsigned int m_samplerID;
 		Scene* m_scene;
-
-	private:
-		Matrix GetModelMatrix();
 		Transform* m_transform;
 		std::vector<Component*> m_components;
 	};

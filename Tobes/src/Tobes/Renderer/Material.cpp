@@ -1,6 +1,8 @@
 #include "Material.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Tobes/Application.h"
+#include "Tobes/Common/Scene.h"
 
 namespace Tobes
 {
@@ -9,6 +11,7 @@ namespace Tobes
 	Material::Material()
 	{
 		m_diffuseMap = new Texture();
+		m_setInstanceData = false;
 	}
 
 	void Material::LoadDiffuseMap(std::string filePath)
@@ -20,6 +23,24 @@ namespace Tobes
 	void Material::SetDiffuseMap(Texture * texture)
 	{
 		m_diffuseMap = texture;
+	}
+
+	void Material::LoadShader(std::string filePath)
+	{
+		
+	}
+
+	void Material::EnableInstancing()
+	{
+		m_instancing = true;
+	}
+
+	void Material::AddMeshInstance(Mesh* mesh)
+	{
+		if (!m_instance.mesh)
+			m_instance.mesh = mesh;
+		if (m_instance.mesh == mesh)
+			m_instance.instances++;
 	}
 
 	void Material::LoadDefaultShaders()

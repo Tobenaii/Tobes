@@ -1,8 +1,9 @@
 #include "Scene.h"
 #include "GameObject.h"
-#include "Tobes/Renderer3D/Light.h"
+#include "Tobes/Renderer3D/Components/Light.h"
 #include "Tobes/Renderer/Renderer.h"
 #include "Tobes/Renderer/Camera.h"
+#include "Tobes/Renderer/Material.h"
 #include <algorithm>
 
 namespace Tobes
@@ -35,6 +36,13 @@ namespace Tobes
 		for (GameObject* obj : m_gameObjects)
 		{
 			obj->Draw(renderer, camera);
+		}
+	}
+	void Scene::Update(float dt)
+	{
+		for (GameObject* obj : m_gameObjects)
+		{
+			obj->Update(dt);
 		}
 	}
 }

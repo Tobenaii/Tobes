@@ -4,10 +4,10 @@
 
 namespace Tobes
 {
-	class TOBES_API Light : public Component
+	class Light : public Component
 	{
 	public:
-		virtual void Start();
+		TOBES_API virtual void Start();
 		Vector3 colour;
 		float ambientStrength;
 	};

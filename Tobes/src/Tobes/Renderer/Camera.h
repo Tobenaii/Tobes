@@ -8,7 +8,7 @@ namespace Tobes
 {
 	class Camera : public Component
 	{
-		friend class Model;
+		friend class MeshRenderer;
 		friend class Application;
 
 	public:

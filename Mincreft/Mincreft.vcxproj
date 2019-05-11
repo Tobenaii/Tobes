@@ -83,7 +83,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tobes/src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tobes/src;$(ProjectDir)src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)bin\Tobes\$(Platform)\$(Configuration)\;</AdditionalLibraryDirectories>
@@ -128,7 +128,7 @@ copy *.dll $(OutDir)
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Tobes/src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Tobes/src;$(ProjectDir)src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -146,14 +146,15 @@ copy *.dll $(OutDir)
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\CameraController.h" />
     <ClInclude Include="src\Mincreft.h" />
-    <ClInclude Include="src\Terrain\Block.h" />
+    <ClInclude Include="src\PerlinNoise.hpp" />
     <ClInclude Include="src\Terrain\Chunk.h" />
     <ClInclude Include="src\Terrain\Terrain.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CameraController.cpp" />
     <ClCompile Include="src\Mincreft.cpp" />
-    <ClCompile Include="src\Terrain\Block.cpp" />
     <ClCompile Include="src\Terrain\Chunk.cpp" />
     <ClCompile Include="src\Terrain\Terrain.cpp" />
   </ItemGroup>

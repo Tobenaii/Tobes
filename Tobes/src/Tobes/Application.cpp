@@ -34,7 +34,7 @@ namespace Tobes
 		ImGui_ImplGlfw_InitForOpenGL(m_window, true);
 
 		//Disabled cursor for virtual infinite mouse movement
-		//glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		//Initialize everything
 		m_renderer = new Renderer(m_window);
@@ -67,6 +67,8 @@ namespace Tobes
 		{
 			curTime = glfwGetTime();
 			deltaTime = curTime - prevTime;
+			if (deltaTime > 0.1f)
+				deltaTime = 0.1f;
 			prevTime = curTime;
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glfwPollEvents();
@@ -74,6 +76,7 @@ namespace Tobes
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 			Update((float)deltaTime);
+			m_scene->Update((float)deltaTime);
 			Draw();
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -100,6 +103,9 @@ namespace Tobes
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		glFrontFace(GL_CCW);
 	}
 	void Application::CreateWindow()
 	{

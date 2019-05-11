@@ -8,8 +8,9 @@ namespace Tobes
 	{
 		friend class Renderer;
 		friend class GameObject;
-		friend class Model;
+		friend class MeshRenderer;
 		friend class Material;
+
 	public:
 		TOBES_API Texture(std::string filePath);
 		TOBES_API unsigned int GetTextureID();

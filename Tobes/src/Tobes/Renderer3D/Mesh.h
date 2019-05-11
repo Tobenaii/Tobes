@@ -2,22 +2,24 @@
 #include <vector>
 #include "Tobes/Core.h"
 #include "Vertex.h"
+#include "Tobes/Renderer/Material.h"
+
 
 namespace Tobes
 {
 	class Mesh
 	{
 		friend class Renderer;
-		friend class Model;
+		friend class MeshRenderer;
 
 	public:
 		TOBES_API std::string GetName();
+		TOBES_API Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
 
 	private:
-		Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
 		const Vertex* GetVertexData();
 		void SetData();
-		void SetMaterial(Material* mat);
+		void SetInstanceData(const Instance& instance, const Vector3* offsets);
 		~Mesh();
 
 	private:
@@ -28,12 +30,12 @@ namespace Tobes
 		unsigned int m_indexCount;
 
 		unsigned int m_vbo;
+		unsigned int m_vboInstance;
 		unsigned int m_ibo;
 		unsigned int m_vao;
 
 		std::string m_name;
-
-		Material* m_material;
 		GameObject* m_gameObject;
+		std::vector<Vector3> m_offsets;
 	};
 }
