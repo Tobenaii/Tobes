@@ -9,13 +9,13 @@ void CameraController::Update(float dt)
 	Tobes::Input* input = Tobes::Input::GetInstance();
 
 	if (input->IsKeyDown(KeyCode_W))
-		transform->Translate(transform->GetForward() * dt * 5);
+		transform->Translate(transform->GetForward() * dt * 10);
 	if (input->IsKeyDown(KeyCode_S))
-		transform->Translate(transform->GetForward() * -dt * 5);
+		transform->Translate(transform->GetForward() * -dt * 10);
 	if (input->IsKeyDown(KeyCode_A))
-		transform->Translate(transform->GetRight() * -dt * 5);
+		transform->Translate(transform->GetRight() * -dt * 10);
 	if (input->IsKeyDown(KeyCode_D))
-		transform->Translate(transform->GetRight() * dt * 5);
+		transform->Translate(transform->GetRight() * dt * 10);
 
 	if (input->GetMouseDeltaX() != 0)
 		transform->Rotate(Vector3(0, 1, 0), input->GetMouseDeltaX() * -dt * 0.1f);

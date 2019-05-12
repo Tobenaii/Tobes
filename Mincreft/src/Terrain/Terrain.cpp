@@ -28,20 +28,15 @@ void Terrain::Generate(int chunkWidth, int chunkHeight, int chunkDepth, int chun
 void Terrain::CreateBlockMesh()
 {
 	Vertex* verts;
-	verts = new Vertex[8];
+	verts = new Vertex[4];
 
-	verts[0].position = Vector4(-1, -1, -1, 1);
-	verts[1].position = Vector4(1, -1, -1, 1);
-	verts[2].position = Vector4(-1, -1, 1, 1);
-	verts[3].position = Vector4(1, -1, 1, 1);
-
-	verts[4].position = Vector4(-1, 1, -1, 1);
-	verts[5].position = Vector4(1, 1, -1, 1);
-	verts[6].position = Vector4(-1, 1, 1, 1);
-	verts[7].position = Vector4(1, 1, 1, 1);
+	verts[0].position = Vector4(-0.5f, -0.5f, -0.5f, 1);
+	verts[1].position = Vector4(0.5f, -0.5f, -0.5f, 1);
+	verts[2].position = Vector4(-0.5f, -0.5f, 0.5f, 1);
+	verts[3].position = Vector4(0.5f, -0.5f, 0.5f, 1);
 
 	unsigned int* indices;
-	indices = new unsigned int[12];
+	indices = new unsigned int[6];
 
 	indices[0] = 0;
 	indices[1] = 1;
@@ -51,15 +46,7 @@ void Terrain::CreateBlockMesh()
 	indices[4] = 2;
 	indices[5] = 3;
 
-	indices[6] = 4;
-	indices[7] = 5;
-	indices[8] = 6;
-
-	indices[9] = 5;
-	indices[10] = 6;
-	indices[11] = 7;
-
-	m_blockMesh = new Tobes::Mesh(verts, 8, indices, 12);
+	m_blockMesh = new Tobes::Mesh(verts, 4, indices, 6);
 	m_blockMaterial = new Tobes::Material();
 	m_blockMaterial->EnableInstancing();
 }
