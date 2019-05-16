@@ -5,6 +5,8 @@
 #include "Tobes/Renderer/Camera.h"
 #include "Tobes/Renderer/Material.h"
 #include <algorithm>
+#include <chrono>
+#include <iostream>
 
 namespace Tobes
 {
@@ -16,14 +18,13 @@ namespace Tobes
 
 	void Scene::AddGameObject(GameObject * object)
 	{
-		m_gameObjects.push_back(object);
+		m_gameObjects.push_back(*object);
 		object->m_scene = this;
 	}
 
-	void Scene::RemoveGameObject(GameObject* object)
+	void Scene::RemoveGameObject(GameObject* object, bool free)
 	{
-		delete object;
-		m_gameObjects.erase(std::remove(m_gameObjects.begin(), m_gameObjects.end(), object), m_gameObjects.end());
+		//m_gameObjects.erase(std::remove(m_gameObjects.begin(), m_gameObjects.end(), *object), m_gameObjects.end());
 	}
 
 	void Scene::AddLight(Light* light)
@@ -33,16 +34,16 @@ namespace Tobes
 
 	void Scene::Draw(Renderer * renderer, Camera* camera)
 	{
-		for (GameObject* obj : m_gameObjects)
+		for (GameObject obj : m_gameObjects)
 		{
-			obj->Draw(renderer, camera);
+			obj.Draw(renderer, camera);
 		}
 	}
 	void Scene::Update(float dt)
 	{
-		for (GameObject* obj : m_gameObjects)
+		for (GameObject obj : m_gameObjects)
 		{
-			obj->Update(dt);
+			obj.Update(dt);
 		}
 	}
 }

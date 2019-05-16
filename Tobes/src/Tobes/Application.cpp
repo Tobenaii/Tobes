@@ -61,6 +61,8 @@ namespace Tobes
 		double curTime = 0;
 		double deltaTime = 0;
 		bool showPreview = false;
+		double fps = 0;
+		double timer = 0;
 		Input::GetInstance()->AddApplication(this);
 		//Main game loop
 		while (!glfwWindowShouldClose(m_window))
@@ -69,6 +71,14 @@ namespace Tobes
 			deltaTime = curTime - prevTime;
 			if (deltaTime > 0.1f)
 				deltaTime = 0.1f;
+			fps += 1;
+			timer += deltaTime;
+			if (timer >= 1)
+			{
+				timer = 0;
+				std::cout << "FPS: " << fps << std::endl;
+				fps = 0;
+			}
 			prevTime = curTime;
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glfwPollEvents();

@@ -75,9 +75,6 @@
     <ClCompile Include="src\Tobes\Content\File.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tobes\Networking\NetHost.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tobes\Common\Components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -174,9 +171,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Content\ModelFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tobes\Networking\NetHost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Tobes\Renderer3D\Vertex.h">

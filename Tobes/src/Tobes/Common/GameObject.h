@@ -27,6 +27,7 @@ namespace Tobes
 			return component;
 		}
 		TOBES_API Transform* GetTransform();
+		TOBES_API void SetActive(bool active);
 
 	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
@@ -38,5 +39,6 @@ namespace Tobes
 		Scene* m_scene;
 		Transform* m_transform;
 		std::vector<Component*> m_components;
+		bool m_isActive = true;
 	};
 }

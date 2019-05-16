@@ -11,6 +11,8 @@ namespace Tobes
 		TOBES_API void SetMaterial(Material* mat);
 		TOBES_API virtual void Update(float dt);
 		TOBES_API virtual void Draw(Renderer* renderer, Camera* camera);
+		TOBES_API virtual void OnDisable();
+		TOBES_API virtual void OnEnable();
 
 	private:
 		Mesh* m_mesh;
