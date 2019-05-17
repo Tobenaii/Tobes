@@ -1,6 +1,8 @@
 #pragma once
 #include "Tobes/Common/Component.h"
 #include "Block.h"
+#include "Tobes/Renderer3D/Vertex.h"
+#include <vector>
 
 class Scene;
 

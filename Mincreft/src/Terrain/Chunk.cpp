@@ -38,7 +38,7 @@ void Chunk::Generate(int width, int height, int depth, Tobes::Mesh* mesh, Tobes:
 		{
 			for (int z = 0; z < depth; z++)
 			{
-				RenderCheck(y, x, z);
+				//RenderCheck(y, x, z);
 			}
 		}
 	}

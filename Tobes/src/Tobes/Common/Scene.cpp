@@ -16,18 +16,18 @@ namespace Tobes
 	{
 	}
 
-	void Scene::AddGameObject(GameObject * object)
+	void Scene::AddGameObject(GameObject& object)
 	{
-		m_gameObjects.push_back(*object);
-		object->m_scene = this;
+		m_gameObjects.push_back(object);
+		object.m_scene = this;
 	}
 
-	void Scene::RemoveGameObject(GameObject* object, bool free)
+	void Scene::RemoveGameObject(GameObject& object, bool free)
 	{
 		//m_gameObjects.erase(std::remove(m_gameObjects.begin(), m_gameObjects.end(), *object), m_gameObjects.end());
 	}
 
-	void Scene::AddLight(Light* light)
+	void Scene::AddLight(Light& light)
 	{
 		m_lights.push_back(light);
 	}

@@ -9,7 +9,7 @@ namespace Tobes
 	GameObject::GameObject()
 	{
 		m_scene = Application::GetCurrentScene();
-		m_scene->AddGameObject(this);
+		m_scene->AddGameObject(*this);
 		m_transform = AddComponent<Transform>();
 	}
 
@@ -30,9 +30,9 @@ namespace Tobes
 	void GameObject::SetActive(bool active)
 	{
 		if (active && !m_isActive)
-			m_scene->AddGameObject(this);
+			m_scene->AddGameObject(*this);
 		else if (!active && m_isActive)
-			m_scene->RemoveGameObject(this, false);
+			m_scene->RemoveGameObject(*this, false);
 		m_isActive = active;
 	}
 

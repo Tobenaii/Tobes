@@ -54,9 +54,9 @@ void Tobes::MeshRenderer::Draw(Renderer * renderer, Camera * camera)
 	{
 		if (i >= m_scene->m_lights.size())
 			break;
-		m_material->m_defaultShader->SetUniform1f("ambientStrength" + std::to_string(i), m_scene->m_lights[i]->ambientStrength);
-		m_material->m_defaultShader->SetUniformVec3("lightColour" + std::to_string(i), m_scene->m_lights[i]->colour);
-		m_material->m_defaultShader->SetUniformVec3("lightPos" + std::to_string(i), m_scene->m_lights[i]->transform->GetPosition());
+		m_material->m_defaultShader->SetUniform1f("ambientStrength" + std::to_string(i), m_scene->m_lights[i].ambientStrength);
+		m_material->m_defaultShader->SetUniformVec3("lightColour" + std::to_string(i), m_scene->m_lights[i].colour);
+		m_material->m_defaultShader->SetUniformVec3("lightPos" + std::to_string(i), m_scene->m_lights[i].transform->GetPosition());
 		m_material->m_defaultShader->SetUniformMat4("modelMatrix", transform->m_transformMatrix);
 		m_material->m_defaultShader->SetUniformVec3("viewPos", camera->transform->GetPosition());
 	}

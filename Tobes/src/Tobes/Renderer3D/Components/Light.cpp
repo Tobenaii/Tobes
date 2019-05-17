@@ -3,5 +3,5 @@
 
 void Tobes::Light::Start()
 {
-	m_scene->AddLight(this);
+	m_scene->AddLight(*this);
 }
