@@ -26,6 +26,7 @@ namespace Tobes
 			return component;
 		}
 		TOBES_API Transform* GetTransform();
+		TOBES_API void SetActive(bool active);
 
 	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
