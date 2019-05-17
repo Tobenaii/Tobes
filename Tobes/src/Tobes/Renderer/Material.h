@@ -28,12 +28,11 @@ namespace Tobes
 		TOBES_API void EnableInstancing();
 
 	private:
-		void AddMeshInstance(Mesh* mesh);
 		static void LoadDefaultShaders();
 		static Shader* m_defaultShader;
 		bool m_instancing;
 		bool m_setInstanceData;
-		~Material();
+		bool m_instanced;
 		Instance m_instance;
 		Texture* m_diffuseMap;
 	};

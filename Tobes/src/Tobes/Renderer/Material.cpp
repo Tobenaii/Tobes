@@ -35,22 +35,10 @@ namespace Tobes
 		m_instancing = true;
 	}
 
-	void Material::AddMeshInstance(Mesh* mesh)
-	{
-		if (!m_instance.mesh)
-			m_instance.mesh = mesh;
-		if (m_instance.mesh == mesh)
-			m_instance.instances++;
-	}
-
 	void Material::LoadDefaultShaders()
 	{
 		m_defaultShader->LoadVertexShader(".\\content\\shaders\\vertex.txt");
 		m_defaultShader->LoadFragmentShader(".\\content\\shaders\\frag.txt");
 		m_defaultShader->LinkProgram();
-	}
-	Material::~Material()
-	{
-		delete m_diffuseMap;
 	}
 }

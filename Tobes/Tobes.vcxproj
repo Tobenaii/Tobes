@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F62BE669-1276-4E27-9F86-5842243A74B4}</ProjectGuid>
+    <ProjectGuid>{A8196278-C653-4DCC-9335-1192F06CC277}</ProjectGuid>
     <RootNamespace>Tobes</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -45,8 +45,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dependencies/enet-1.3.14/include;$(SolutionDir)/dependencies/stb-master;$(SolutionDir)dependencies/glew-2.1.0/include/GL;$(SolutionDir)dependencies/assimp/include;$(SolutionDir)dependencies/glfw-3.2.1/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)dependencies/enet-1.3.14/;$(SolutionDir)dependencies/assimp;$(SolutionDir)dependencies\enet-1.3.14\;$(SolutionDir)dependencies/glew-2.1.0/;$(SolutionDir)dependencies/glfw-3.2.1/lib-vc2015;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>$(SolutionDir)/dependencies/stb-master;$(SolutionDir)dependencies/glew-2.1.0/include/GL;$(SolutionDir)dependencies/assimp/include;$(SolutionDir)dependencies/glfw-3.2.1/include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)dependencies/assimp;$(SolutionDir)dependencies\enet-1.3.14\;$(SolutionDir)dependencies/glew-2.1.0/;$(SolutionDir)dependencies/glfw-3.2.1/lib-vc2015;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
@@ -60,19 +60,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>
-      </SubSystem>
-      <AdditionalDependencies>enet64.lib;assimp.lib;opengl32.lib;glew32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp.lib;opengl32.lib;glew32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -82,9 +76,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>TB_BUILD_DLL;_WINDLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -93,9 +87,55 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Tobes.h" />
+    <ClInclude Include="src\Tobes\Application.h" />
+    <ClInclude Include="src\Tobes\Common\Component.h" />
+    <ClInclude Include="src\Tobes\Common\Components\Transform.h" />
+    <ClInclude Include="src\Tobes\Common\GameObject.h" />
+    <ClInclude Include="src\Tobes\Common\Input.h" />
+    <ClInclude Include="src\Tobes\Common\Math\Matrix.h" />
+    <ClInclude Include="src\Tobes\Common\Math\Vector2.h" />
+    <ClInclude Include="src\Tobes\Common\Math\Vector3.h" />
+    <ClInclude Include="src\Tobes\Common\Math\Vector4.h" />
+    <ClInclude Include="src\Tobes\Common\Scene.h" />
+    <ClInclude Include="src\Tobes\Content\ContentManager.h" />
+    <ClInclude Include="src\Tobes\Content\File.h" />
+    <ClInclude Include="src\Tobes\Content\ModelFile.h" />
+    <ClInclude Include="src\Tobes\Core.h" />
+    <ClInclude Include="src\Tobes\EntryPoint.h" />
+    <ClInclude Include="src\Tobes\imgui\imconfig.h" />
+    <ClInclude Include="src\Tobes\imgui\imgui.h" />
+    <ClInclude Include="src\Tobes\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\Tobes\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\Tobes\imgui\imgui_internal.h" />
+    <ClInclude Include="src\Tobes\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\Tobes\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\Tobes\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2Body.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2CircleShape.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2Collision.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2EdgeShape.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2Fixture.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2PolygonShape.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2Shape.h" />
+    <ClInclude Include="src\Tobes\Physics2D\p2World.h" />
+    <ClInclude Include="src\Tobes\Renderer2D\Sprite.h" />
+    <ClInclude Include="src\Tobes\Renderer3D\Components\Light.h" />
+    <ClInclude Include="src\Tobes\Renderer3D\Components\MeshRenderer.h" />
+    <ClInclude Include="src\Tobes\Renderer3D\Mesh.h" />
+    <ClInclude Include="src\Tobes\Renderer3D\Vertex.h" />
+    <ClInclude Include="src\Tobes\Renderer\Camera.h" />
+    <ClInclude Include="src\Tobes\Renderer\Material.h" />
+    <ClInclude Include="src\Tobes\Renderer\Renderer.h" />
+    <ClInclude Include="src\Tobes\Renderer\Shader.h" />
+    <ClInclude Include="src\Tobes\Renderer\Texture.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\Tobes\Application.cpp" />
     <ClCompile Include="src\Tobes\Common\Components\Transform.cpp" />
     <ClCompile Include="src\Tobes\Common\GameObject.cpp" />
+    <ClCompile Include="src\Tobes\Common\Input.cpp" />
+    <ClCompile Include="src\Tobes\Common\Scene.cpp" />
     <ClCompile Include="src\Tobes\Content\ContentManager.cpp" />
     <ClCompile Include="src\Tobes\Content\File.cpp" />
     <ClCompile Include="src\Tobes\Content\ModelFile.cpp" />
@@ -105,57 +145,22 @@
     <ClCompile Include="src\Tobes\imgui\imgui_impl_glfw.cpp" />
     <ClCompile Include="src\Tobes\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\Tobes\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="src\Tobes\Networking\NetHost.cpp" />
-    <ClCompile Include="src\Tobes\Renderer3D\Components\MeshRenderer.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2Body.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2CircleShape.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2Collision.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2EdgeShape.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2Fixture.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2PolygonShape.cpp" />
+    <ClCompile Include="src\Tobes\Physics2D\p2World.cpp" />
     <ClCompile Include="src\Tobes\Renderer3D\Components\Light.cpp" />
+    <ClCompile Include="src\Tobes\Renderer3D\Components\MeshRenderer.cpp" />
+    <ClCompile Include="src\Tobes\Renderer3D\Mesh.cpp" />
     <ClCompile Include="src\Tobes\Renderer3D\Model.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Camera.cpp" />
-    <ClCompile Include="src\Tobes\Common\Input.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Material.cpp" />
-    <ClCompile Include="src\Tobes\Renderer3D\Mesh.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Tobes\Common\Scene.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Shader.cpp" />
     <ClCompile Include="src\Tobes\Renderer\Texture.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Tobes.h" />
-    <ClInclude Include="src\Tobes\Application.h" />
-    <ClInclude Include="src\Tobes\Common\Component.h" />
-    <ClInclude Include="src\Tobes\Common\Components\Transform.h" />
-    <ClInclude Include="src\Tobes\Common\GameObject.h" />
-    <ClInclude Include="src\Tobes\Common\Math\Matrix.h" />
-    <ClInclude Include="src\Tobes\Common\Math\Vector2.h" />
-    <ClInclude Include="src\Tobes\Common\Math\Vector3.h" />
-    <ClInclude Include="src\Tobes\Common\Math\Vector4.h" />
-    <ClInclude Include="src\Tobes\Content\ContentManager.h" />
-    <ClInclude Include="src\Tobes\Content\File.h" />
-    <ClInclude Include="src\Tobes\Content\ModelFile.h" />
-    <ClInclude Include="src\Tobes\Core.h" />
-    <ClInclude Include="src\Tobes\imgui\imconfig.h" />
-    <ClInclude Include="src\Tobes\imgui\imgui.h" />
-    <ClInclude Include="src\Tobes\imgui\imgui_impl_glfw.h" />
-    <ClInclude Include="src\Tobes\imgui\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\Tobes\imgui\imgui_internal.h" />
-    <ClInclude Include="src\Tobes\imgui\imstb_rectpack.h" />
-    <ClInclude Include="src\Tobes\imgui\imstb_textedit.h" />
-    <ClInclude Include="src\Tobes\imgui\imstb_truetype.h" />
-    <ClInclude Include="src\Tobes\Networking\NetHost.h" />
-    <ClInclude Include="src\Tobes\Renderer3D\Components\MeshRenderer.h" />
-    <ClInclude Include="src\Tobes\EntryPoint.h" />
-    <ClInclude Include="src\Tobes\Renderer2D\Sprite.h" />
-    <ClInclude Include="src\Tobes\Renderer3D\Vertex.h" />
-    <ClInclude Include="src\Tobes\Renderer\Camera.h" />
-    <ClInclude Include="src\Tobes\Common\Input.h" />
-    <ClInclude Include="src\Tobes\Renderer3D\Components\Light.h" />
-    <ClInclude Include="src\Tobes\Renderer\Material.h" />
-    <ClInclude Include="src\Tobes\Renderer3D\Mesh.h" />
-    <ClInclude Include="src\Tobes\Renderer\Renderer.h" />
-    <ClInclude Include="src\Tobes\Common\Scene.h" />
-    <ClInclude Include="src\Tobes\Renderer\Shader.h" />
-    <ClInclude Include="src\Tobes\Renderer\Texture.h" />
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

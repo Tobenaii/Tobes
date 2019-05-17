@@ -8,49 +8,36 @@
 #include "Tobes/Renderer/Texture.h"
 #include "Tobes/Renderer3D/Components/Light.h"
 #include "Tobes/Common/Components/Transform.h"
+#include "Tobes/Common/GameObject.h"
 
 void Tobes::MeshRenderer::SetMesh(Mesh * mesh)
 {
 	m_mesh = mesh;
-	if (m_material && m_material->m_instancing)
-	{
-		m_material->AddMeshInstance(mesh);
-	}
+	if (m_material != nullptr && m_material->m_instancing)
+		m_material->m_instance.mesh = m_mesh;
 }
 
 void Tobes::MeshRenderer::SetMaterial(Material * mat)
 {
 	m_material = mat;
-	if (m_mesh && mat->m_instancing)
-	{
-		m_material->AddMeshInstance(m_mesh);
-	}
+	if (m_material->m_instancing && m_mesh != nullptr)
+		m_material->m_instance.mesh = m_mesh;
 }
 
 void Tobes::MeshRenderer::Update(float dt)
 {
 	if (m_material->m_instancing)
 	{
-		if (!m_material->m_setInstanceData)
-		{
-			m_mesh->m_offsets.push_back(transform->GetPosition());
-		}
-		m_material->m_instance.instanced = false;
+		m_material->m_instanced = false;
+		m_mesh->m_offsets.push_back(gameObject->GetTransform()->GetPosition());
+		m_material->m_instance.instances++;
 	}
 }
 
 void Tobes::MeshRenderer::Draw(Renderer * renderer, Camera * camera)
 {
-	if (m_material->m_instancing)
-	{
-		if (!m_material->m_setInstanceData)
-		{
-			m_material->m_setInstanceData = true;
-			m_mesh->SetInstanceData(m_material->m_instance, &m_mesh->m_offsets[0]);
-		}
-		if (m_material->m_instance.instanced)
-			return;
-	}
+	if (m_material->m_instanced)
+		return;
 	if (m_material->m_defaultShader)
 	{
 		Material::m_defaultShader->ApplyShader();
@@ -75,8 +62,11 @@ void Tobes::MeshRenderer::Draw(Renderer * renderer, Camera * camera)
 	}
 	if (m_material->m_instancing)
 	{
-		m_material->m_instance.instanced = true;
+		m_mesh->UpdateInstanceData(m_material->m_instance);
 		renderer->DrawInstancedMesh(&m_material->m_instance);
+		m_material->m_instance.instances = 0;
+		m_mesh->m_offsets.clear();
+		m_material->m_instanced = true;
 	}
 	else
 		renderer->DrawMesh(m_mesh);

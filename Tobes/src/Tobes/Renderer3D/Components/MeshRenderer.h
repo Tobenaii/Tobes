@@ -15,5 +15,6 @@ namespace Tobes
 	private:
 		Mesh* m_mesh;
 		Material* m_material;
+		int m_instanceIndex;
 	};
 }

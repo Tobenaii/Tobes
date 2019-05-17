@@ -14,7 +14,7 @@ namespace Tobes
 		Transform* transform;
 		GameObject* gameObject;
 
-	public:
+	protected:
 		virtual void Start() {};
 		virtual void Update(float dt) {};
 		virtual void FixedUpdate(float dt) {};

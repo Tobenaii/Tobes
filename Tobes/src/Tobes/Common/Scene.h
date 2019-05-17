@@ -15,7 +15,6 @@ namespace Tobes
 	public:
 		TOBES_API Scene();
 		TOBES_API void AddGameObject(GameObject* object);
-		TOBES_API void RemoveGameObject(GameObject* object);
 		TOBES_API void AddLight(Light* light);
 		TOBES_API void Draw(Renderer* renderer, Camera* camera);
 		TOBES_API void Update(float dt);

@@ -2,6 +2,7 @@
 #include "Components/Transform.h"
 #include "Tobes/Application.h"
 #include "Scene.h"
+#include <iostream>
 
 namespace Tobes
 {
@@ -10,10 +11,6 @@ namespace Tobes
 		m_scene = Application::GetCurrentScene();
 		m_scene->AddGameObject(this);
 		m_transform = AddComponent<Transform>();
-	}
-
-	GameObject::~GameObject()
-	{
 	}
 
 	Matrix GameObject::GetModelMatrix()
@@ -26,7 +23,7 @@ namespace Tobes
 		return m_transform;
 	}
 
-	void GameObject::Draw(Renderer * renderer, Camera * camera)
+	void GameObject::Draw(Renderer* renderer, Camera* camera)
 	{
 		for (Component* component : m_components)
 		{

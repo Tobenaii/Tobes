@@ -14,7 +14,6 @@ namespace Tobes
 		friend class Application;
 	public:
 		TOBES_API GameObject();
-		TOBES_API ~GameObject();
 		template<class T>
 		inline T* AddComponent()
 		{
@@ -31,6 +30,7 @@ namespace Tobes
 	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
 		virtual void Update(float dt);
+
 		Matrix GetModelMatrix();
 
 		unsigned int m_matrixID;
@@ -38,5 +38,6 @@ namespace Tobes
 		Scene* m_scene;
 		Transform* m_transform;
 		std::vector<Component*> m_components;
+		bool m_isActive = true;
 	};
 }

@@ -18,13 +18,13 @@ namespace Tobes
 	Input::Input()
 	{
 		m_firstMouseMove = true;
-		m_curKeys = new int[KeyCode_LAST];
-		m_prevKeys = new int[KeyCode_LAST];
+		m_curKeys = new int[KeyCode_LAST + 1];
+		m_prevKeys = new int[KeyCode_LAST + 1];
 
 		m_curButtons = new int[2];
 		m_prevButtons = new int[2];
 
-		for (int i = 0; i <= KeyCode_LAST; i++)
+		for (int i = GLFW_KEY_SPACE; i <= KeyCode_LAST; i++)
 		{
 			m_curKeys[i] = m_prevKeys[i] = glfwGetKey(glfwGetCurrentContext(), i);
 		}

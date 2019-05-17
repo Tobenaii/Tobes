@@ -19,8 +19,8 @@ namespace Tobes
 	private:
 		const Vertex* GetVertexData();
 		void SetData();
-		void SetInstanceData(const Instance& instance, const Vector3* offsets);
-		~Mesh();
+		void SetInstanceData(const Instance& instance);
+		void UpdateInstanceData(const Instance& instance);
 
 	private:
 		Vertex* m_vertexData;
