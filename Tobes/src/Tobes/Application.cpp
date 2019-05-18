@@ -67,6 +67,7 @@ namespace Tobes
 		//Main game loop
 		while (!glfwWindowShouldClose(m_window))
 		{
+
 			curTime = glfwGetTime();
 			deltaTime = curTime - prevTime;
 			if (deltaTime > 0.1f)
