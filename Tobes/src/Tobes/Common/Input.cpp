@@ -21,8 +21,8 @@ namespace Tobes
 		m_curKeys = new int[KeyCode_LAST + 1];
 		m_prevKeys = new int[KeyCode_LAST + 1];
 
-		m_curButtons = new int[2];
-		m_prevButtons = new int[2];
+		m_curButtons = new int[3];
+		m_prevButtons = new int[3];
 
 		for (int i = GLFW_KEY_SPACE; i <= KeyCode_LAST; i++)
 		{
