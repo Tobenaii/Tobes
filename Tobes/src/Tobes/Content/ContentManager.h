@@ -9,7 +9,8 @@ namespace Tobes
 	{
 		friend class Model;
 	public:
-		void SaveFile();
+		TOBES_API void SaveFile(std::string path);
+		TOBES_API std::string LoadFile(std::string filePath);
 		TOBES_API static bool CheckModelFile(std::string path);
 		TOBES_API static bool CheckImageFile(std::string path);
 
@@ -20,6 +21,5 @@ namespace Tobes
 		std::string m_fileName;
 
 	private:
-		std::string LoadFile(std::string filePath);
 	};
 }

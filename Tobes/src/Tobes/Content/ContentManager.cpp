@@ -15,6 +15,7 @@ namespace Tobes
 		if (CheckModelFile(filePath))
 		{
 			m_fileName = p.replace_extension(".tbs").string();
+			m_fileName = p.filename().string();
 			m_file = new ModelFile();
 			m_file->LoadFile(filePath);
 			return m_fileName;
@@ -22,14 +23,14 @@ namespace Tobes
 		return "";
 	}
 
-	void ContentManager::SaveFile()
+	void ContentManager::SaveFile(std::string path)
 	{
 		if (!m_file)
 			return;
 		m_file->GetData();
 		//Save data buffer to file
 		std::vector<std::string>* data = m_file->GetData();
-		std::ofstream file(m_fileName, std::ios::out | std::ios::binary);
+		std::ofstream file(path, std::ios::out | std::ios::binary);
 		std::ostream_iterator<std::string> iterator(file, "\n");
 		std::copy(data->begin(), data->end(), iterator);
 		file.close();

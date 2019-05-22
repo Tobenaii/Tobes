@@ -14,6 +14,7 @@ namespace Tobes
 		friend class Application;
 	public:
 		TOBES_API GameObject();
+		TOBES_API GameObject(std::string name);
 		template<class T>
 		inline T* AddComponent()
 		{
@@ -26,6 +27,7 @@ namespace Tobes
 			return component;
 		}
 		TOBES_API Transform* GetTransform();
+		TOBES_API std::string GetName();
 
 	private:
 		virtual void Draw(Renderer* renderer, Camera* camera);
@@ -39,5 +41,6 @@ namespace Tobes
 		Transform* m_transform;
 		std::vector<Component*> m_components;
 		bool m_isActive = true;
+		std::string m_name;
 	};
 }

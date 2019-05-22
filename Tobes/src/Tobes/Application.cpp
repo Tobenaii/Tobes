@@ -11,10 +11,15 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include <math.h>
 
 namespace Tobes
 {
 	Scene* Application::m_scene = nullptr;
+	Vector2 Application::m_position = Vector2(0, 0);
+	Vector2 Application::m_extents = Vector2(0, 0);
+	int Application::windowWidth = 0;
+	int Application::windowHeight = 0;
 
 	Application::Application()
 	{
@@ -32,10 +37,8 @@ namespace Tobes
 		ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 		ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-
 		//Disabled cursor for virtual infinite mouse movement
 		glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
 		//Initialize everything
 		m_renderer = new Renderer(m_window);
 		m_scene = new Scene();
@@ -46,15 +49,13 @@ namespace Tobes
 		ImGui_ImplOpenGL3_Init(version);
 
 		ImVec4 clearColour = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
 		//Enable alpha blending and depth test
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
-		GameObject* camera = new GameObject();
+		GameObject* camera = new GameObject("MainCamera");
 		m_camera = camera->AddComponent<Camera>();
 		//Main Program Loop
-		Startup();
 
 		//Initialize values for frame time
 		double prevTime = glfwGetTime();
@@ -64,10 +65,12 @@ namespace Tobes
 		double fps = 0;
 		double timer = 0;
 		Input::GetInstance()->AddApplication(this);
+		Startup();
 		//Main game loop
 		while (!glfwWindowShouldClose(m_window))
 		{
-
+			glfwGetWindowSize(m_window, &windowWidth, &windowHeight);
+			m_camera->SetPerspective(90.f, m_extents.x / m_extents.y, 0.1f, 10000.0f);
 			curTime = glfwGetTime();
 			deltaTime = curTime - prevTime;
 			if (deltaTime > 0.1f)
@@ -96,9 +99,21 @@ namespace Tobes
 		}
 	}
 
-	Scene * Application::GetCurrentScene()
+	Scene* Application::GetCurrentScene()
 	{
 		return m_scene;
+	}
+
+	void Application::SetBounds(Vector2 position, Vector2 extents)
+	{
+		m_position = position;
+		m_extents = extents;
+		glViewport(m_position.x, abs(m_position.y - windowHeight) - m_extents.y, m_extents.x, m_extents.y);
+	}
+
+	void Application::ShowMouse(bool show)
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, ((!show)?GLFW_CURSOR_DISABLED:GLFW_CURSOR_NORMAL));
 	}
 
 	void Application::Init()

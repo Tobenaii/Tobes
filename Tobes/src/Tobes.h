@@ -1,6 +1,5 @@
 #pragma once
 #include "Tobes/Application.h"
-#include "Tobes/EntryPoint.h"
 #include "Tobes/Common/GameObject.h"
 #include "Tobes/Common/Scene.h"
 #include "Tobes/Common/Input.h"
@@ -12,3 +11,4 @@
 #include "Tobes/imgui/imgui.h"
 #include "Tobes/Renderer/Camera.h"
 #include "Tobes/Common/Component.h"
+#include "Tobes/Content/ContentManager.h"

@@ -26,7 +26,7 @@ namespace Tobes
 		//Set default values
 		transform->Translate(Vector3(0, 0, -10));
 		m_viewMatrix = Matrix::LookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
-		SetPerspective(1.f, 1.0f, 0.1f, 1000000.0f);
+		SetPerspective(90.f, 1.0f, 0.1f, 10000.0f);
 	}
 }
 

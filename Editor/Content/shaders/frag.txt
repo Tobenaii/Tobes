@@ -1,0 +1,27 @@
+#version 420
+
+in vec2 textureCoord;
+in vec3 normal;
+in vec3 fragPos;
+
+uniform sampler2D textureSampler;
+
+uniform vec3 lightPos0;
+uniform float ambientStrength0;
+uniform vec3 lightColour0;
+
+uniform vec3 lightPos1;
+uniform float ambientStrength1;
+uniform vec3 lightColour1;
+
+uniform vec3 viewPos;
+uniform bool useTexture;
+
+out vec4 fragColour;
+
+
+void main() {
+	vec4 result = texture(textureSampler, textureCoord);
+
+	fragColour = vec4(result);
+}

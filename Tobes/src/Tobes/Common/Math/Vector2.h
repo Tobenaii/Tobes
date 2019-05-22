@@ -1,6 +1,7 @@
 #pragma once
 #include <math.h>
 #include "Tobes/Core.h"
+#include "Tobes/imgui/imgui.h"
 
 struct TOBES_API Vector2
 {
@@ -10,6 +11,8 @@ struct TOBES_API Vector2
 
 	Vector2(float x_, float y_) : x(x_), y(y_) {}
 	void Set(float x_, float y_) { x = x_; y = y_; }
+
+	Vector2(ImVec2 vec2) : x(vec2.x), y(vec2.y) {}
 
 	Vector2 operator+(const Vector2& rhs) const { return Vector2(x + rhs.x, y + rhs.y); }
 	Vector2 operator-(const Vector2& rhs) const { return Vector2(x - rhs.x, y - rhs.y); }

@@ -1,0 +1,20 @@
+#version 420
+
+layout(location = 0) in vec4 in_position;
+layout(location = 1) in vec2 in_textureCoord;
+layout(location = 2) in vec3 in_normal;
+layout(location = 3) in vec3 in_offset;
+
+uniform mat4 mvp;
+uniform mat4 modelMatrix;
+
+out vec2 textureCoord;
+out vec3 normal;
+out vec3 fragPos;
+
+void main(){
+	textureCoord = in_textureCoord;
+	gl_Position = mvp * (in_position + vec4(in_offset, 0));
+	normal = mat3(transpose(inverse(modelMatrix))) * in_normal;
+	fragPos = vec3(gl_Position);
+}

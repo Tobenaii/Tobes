@@ -83,7 +83,7 @@ namespace Tobes
 		//Assign callbacks to glfw
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), MouseMoveCallback);
 		glfwSetCursorEnterCallback(glfwGetCurrentContext(), MouseEnteredCallback);
-		glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
+		//glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
 		glfwSetDropCallback(glfwGetCurrentContext(), FileDropCallback);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), MouseClickCallback);
 		glfwSetScrollCallback(glfwGetCurrentContext(), MouseScrollCallback);
@@ -91,11 +91,13 @@ namespace Tobes
 
 	bool Input::IsKeyDown(int key)
 	{
+		return ImGui::IsKeyDown(key);
 		return m_curKeys[key] == GLFW_PRESS || m_curKeys[key] == GLFW_REPEAT;
 	}
 
 	bool Input::WasKeyPressed(int key)
 	{
+		return ImGui::IsKeyPressed(key);
 		return m_curKeys[key] == GLFW_PRESS && m_prevKeys[key] == GLFW_RELEASE;
 	}
 

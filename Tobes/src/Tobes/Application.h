@@ -1,5 +1,6 @@
 #pragma once
 #include "Tobes/Core.h"
+#include "Tobes/Common/Math/Vector2.h"
 
 struct GLFWwindow;
 
@@ -15,9 +16,14 @@ namespace Tobes
 		virtual void Update(float dt) {}
 		virtual void OnFileDrop(int count, const char ** paths) {}
 		static Scene* GetCurrentScene();
+		static void SetBounds(Vector2 position, Vector2 extents);
+
+		static int windowWidth;
+		static int windowHeight;
 
 	protected:
 		Camera* m_camera;
+		void ShowMouse(bool show);
 
 	private:
 		void Init();
@@ -25,10 +31,12 @@ namespace Tobes
 		void Cleanup();
 		void Draw();
 
-	private:
+	protected:
 		GLFWwindow* m_window;
 		Renderer* m_renderer;
 		static Scene* m_scene;
+		static Vector2 m_position;
+		static Vector2 m_extents;
 	};
 
 	Application* CreateApplication();
