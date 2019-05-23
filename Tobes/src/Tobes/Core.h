@@ -16,6 +16,7 @@ namespace Tobes
 	class File;
 	class Material;
 	class Component;
+	class MeshRenderer;
 }
 
 #ifdef TB_BUILD_DLL

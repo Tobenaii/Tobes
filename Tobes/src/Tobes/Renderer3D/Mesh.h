@@ -7,6 +7,11 @@
 
 namespace Tobes
 {
+	enum Primitive
+	{
+		Block,
+		Skybox
+	};
 	class Mesh
 	{
 		friend class Renderer;
@@ -15,12 +20,14 @@ namespace Tobes
 	public:
 		TOBES_API std::string GetName();
 		TOBES_API Mesh(Vertex* vertices, unsigned int vertexCount, unsigned int* indices, unsigned int indexCount);
+		TOBES_API Mesh(Primitive primitive);
 
 	private:
 		const Vertex* GetVertexData();
 		void SetData();
 		void SetInstanceData(const Instance& instance);
 		void UpdateInstanceData(const Instance& instance);
+		void CreateSkybox();
 
 	private:
 		Vertex* m_vertexData;

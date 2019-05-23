@@ -20,6 +20,6 @@ namespace Tobes
 		void Initialize();
 		void DrawMesh(Mesh* mesh);
 		void DrawInstancedMesh(Instance* instance);
-
+		void DrawSkybox(Mesh* mesh);
 	};
 }

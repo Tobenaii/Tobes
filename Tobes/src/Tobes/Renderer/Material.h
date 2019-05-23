@@ -24,12 +24,13 @@ namespace Tobes
 		TOBES_API Material();
 		TOBES_API void LoadDiffuseMap(std::string filePath);
 		TOBES_API void SetDiffuseMap(Texture* texture);
-		TOBES_API void LoadShader(std::string filePath);
 		TOBES_API void EnableInstancing();
+		TOBES_API void LoadShader(Shader* shader);
 
 	private:
 		static void LoadDefaultShaders();
 		static Shader* m_defaultShader;
+		Shader* m_shader;
 		bool m_instancing;
 		bool m_setInstanceData;
 		bool m_instanced;

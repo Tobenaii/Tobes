@@ -4,6 +4,8 @@
 #include "Tobes/Renderer3D/Mesh.h"
 #include "Tobes/Common/Scene.h"
 #include "Tobes/Renderer/Material.h"
+#include "Tobes/Renderer3D/Components/MeshRenderer.h"
+#include "Tobes/Renderer/Shader.h"
 #include <iostream>
 
 namespace Tobes
@@ -36,5 +38,11 @@ namespace Tobes
 		glBindVertexArray(instance->mesh->m_vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, instance->mesh->m_ibo);
 		glDrawElementsInstanced(GL_TRIANGLES, instance->mesh->m_indexCount, GL_UNSIGNED_INT, nullptr, instance->instances);
+	}
+	void Renderer::DrawSkybox(Mesh* mesh)
+	{
+		glDepthMask(GL_FALSE);
+		DrawMesh(mesh);
+		glDepthMask(GL_TRUE);
 	}
 }

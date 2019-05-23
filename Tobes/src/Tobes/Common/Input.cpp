@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Tobes/imgui/imgui.h"
+#include "Tobes/imgui/imgui_impl_glfw.h"
 #include "Tobes/Application.h"
 
 namespace Tobes
@@ -21,15 +22,15 @@ namespace Tobes
 		m_curKeys = new int[KeyCode_LAST + 1];
 		m_prevKeys = new int[KeyCode_LAST + 1];
 
-		m_curButtons = new int[3];
-		m_prevButtons = new int[3];
+		m_curButtons = new int[4];
+		m_prevButtons = new int[4];
 
 		for (int i = GLFW_KEY_SPACE; i <= KeyCode_LAST; i++)
 		{
 			m_curKeys[i] = m_prevKeys[i] = glfwGetKey(glfwGetCurrentContext(), i);
 		}
 
-		for (int i = 0; i <= 2; i++)
+		for (int i = 0; i <= 3; i++)
 		{
 			m_curButtons[i] = m_prevButtons[i] = glfwGetMouseButton(glfwGetCurrentContext(), i);
 		}
@@ -83,7 +84,7 @@ namespace Tobes
 		//Assign callbacks to glfw
 		glfwSetCursorPosCallback(glfwGetCurrentContext(), MouseMoveCallback);
 		glfwSetCursorEnterCallback(glfwGetCurrentContext(), MouseEnteredCallback);
-		//glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
+		glfwSetKeyCallback(glfwGetCurrentContext(), KeyCallback);
 		glfwSetDropCallback(glfwGetCurrentContext(), FileDropCallback);
 		glfwSetMouseButtonCallback(glfwGetCurrentContext(), MouseClickCallback);
 		glfwSetScrollCallback(glfwGetCurrentContext(), MouseScrollCallback);
@@ -91,13 +92,11 @@ namespace Tobes
 
 	bool Input::IsKeyDown(int key)
 	{
-		return ImGui::IsKeyDown(key);
 		return m_curKeys[key] == GLFW_PRESS || m_curKeys[key] == GLFW_REPEAT;
 	}
 
 	bool Input::WasKeyPressed(int key)
 	{
-		return ImGui::IsKeyPressed(key);
 		return m_curKeys[key] == GLFW_PRESS && m_prevKeys[key] == GLFW_RELEASE;
 	}
 
@@ -125,6 +124,11 @@ namespace Tobes
 		return m_mouseY - m_prevMouseY;
 	}
 
+	Vector2 Input::GetMousePos()
+	{
+		return Vector2(m_mouseX, m_mouseY);
+	}
+
 	double Input::GetScrollDeltaY()
 	{
 		return m_scrollY;
@@ -137,6 +141,7 @@ namespace Tobes
 
 	void Input::Clear()
 	{
+		ImGui_ImplGlfw_NewFrame();
 		for (int i = 0; i < KeyCode_LAST; i++)
 		{
 			m_prevKeys[i] = m_curKeys[i];

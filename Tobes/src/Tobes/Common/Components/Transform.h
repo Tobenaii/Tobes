@@ -26,6 +26,7 @@ namespace Tobes
 
 		TOBES_API void Translate(const Vector3& pos);
 		TOBES_API void Rotate(const Vector3& axis, const float angle);
+		TOBES_API void Scale(const Vector3& scale);
 		TOBES_API void SetPosition(const Vector3& pos);
 	};
 }

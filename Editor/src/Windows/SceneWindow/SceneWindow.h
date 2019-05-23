@@ -8,6 +8,8 @@ public:
 	SceneWindow();
 	void Draw();
 
+	Tobes::GameObject* currentObject;
+
 private:
 	Tobes::Scene* m_scene;
 };

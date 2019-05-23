@@ -1,6 +1,7 @@
 #pragma once
 #include "Tobes/Core.h"
 #include "Tobes/Common/Math/Vector2.h"
+#include <vector>
 
 struct GLFWwindow;
 
@@ -30,6 +31,9 @@ namespace Tobes
 		void CreateWindow();
 		void Cleanup();
 		void Draw();
+		GameObject* m_skybox;
+		MeshRenderer* m_skyboxRenderer;
+		std::vector<std::string> m_maps;
 
 	protected:
 		GLFWwindow* m_window;

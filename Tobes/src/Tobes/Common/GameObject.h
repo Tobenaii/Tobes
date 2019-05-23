@@ -13,8 +13,8 @@ namespace Tobes
 		friend class Scene;
 		friend class Application;
 	public:
-		TOBES_API GameObject();
 		TOBES_API GameObject(std::string name);
+		TOBES_API GameObject(std::string name, GameObject* parent);
 		template<class T>
 		inline T* AddComponent()
 		{
@@ -28,8 +28,12 @@ namespace Tobes
 		}
 		TOBES_API Transform* GetTransform();
 		TOBES_API std::string GetName();
+		void AddChild(GameObject* obj);
+		TOBES_API int GetChildCount();
+		TOBES_API GameObject* GetChild(int i);
 
 	private:
+		GameObject();
 		virtual void Draw(Renderer* renderer, Camera* camera);
 		virtual void Update(float dt);
 
@@ -40,6 +44,7 @@ namespace Tobes
 		Scene* m_scene;
 		Transform* m_transform;
 		std::vector<Component*> m_components;
+		std::vector<GameObject*> m_children;
 		bool m_isActive = true;
 		std::string m_name;
 	};

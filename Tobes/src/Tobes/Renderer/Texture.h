@@ -14,10 +14,13 @@ namespace Tobes
 	public:
 		TOBES_API Texture(std::string filePath);
 		TOBES_API unsigned int GetTextureID();
+		TOBES_API Texture(std::string* filePaths);
+
 
 	private:
 		Texture();
 		void ApplyTexture(unsigned int slot);
+		void ApplySkybox(unsigned int slot);
 		~Texture();
 
 		int m_width;
@@ -27,5 +30,7 @@ namespace Tobes
 		unsigned int m_textureID;
 
 		void GenerateTexture();
+		void GenerateSkybox();
+		void LoadCubeFace(int i);
 	};
 }

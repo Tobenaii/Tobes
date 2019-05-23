@@ -72,6 +72,19 @@ void Tobes::MeshRenderer::Draw(Renderer * renderer, Camera * camera)
 		renderer->DrawMesh(m_mesh);
 }
 
+void Tobes::MeshRenderer::DrawSkybox(Renderer * renderer, Camera * camera)
+{
+	if (m_material->m_diffuseMap)
+	{
+		m_material->m_shader->ApplyShader();
+		m_material->m_diffuseMap->ApplySkybox(0);
+		m_material->m_shader->SetUniform1f("skybox", 0);
+		Matrix mvp = camera->GetSkyboxViewProjection();
+		Material::m_defaultShader->SetUniformMat4("mvp", mvp);
+	}
+	renderer->DrawSkybox(m_mesh);
+}
+
 void Tobes::MeshRenderer::OnDisable()
 {
 

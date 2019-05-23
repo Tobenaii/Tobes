@@ -21,7 +21,22 @@ void SceneWindow::Draw()
 	}
 	for (int i = 0; i < m_scene->GetGameObjectCount(); i++)
 	{
-		ImGui::Button(m_scene->GetGameObject(i)->GetName().c_str());
+		Tobes::GameObject* parent = m_scene->GetGameObject(i);
+		if (parent->GetChildCount() > 0)
+		{
+			if (ImGui::CollapsingHeader(parent->GetName().c_str()))
+			{
+				ImGui::Indent();
+				for (int i = 0; i < parent->GetChildCount(); i++)
+				{
+					Tobes::GameObject* child = parent->GetChild(i);
+					ImGui::Button(child->GetName().c_str());
+				}
+				ImGui::Unindent();
+			}
+		}
+		else
+			ImGui::Button(parent->GetName().c_str());
 	}
 	ImGui::End();
 }

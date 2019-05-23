@@ -12,3 +12,4 @@
 #include "Tobes/Renderer/Camera.h"
 #include "Tobes/Common/Component.h"
 #include "Tobes/Content/ContentManager.h"
+#include "Tobes/Common/Components/Transform.h"

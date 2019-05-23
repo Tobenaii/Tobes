@@ -65,6 +65,7 @@ namespace Tobes
 		//Start the clock to see how long the load took
 		std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 		std::ifstream buffer(filePath, std::ios::in | std::ios::binary);
+		GameObject* baseObj = new GameObject(p.filename().string());
 		bool open = false;
 		unsigned int meshCount;
 		std::string line;
@@ -139,7 +140,7 @@ namespace Tobes
 					}
 					//Create new mesh and set the mesh data
 					Mesh* mesh = new Mesh(vertexData, vertexCount, indices, indexCount);
-					GameObject* go = new GameObject(meshName);
+					GameObject* go = new GameObject(meshName, baseObj);
 					MeshRenderer* renderer = go->AddComponent<MeshRenderer>();
 					renderer->SetMaterial(new Material());
 					renderer->SetMesh(mesh);

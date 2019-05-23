@@ -147,6 +147,7 @@ copy *.dll $(OutDir)
     <ClInclude Include="src\Editor.h" />
     <ClInclude Include="src\Windows\AssetWindow\AssetWindow.h" />
     <ClInclude Include="src\Windows\AssetWindow\Folder.h" />
+    <ClInclude Include="src\Windows\ComponentWindow\ComponentWindow.h" />
     <ClInclude Include="src\Windows\GameWindow\GameWindow.h" />
     <ClInclude Include="src\Windows\SceneWindow\SceneWindow.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@ copy *.dll $(OutDir)
     <ClCompile Include="src\Editor.cpp" />
     <ClCompile Include="src\Windows\AssetWindow\AssetWindow.cpp" />
     <ClCompile Include="src\Windows\AssetWindow\Folder.cpp" />
+    <ClCompile Include="src\Windows\ComponentWindow\ComponentWindow.cpp" />
     <ClCompile Include="src\Windows\GameWindow\GameWindow.cpp" />
     <ClCompile Include="src\Windows\SceneWindow\SceneWindow.cpp" />
   </ItemGroup>

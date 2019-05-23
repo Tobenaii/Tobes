@@ -20,6 +20,8 @@ void Editor::OnFileDrop(int count, const char ** paths)
 
 void Editor::Update(float dt)
 {
+	m_gameWindow->UpdateCamera(m_camera, dt);
+
 	m_assetWindow->Draw();
 	m_sceneWindow->Draw();
 	m_gameWindow->Draw();

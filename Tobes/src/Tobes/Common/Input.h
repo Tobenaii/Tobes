@@ -126,6 +126,7 @@ struct GLFWwindow;
 
 #include <vector>
 #include "Tobes/Core.h"
+#include "Tobes/Common/Math/Vector2.h"
 
 namespace Tobes
 {
@@ -142,6 +143,7 @@ namespace Tobes
 
 		TOBES_API float GetMouseDeltaX();
 		TOBES_API float GetMouseDeltaY();
+		TOBES_API Vector2 GetMousePos();
 		TOBES_API double GetScrollDeltaY();
 
 	private:

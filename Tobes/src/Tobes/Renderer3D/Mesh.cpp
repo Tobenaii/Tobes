@@ -17,6 +17,14 @@ namespace Tobes
 		SetData();
 	}
 
+	Mesh::Mesh(Primitive primitive)
+	{
+		if (primitive == Skybox)
+		{
+			CreateSkybox();
+		}
+	}
+
 	const Vertex* Mesh::GetVertexData()
 	{
 		return m_vertexData;
@@ -81,6 +89,105 @@ namespace Tobes
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3) * instance.instances, &m_offsets[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	}
+
+	void Mesh::CreateSkybox()
+	{
+		Vertex* verts;
+		verts = new Vertex[24];
+
+		//bot
+		verts[0].position = Vector4(-0.5f, -0.5f, -0.5f, 1);
+		verts[1].position = Vector4(0.5f, -0.5f, -0.5f, 1);
+		verts[2].position = Vector4(-0.5f, -0.5f, 0.5f, 1);
+		verts[3].position = Vector4(0.5f, -0.5f, 0.5f, 1);
+
+		//top
+		verts[4].position = Vector4(-0.5f, 0.5f, -0.5f, 1);
+		verts[5].position = Vector4(0.5f, 0.5f, -0.5f, 1);
+		verts[6].position = Vector4(-0.5f, 0.5f, 0.5f, 1);
+		verts[7].position = Vector4(0.5f, 0.5f, 0.5f, 1);
+
+		//left
+		verts[8].position = Vector4(-0.5f, -0.5f, 0.5f, 1);
+		verts[9].position = Vector4(-0.5f, -0.5f, -0.5f, 1);
+		verts[10].position = Vector4(-0.5f, 0.5f, 0.5f, 1);
+		verts[11].position = Vector4(-0.5f, 0.5f, -0.5f, 1);
+
+		//right
+		verts[12].position = Vector4(0.5f, -0.5f, -0.5f, 1);
+		verts[13].position = Vector4(0.5f, -0.5f, 0.5f, 1);
+		verts[14].position = Vector4(0.5f, 0.5f, -0.5f, 1);
+		verts[15].position = Vector4(0.5f, 0.5f, 0.5f, 1);
+
+		//back
+		verts[16].position = Vector4(-0.5f, -0.5f, -0.5f, 1);
+		verts[17].position = Vector4(0.5f, -0.5f, -0.5f, 1);
+		verts[18].position = Vector4(-0.5f, 0.5f, -0.5f, 1);
+		verts[19].position = Vector4(0.5f, 0.5f, -0.5f, 1);
+
+		//front
+		verts[20].position = Vector4(-0.5f, -0.5f, 0.5f, 1);
+		verts[21].position = Vector4(0.5f, -0.5f, 0.5f, 1);
+		verts[22].position = Vector4(-0.5f, 0.5f, 0.5f, 1);
+		verts[23].position = Vector4(0.5f, 0.5f, 0.5f, 1);
+
+		unsigned int* indices;
+		indices = new unsigned int[36];
+
+		//bot
+		indices[0] = 0;
+		indices[1] = 1;
+		indices[2] = 2;
+		indices[3] = 1;
+		indices[4] = 2;
+		indices[5] = 3;
+
+		//top
+		indices[6] = 4;
+		indices[7] = 5;
+		indices[8] = 6;
+		indices[9] = 5;
+		indices[10] = 6;
+		indices[11] = 7;
+
+		//left
+		indices[12] = 8;
+		indices[13] = 9;
+		indices[14] = 10;
+		indices[15] = 9;
+		indices[16] = 10;
+		indices[17] = 11;
+
+		//right
+		indices[18] = 12;
+		indices[19] = 13;
+		indices[20] = 14;
+		indices[21] = 13;
+		indices[22] = 14;
+		indices[23] = 15;
+
+		//back
+		indices[24] = 16;
+		indices[25] = 17;
+		indices[26] = 18;
+		indices[27] = 17;
+		indices[28] = 18;
+		indices[29] = 19;
+
+		//front
+		indices[30] = 20;
+		indices[31] = 21;
+		indices[32] = 22;
+		indices[33] = 21;
+		indices[34] = 22;
+		indices[35] = 23;
+
+		m_vertexCount = 24;
+		m_vertexData = verts;
+		m_indexCount = 36;
+		m_indices = indices;
+		SetData();
 	}
 
 	std::string Mesh::GetName()

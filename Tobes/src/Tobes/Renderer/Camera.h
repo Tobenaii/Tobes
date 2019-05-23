@@ -25,6 +25,7 @@ namespace Tobes
 
 	private:
 		Matrix GetViewProjection();
+		Matrix GetSkyboxViewProjection();
 	public:
 		virtual void Start();
 	};

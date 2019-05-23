@@ -41,6 +41,27 @@ void Tobes::Transform::Rotate(const Vector3 & axis, const float angle)
 	m_transformMatrix = m_scaleMatrix * m_rotationMatrix * m_translationMatrix;
 }
 
+void Tobes::Transform::Scale(const Vector3 & scale)
+{
+	m_scaleMatrix.m11 = scale.x;
+	m_scaleMatrix.m12 = 0;
+	m_scaleMatrix.m13 = 0;
+	m_scaleMatrix.m14 = 0;
+	m_scaleMatrix.m21 = 0;
+	m_scaleMatrix.m22 = scale.y;
+	m_scaleMatrix.m23 = 0;
+	m_scaleMatrix.m24 = 0;
+	m_scaleMatrix.m31 = 0;
+	m_scaleMatrix.m32 = 0;
+	m_scaleMatrix.m33 = scale.z;
+	m_scaleMatrix.m34 = 0;
+	m_scaleMatrix.m41 = 0;
+	m_scaleMatrix.m42 = 0;
+	m_scaleMatrix.m43 = 0;
+	m_scaleMatrix.m44 = 1;
+	m_transformMatrix = m_scaleMatrix * m_rotationMatrix * m_translationMatrix;
+}
+
 void Tobes::Transform::SetPosition(const Vector3 & pos)
 {
 	m_translationMatrix = Matrix::CreateTranslation(pos);

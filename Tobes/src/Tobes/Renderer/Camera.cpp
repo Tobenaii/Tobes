@@ -21,12 +21,16 @@ namespace Tobes
 		m_viewMatrix = Matrix::LookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
 		return m_viewMatrix * m_projectionMatrix;
 	}
+	Matrix Camera::GetSkyboxViewProjection()
+	{
+		Matrix view = Matrix::LookAt(Vector3(0,0,0), transform->GetForward(), transform->GetUp());
+		return view * m_projectionMatrix;
+	}
 	void Camera::Start()
 	{
 		//Set default values
-		transform->Translate(Vector3(0, 0, -10));
+		transform->Translate(Vector3(0, 0, 0));
 		m_viewMatrix = Matrix::LookAt(transform->GetPosition(), transform->GetPosition() + transform->GetForward(), transform->GetUp());
-		SetPerspective(90.f, 1.0f, 0.1f, 10000.0f);
 	}
 }
 

@@ -11,6 +11,8 @@ namespace Tobes
 	{
 		friend class Material;
 		friend class MeshRenderer;
+		friend class Application;
+		friend class Renderer;
 
 	private:
 		unsigned int m_programID = -1;

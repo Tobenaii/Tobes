@@ -11,6 +11,11 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+#include "Tobes/Renderer3D/Components/MeshRenderer.h"
+#include "Tobes/Renderer/Material.h"
+#include "Tobes/Renderer3D/Mesh.h"
+#include "Tobes/Renderer/Texture.h"
+#include "Tobes/Common/Components/Transform.h"
 #include <math.h>
 
 namespace Tobes
@@ -65,12 +70,42 @@ namespace Tobes
 		double fps = 0;
 		double timer = 0;
 		Input::GetInstance()->AddApplication(this);
+		ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = true;
+		glfwPollEvents();
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
 		Startup();
+
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_rt.png");
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_lf.png");
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_up.png");
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_dn.png");
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_bk.png");
+		m_maps.push_back(".\\content\\skybox\\bluefreeze_ft.png");
+
+		m_skybox = new GameObject();
+		m_skyboxRenderer = m_skybox->AddComponent<MeshRenderer>();
+		Material* material = new Material();
+		Shader* shader = new Shader();
+		shader->LoadVertexShader(".\\content\\shaders\\vertex_sky.txt");
+		shader->LoadFragmentShader(".\\content\\shaders\\frag_sky.txt");
+		shader->LinkProgram();
+		material->LoadShader(shader);
+		Mesh* mesh = new Mesh(Primitive::Skybox);
+		m_skyboxRenderer->SetMesh(mesh);
+		m_skyboxRenderer->SetMaterial(material);
+		Texture* texture = new Texture(&m_maps[0]);
+		material->SetDiffuseMap(texture);
+		m_skybox->m_transform->Scale(Vector3(1000, 1000, 1000));
+
 		//Main game loop
 		while (!glfwWindowShouldClose(m_window))
 		{
+			m_camera->SetPerspective(1.5708f, m_extents.x / m_extents.y, 0.1f, 10000.0f);
+			std::cout << m_extents.x / m_extents.y << std::endl;
+			glfwPollEvents();
 			glfwGetWindowSize(m_window, &windowWidth, &windowHeight);
-			m_camera->SetPerspective(90.f, m_extents.x / m_extents.y, 0.1f, 10000.0f);
+			Vector2 mousePos = Input::GetInstance()->GetMousePos();
 			curTime = glfwGetTime();
 			deltaTime = curTime - prevTime;
 			if (deltaTime > 0.1f)
@@ -85,12 +120,13 @@ namespace Tobes
 			}
 			prevTime = curTime;
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glfwPollEvents();
 			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
+			if (mousePos.x > m_position.x && mousePos.x < m_position.x + m_extents.x && mousePos.y > m_position.y && mousePos.y < m_position.y + m_extents.y)
+				ImGui::GetIO().WantCaptureMouse = false;
 			Update((float)deltaTime);
 			m_scene->Update((float)deltaTime);
+			m_skyboxRenderer->DrawSkybox(m_renderer, m_camera);
 			Draw();
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -129,13 +165,13 @@ namespace Tobes
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-		glFrontFace(GL_CCW);
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glFrontFace(GL_CCW);
 	}
 	void Application::CreateWindow()
 	{
-		m_window = glfwCreateWindow(800, 800, "TestApp", NULL, NULL);
+		m_window = glfwCreateWindow(1280, 720, "TestApp", NULL, NULL);
 		glfwMakeContextCurrent(m_window);
 	}
 	void Application::Cleanup()

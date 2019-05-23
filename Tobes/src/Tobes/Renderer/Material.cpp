@@ -25,14 +25,14 @@ namespace Tobes
 		m_diffuseMap = texture;
 	}
 
-	void Material::LoadShader(std::string filePath)
-	{
-		
-	}
-
 	void Material::EnableInstancing()
 	{
 		m_instancing = true;
+	}
+
+	void Material::LoadShader(Shader* shader)
+	{
+		m_shader = shader;
 	}
 
 	void Material::LoadDefaultShaders()
